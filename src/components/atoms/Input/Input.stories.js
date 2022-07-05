@@ -20,6 +20,12 @@ CommentChatInputStory.args = {
   placeholder: '댓글(채팅) 입력하기...',
   className: 'input_chat-comment',
 };
+// type=password
+export const PasswordInputStory = Template.bind({});
+PasswordInputStory.args = {
+  type: 'password',
+  placeholder: '비밀번호를 입력해주세요.',
+};
 // type=file
 export const ProfileImgInputStory = Template.bind({});
 ProfileImgInputStory.args = {
@@ -38,14 +44,12 @@ UploadImgInput.args = {
   type: 'file',
   className: 'ir',
 };
-
 //type=search
 export const SearchInput = Template.bind({});
 SearchInput.args = {
   type: 'search',
   placeholder: '계정 검색',
 };
-
 //textarea
 export const UploadTextArea = Template.bind({});
 UploadTextArea.args = {
