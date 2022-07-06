@@ -39,7 +39,6 @@ const Label = ({
   id={id}
   display={display}>
     {label}
-    {id}
   </LabelStyle>
 };
 

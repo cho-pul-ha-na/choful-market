@@ -7,8 +7,8 @@ export default {
 
 const Template = args => <Label {...args} />;
 
-export const Email = Template.bind({});
-Email.args = {
+export const EmailStory = Template.bind({});
+EmailStory.args = {
   fontWeight: '500',
   fontSize: '12px',
   lineHeight: '15px',
@@ -16,8 +16,8 @@ Email.args = {
   label: '이메일',
 };
 
-export const PassWord = Template.bind({});
-PassWord.args = {
+export const PassWordStory = Template.bind({});
+PassWordStory.args = {
   fontWeight: '500',
   fontSize: '12px',
   lineHeight: '15px',
@@ -25,8 +25,8 @@ PassWord.args = {
   label: '비밀번호'
 };
 
-export const UserName = Template.bind({});
-UserName.args = {
+export const UserNameStory = Template.bind({});
+UserNameStory.args = {
   fontWeight: '500',
   fontSize: '12px',
   lineHeight: '15px',
@@ -34,8 +34,8 @@ UserName.args = {
   label: '사용자 이름'
 };
 
-export const ImgRegistration = Template.bind({});
-ImgRegistration.args = {
+export const ImgRegistrationStory = Template.bind({});
+ImgRegistrationStory.args = {
   fontWeight: '400',
   fontSize: '12px',
   lineHeight: '14px',
@@ -43,8 +43,8 @@ ImgRegistration.args = {
   label: '이미지 등록'
 };
 
-export const BackgroundLabel = Template.bind({});
-BackgroundLabel.args = {
+export const BackgroundLabelStory = Template.bind({});
+BackgroundLabelStory.args = {
   width: '322px',
   height: '204px',
   background: '#F2F2F2',
