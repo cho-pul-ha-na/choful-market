@@ -1,7 +1,7 @@
 import Sns from "./SnsButton";
 
 export default {
-    title: `Atoms / Sns`,
+    title: 'Atoms / Sns',
     component: Sns,
 }
 
