@@ -31,13 +31,13 @@ UserIconStory.args = {
     title: '유저 아이콘',
 };
 
-export const FilledUserIconStory = Template.bind({});
-FilledUserIconStory.args = {
-    size: '24px',
-    xPoint: '-186px',
-    yPoint: '-192px',
-    title: '채워진 유저 아이콘',
-};
+// export const FilledUserIconStory = Template.bind({});
+// FilledUserIconStory.args = {
+//     size: '24px',
+//     xPoint: '-186px',
+//     yPoint: '-192px',
+//     title: '채워진 유저 아이콘',
+// };
 
 export const LargeEditIconStory = Template.bind({});
 LargeEditIconStory.args = {
@@ -127,13 +127,13 @@ HeartIconStory.args = {
     title: '하트모양 아이콘',
 };
 
-export const FilledHeartIconStory = Template.bind({});
-FilledHeartIconStory.args = {
-    size: '18px',
-    xPoint: '-50px',
-    yPoint: '-236px',
-    title: '채워진 하트모양 아이콘',
-};
+// export const FilledHeartIconStory = Template.bind({});
+// FilledHeartIconStory.args = {
+//     size: '18px',
+//     xPoint: '-50px',
+//     yPoint: '-236px',
+//     title: '채워진 하트모양 아이콘',
+// };
 
 export const LargeHomeIconStory = Template.bind({});
 LargeHomeIconStory.args = {
@@ -151,13 +151,13 @@ HomeIconStory.args = {
     title: '홈 아이콘',
 };
 
-export const FilledHomeIconStory = Template.bind({});
-FilledHomeIconStory.args = {
-    size: '24px',
-    xPoint: '-192px',
-    yPoint: '-98px',
-    title: '채워진 홈 아이콘',
-};
+// export const FilledHomeIconStory = Template.bind({});
+// FilledHomeIconStory.args = {
+//     size: '24px',
+//     xPoint: '-192px',
+//     yPoint: '-98px',
+//     title: '채워진 홈 아이콘',
+// };
 
 export const ImageIconStory = Template.bind({});
 ImageIconStory.args = {
@@ -183,13 +183,13 @@ MessageIconStory.args = {
     title: '메시지 아이콘',
 };
 
-export const FilledMessageIconStory = Template.bind({});
-FilledMessageIconStory.args = {
-    size: '24px',
-    xPoint: '-10px',
-    yPoint: '-192px',
-    title: '채워진 메시지 아이콘',
-};
+// export const FilledMessageIconStory = Template.bind({});
+// FilledMessageIconStory.args = {
+//     size: '24px',
+//     xPoint: '-10px',
+//     yPoint: '-192px',
+//     title: '채워진 메시지 아이콘',
+// };
 
 export const NewNoticeIconStory = Template.bind({});
 NewNoticeIconStory.args = {
