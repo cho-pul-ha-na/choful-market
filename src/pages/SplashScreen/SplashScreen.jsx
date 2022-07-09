@@ -1,8 +1,8 @@
 import styled, { keyframes } from 'styled-components';
 import Logo from '../../components/atoms/Logo/Logo';
+import { useState } from 'react';
 
 import FullLogoImg from '../../assets/full-logo.png';
-import { useState } from 'react';
 
 const fadeInOut = keyframes`
   0% {
