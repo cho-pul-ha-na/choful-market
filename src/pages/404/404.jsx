@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import Logo from '../../components/atoms/Logo/Logo';
-
-import Img404 from '../../assets/not-found-logo.png';
 import Button from '../../components/atoms/Button/Button';
 import { useNavigate } from 'react-router-dom';
+
+import Img404 from '../../assets/not-found-logo.png';
 
 const Wrapper = styled.div`
   width: 100vw;
