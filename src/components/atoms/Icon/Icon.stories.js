@@ -150,7 +150,7 @@ ImageLayerIconStory.args = {
     size: '20px',
     xPoint: '-236px',
     yPoint: '-139px',
-    title: '이미지 레이어 아이콘',
+    title: '갤러리 아이콘',
 };
 
 export const MessageIconStory = Template.bind({});

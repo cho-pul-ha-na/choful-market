@@ -20,7 +20,8 @@ const IconDiv = styled.div`
 `
 const IconLink = styled(NavLink)`
     ${IconCss};
-    /* &.activeHome {
+    /* active 된 아이콘 좌표
+    &.activeHome {
         background-position: -192px -98px;
     };
     &.user-active {
