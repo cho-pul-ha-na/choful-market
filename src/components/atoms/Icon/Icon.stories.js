@@ -29,7 +29,6 @@ UserIconStory.args = {
     xPoint: '-142px',
     yPoint: '-192px',
     title: '유저 아이콘',
-    isNavLink: true,
 };
 
 export const LargeEditIconStory = Template.bind({});
@@ -134,7 +133,6 @@ HomeIconStory.args = {
     xPoint: '-192px',
     yPoint: '-54px',
     title: '홈 아이콘',
-    isNavLink: true,
 };
 
 export const ImageIconStory = Template.bind({});
@@ -159,7 +157,6 @@ MessageIconStory.args = {
     xPoint: '-192px',
     yPoint: '-142px',
     title: '메시지 아이콘',
-    isNavLink: true,
 };
 
 export const NewNoticeIconStory = Template.bind({});
