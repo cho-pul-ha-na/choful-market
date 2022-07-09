@@ -29,14 +29,7 @@ UserIconStory.args = {
     xPoint: '-142px',
     yPoint: '-192px',
     title: '유저 아이콘',
-};
-
-export const FilledUserIconStory = Template.bind({});
-FilledUserIconStory.args = {
-    size: '24px',
-    xPoint: '-186px',
-    yPoint: '-192px',
-    title: '채워진 유저 아이콘',
+    isNavLink: true,
 };
 
 export const LargeEditIconStory = Template.bind({});
@@ -52,7 +45,7 @@ EditIconStory.args = {
     size: '24px',
     xPoint: '-192px',
     yPoint: '-10px',
-    title: '큰 게시글 추가 아이콘',
+    title: '게시글 추가 아이콘',
 };
 
 export const AlbumIconOnStory = Template.bind({});
@@ -127,14 +120,6 @@ HeartIconStory.args = {
     title: '하트모양 아이콘',
 };
 
-export const FilledHeartIconStory = Template.bind({});
-FilledHeartIconStory.args = {
-    size: '18px',
-    xPoint: '-50px',
-    yPoint: '-236px',
-    title: '채워진 하트모양 아이콘',
-};
-
 export const LargeHomeIconStory = Template.bind({});
 LargeHomeIconStory.args = {
     size: '48px',
@@ -149,14 +134,7 @@ HomeIconStory.args = {
     xPoint: '-192px',
     yPoint: '-54px',
     title: '홈 아이콘',
-};
-
-export const FilledHomeIconStory = Template.bind({});
-FilledHomeIconStory.args = {
-    size: '24px',
-    xPoint: '-192px',
-    yPoint: '-98px',
-    title: '채워진 홈 아이콘',
+    isNavLink: true,
 };
 
 export const ImageIconStory = Template.bind({});
@@ -172,7 +150,7 @@ ImageLayerIconStory.args = {
     size: '20px',
     xPoint: '-236px',
     yPoint: '-139px',
-    title: '이미지 레이어 아이콘',
+    title: '갤러리 아이콘',
 };
 
 export const MessageIconStory = Template.bind({});
@@ -181,14 +159,7 @@ MessageIconStory.args = {
     xPoint: '-192px',
     yPoint: '-142px',
     title: '메시지 아이콘',
-};
-
-export const FilledMessageIconStory = Template.bind({});
-FilledMessageIconStory.args = {
-    size: '24px',
-    xPoint: '-10px',
-    yPoint: '-192px',
-    title: '채워진 메시지 아이콘',
+    isNavLink: true,
 };
 
 export const NewNoticeIconStory = Template.bind({});
