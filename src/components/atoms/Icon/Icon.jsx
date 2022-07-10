@@ -33,7 +33,7 @@ const IconLink = styled(NavLink)`
 `
 
 const Icon = ({ to, size, xPoint, yPoint, title, isLink, className }) => {
-    return ( isLink === 'true'?  
+    return ( isLink?  
     <IconLink to={to} size={size} xPoint={xPoint} yPoint={yPoint} title={title}/> :
     <IconDiv size={size} xPoint={xPoint} yPoint={yPoint} title={title} className={className}/>
 )}
