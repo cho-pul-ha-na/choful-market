@@ -35,6 +35,9 @@ export const GlobalStyle = createGlobalStyle`
   font-size: 1px;
   color: transparent;
   }
+  .hide {
+    display: none;
+  }
 `;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
