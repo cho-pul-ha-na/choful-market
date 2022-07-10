@@ -13,11 +13,13 @@ import PostUpload from './pages/PostUpload';
 import Search from './pages/Search';
 import SetProfile from './pages/SetProfile';
 import YourProfile from './pages/YourProfile';
+import Header from './components/modules/Header/Header';
 import Nav from './components/modules/Nav/Nav'
 
 function App() {
   return (
     <>
+    <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
