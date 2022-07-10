@@ -24,6 +24,16 @@ const StyledButton = styled.button`
     height: 36px;
     background-image: url(${props => props.buttonImg});
   }
+  &.btn_header {
+    display: none;
+    width: 90px;
+    position: absolute;
+    top: 8px;
+    right: 16px;
+  }
+  &.show {
+    display: block;
+  }
 `;
 
 const Button = ({

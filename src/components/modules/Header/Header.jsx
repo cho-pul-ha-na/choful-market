@@ -30,13 +30,13 @@ const Header = () => {
     const navigate = useNavigate();
 
     const handleButtonClick = () => {
-      navigate(-1);
+        navigate(-1);
     };
     return (
         <>
         { !path.includes('login') ?
         <>
-            <HeaderBox className={ path.length === 1? 'hide' : '' }>
+            <HeaderBox className={path.length === 1? 'hide' : null}>
                 <Icon 
                     size='22px'
                     xPoint='-236px'
@@ -45,11 +45,11 @@ const Header = () => {
                     onclick={handleButtonClick}
                 />
                 <Input
-                    className={path.includes('search')? '' : 'hide'}
+                    className={path.includes('search')? null : 'hide'}
                     type='search'
                     placeholder='계정 검색'
                 />
-                <HeaderSpan className={path.includes('chat/room')? '' : 'hide'}>
+                <HeaderSpan className={path.includes('chat/room')? null : 'hide'}>
                     도촌동풀벌레 찌르찌르
                 </HeaderSpan>
                 <Icon
@@ -57,7 +57,8 @@ const Header = () => {
                     xPoint='-54px'
                     yPoint='-192px'
                     title='비활성화 된 더보기 아이콘'
-                    className={'right ' + (path.includes('search') || path.includes('Profile')? 'hide' : '')}
+                    className={`right ${path.includes('search') || path.includes('Profile') ? 'hide' : null}`}
+
                     />
                 <Button
                     label={path.includes('modification')? '저장' : '업로드'}
@@ -68,13 +69,13 @@ const Header = () => {
                     bgColor={props => props.theme.color.main.green}
                     txtColor={props => props.theme.color.text.white}
                     borderRadius='32px'
-                    className={'btn_header ' + (path.includes('upload') || path.includes('modification')?'show' : '')}
+                    className={`btn_header + ${path.includes('upload') || path.includes('modification')?'show' : null}`}
                 />
             </HeaderBox>
 
-            <HeaderBox className={path.length === 1? '' : 'hide' }>
+            <HeaderBox className={path.length === 1? null : 'hide'}>
                 <HeaderSpan className={path.length === 1? '' : 'hide'}>초풀마켓 피드</HeaderSpan>
-                <HeaderSpan className={path.includes('chat/room') ? "" : "hide"}>
+                <HeaderSpan className={path.includes('chat/room') ? null : 'hide'}>
                     {/* 여기에 채팅하는 상대방 유저아이디 */}
                     도촌동풀벌레 찌르찌르
                     </HeaderSpan>
