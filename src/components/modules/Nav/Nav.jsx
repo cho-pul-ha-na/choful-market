@@ -38,26 +38,27 @@ const Nav = () => {
     return (
         <NavUl>
             <NavLi>
+                {/* Span을 눌러도 Link가 옮겨갈 수 있게 만들기 */}
                 <Icon
                 to="/"
                 size='24px'
                 xPoint='-192px' 
                 yPoint={ matchHome !== null ? '-98px' : '-54px' }
                 title='홈 아이콘' 
-                isLink='true'
+                isLink
                 />
-                <NavSpan className={matchHome !== null ? "activated" : ""} >홈</NavSpan>
+                <NavSpan className={ matchHome !== null ? "activated" : ""} >홈</NavSpan>
             </NavLi>
             <NavLi>
                 <Icon 
                 to="/chat/list"
                 size='24px' 
-                xPoint= { matchChat !== null ? '10px' : '-192px'} 
-                yPoint={ matchChat !== null ? '192px' : '-142px'} 
+                xPoint= { matchChat !== null ? '-10px' : '-192px'} 
+                yPoint={ matchChat !== null ? '-192px' : '-142px'} 
                 title='메시지 아이콘' 
-                isLink='true'
+                isLink
                 />
-                <NavSpan className={matchChat !== null ? "activated" : ""}>채팅</NavSpan>
+                <NavSpan className={ matchChat !== null ? "activated" : ""}>채팅</NavSpan>
             </NavLi>
             <NavLi>
                 <Icon 
@@ -66,7 +67,7 @@ const Nav = () => {
                 xPoint='-192px' 
                 yPoint='-10px' 
                 title='게시글 추가 아이콘'
-                isLink='true'
+                isLink
                 />
                 <NavSpan  active={null}>게시물 작성</NavSpan>
             </NavLi>
@@ -77,9 +78,9 @@ const Nav = () => {
                 xPoint={ matchProfile !== null ? '-186px' : '-142px'} 
                 yPoint='-192px'
                 title='유저 아이콘'
-                isLink='true'
+                isLink
                 />
-                <NavSpan className={matchProfile !== null ? "activated" : ""}>프로필</NavSpan>
+                <NavSpan className={ matchProfile !== null ? "activated" : ""}>프로필</NavSpan>
             </NavLi>
         </NavUl>
     )
