@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Icon from "../../atoms/Icon/Icon";
 
 const NavUl = styled.ul`
+    position: absolute;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     border-top: 0.5px solid ${props => props.theme.color.gray.d2};
