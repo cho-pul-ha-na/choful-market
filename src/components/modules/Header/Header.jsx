@@ -13,6 +13,7 @@ const HeaderBox = styled.header`
     justify-content: space-between;
     align-items: center;
     gap: 20px;
+    z-index: 10;
     &.hide {
         display: none;
     }

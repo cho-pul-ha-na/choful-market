@@ -7,9 +7,11 @@ const NavUl = styled.ul`
     width: 100%;
     display: flex;
     justify-content: space-between;
+    background-color: #fff;
     border-top: 0.5px solid ${props => props.theme.color.gray.d2};
     bottom: 0;
     padding: 12px 0 6px;
+    z-index: 10;
 `
 const NavLi = styled.li`
     width: 84px;
