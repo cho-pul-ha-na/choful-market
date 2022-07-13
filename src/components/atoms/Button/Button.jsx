@@ -47,10 +47,12 @@ const Button = ({
   borderRadius,
   buttonImg,
   className,
+  onClick,
+  ...props
 }) => {
   return (
     <StyledButton
-      type="button"
+      type='button'
       fontSize={fontSize}
       fontWeight={fontWeight}
       lineHeight={lineHeight}
@@ -60,6 +62,8 @@ const Button = ({
       borderRadius={borderRadius}
       buttonImg={buttonImg}
       className={className}
+      onClick={onClick}
+      {...props}
     >
       {label}
     </StyledButton>
