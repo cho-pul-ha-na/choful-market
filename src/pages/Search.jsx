@@ -2,9 +2,8 @@ import styled from "styled-components";
 import Profile from "../components/atoms/Profile/Profile";
 import UserProfile from '../assets/default-profile.png'
 
-
 const SearchWrapper = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100%;
   padding: 24px 16px 0;
 `
@@ -17,11 +16,11 @@ const SearchDiv = styled.div`
 `
 
 const SearchUl = styled.ul`
-  width: 100vw;
+  width: 100%;
   margin-left: 12px;
 `
 
-const Searchli = styled.li`
+const SearchLi = styled.li`
   font-weight: 400; 
   white-space: nowrap;
   overflow: hidden;
@@ -30,7 +29,6 @@ const Searchli = styled.li`
     font-weight: 500;
     font-size: 14px;
     line-height: 18px;
-    color: ${props => props.theme.color.text.black};
     margin-bottom: 6px;
   }
   &:nth-child(2){
@@ -42,17 +40,15 @@ const Searchli = styled.li`
 
 const Search = () => {
   return (
-    <>
-      <SearchWrapper>
-        <SearchDiv >
-          <Profile size="42px" imgSrc={UserProfile} imgAlt="프로필 이미지"/>
-          <SearchUl>
-            <Searchli >애월읍 위니브 감귤농장</Searchli>
-            <Searchli >@weniv_Mandarin</Searchli>
-          </SearchUl>
-        </SearchDiv>
-      </SearchWrapper>
-    </>
+    <SearchWrapper>
+      <SearchDiv >
+        <Profile size="42px" imgSrc={UserProfile} imgAlt="프로필 이미지"/>
+        <SearchUl>
+          <SearchLi >애월읍 위니브 감귤농장</SearchLi>
+          <SearchLi >@weniv_Mandarin</SearchLi>
+        </SearchUl>
+      </SearchDiv>
+    </SearchWrapper>
   );
 };
 

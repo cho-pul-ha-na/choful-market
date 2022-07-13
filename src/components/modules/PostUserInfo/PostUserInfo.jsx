@@ -3,9 +3,8 @@ import Profile from "../../atoms/Profile/Profile";
 import Icon from "../../atoms/Icon/Icon";
 import UserProfile from '../../../assets/basic-profile-img.png'
 
-
 const PostUserInfohWrapper = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100%;
   padding: 24px 16px 0;
 `
@@ -18,11 +17,11 @@ const PostUserInfoDiv = styled.div`
 `
 
 const PostUserInfoUl = styled.ul`
-  width: 100vw;
+  width: 100%;
   margin-left: 12px;
 `
 
-const PostUserInfoli = styled.li`
+const PostUserInfoLi = styled.li`
   font-weight: 400; 
   white-space: nowrap;
   overflow: hidden;
@@ -31,7 +30,6 @@ const PostUserInfoli = styled.li`
     font-weight: 500;
     font-size: 14px;
     line-height: 18px;
-    color: ${props => props.theme.color.text.black};
     margin-bottom: 6px;
   }
   &:nth-child(2){
@@ -43,18 +41,16 @@ const PostUserInfoli = styled.li`
 
 const PostUserInfo = () => {
   return (
-    <>
-      <PostUserInfohWrapper>
-        <PostUserInfoDiv >
-          <Profile size="42px" imgSrc={UserProfile} imgAlt="프로필 이미지"/>
-          <PostUserInfoUl>
-            <PostUserInfoli >애월읍 위니브 감귤농장</PostUserInfoli>
-            <PostUserInfoli >@weniv_Mandarin</PostUserInfoli>
-          </PostUserInfoUl>
-          <Icon size="18px" xPoint= "-88px" yPoint= "-236px"/>
-        </PostUserInfoDiv>
-      </PostUserInfohWrapper>
-    </>
+    <PostUserInfohWrapper>
+      <PostUserInfoDiv >
+        <Profile size="42px" imgSrc={UserProfile} imgAlt="프로필 이미지"/>
+        <PostUserInfoUl>
+          <PostUserInfoLi >애월읍 위니브 감귤농장</PostUserInfoLi>
+          <PostUserInfoLi >@weniv_Mandarin</PostUserInfoLi>
+        </PostUserInfoUl>
+        <Icon size="18px" xPoint= "-88px" yPoint= "-236px"/>
+      </PostUserInfoDiv>
+    </PostUserInfohWrapper>
   );
 };
 
