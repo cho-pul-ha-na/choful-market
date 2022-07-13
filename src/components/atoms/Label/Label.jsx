@@ -24,7 +24,7 @@ const Label = ({
   border,
   borderRadius,
   label,
-  id,
+  htmlFor,
   display,}) => {
   return <LabelStyle 
   width={width} 
@@ -36,7 +36,7 @@ const Label = ({
   background={background} 
   border={border} 
   borderRadius={borderRadius}
-  id={id}
+  htmlFor={htmlFor}
   display={display}>
     {label}
   </LabelStyle>
