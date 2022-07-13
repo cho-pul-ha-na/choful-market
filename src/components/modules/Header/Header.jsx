@@ -39,7 +39,7 @@ const Header = () => {
     navigate(-1);
   };
   return (
-    <>
+    <CommonWrapper>
       {!path.includes('login') ? (
         <>
           <HeaderBox className={path.length === 1 ? 'hide' : null}>
@@ -114,7 +114,7 @@ const Header = () => {
       ) : (
         <></>
       )}
-    </>
+    </CommonWrapper>
   );
 };
 
