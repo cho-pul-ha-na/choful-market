@@ -24,4 +24,9 @@ export const mainTheme = {
       red: '#EB5757',
     },
   },
+  borderRadius: {
+    lv1: '5px',
+    lv2: '10px',
+    circle: '50%',
+  }
 };
