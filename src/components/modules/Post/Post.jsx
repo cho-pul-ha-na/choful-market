@@ -6,7 +6,7 @@ import Icon from '../../atoms/Icon/Icon';
 import PostUserInfo from '../PostUserInfo/PostUserInfo';
 
 const PostWrapper = styled.article`
-  width: 390px;
+  width: 100%;
   padding: 4px 0px;
   margin: 20px auto 0;
   & div:first-child {
@@ -34,7 +34,7 @@ const IconContainer = styled.div`
   }
 `;
 
-const LikeCommentText = styled.p`
+const LikeCommentCount = styled.p`
   font-size: 12px;
   line-height: 20px;
   font-weight: 400;
@@ -60,12 +60,7 @@ const Post = () => {
           이상의 청춘의 뼈 따뜻한 그들의 그와 약동하다. 대고, 못할 넣는 풍부하게
           뛰노는 인생의 힘있다
         </PostText>
-        <Img
-          width='304px'
-          height='228px'
-          imgSrc={PostImg}
-          imgAlt='게시글 이미지'
-        />
+        <Img width='100%' imgSrc={PostImg} imgAlt='게시글 이미지' />
         <IconContainer>
           <Icon
             size='20px'
@@ -73,14 +68,14 @@ const Post = () => {
             yPoint='-179px'
             title='하트모양 아이콘'
           />
-          <LikeCommentText>30</LikeCommentText>
+          <LikeCommentCount>30</LikeCommentCount>
           <Icon
             size='20px'
             xPoint='-192px'
             yPoint='-142px'
             title='메시지 아이콘'
           />
-          <LikeCommentText>10</LikeCommentText>
+          <LikeCommentCount>10</LikeCommentCount>
         </IconContainer>
         <CreatedDate>2020년 10월 21일</CreatedDate>
       </PostContent>
