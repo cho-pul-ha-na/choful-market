@@ -62,6 +62,10 @@ const MessageIconWrapper = styled.div`
   margin-right: 18px;
 `;
 
+const MessageLabel = styled.label`
+  cursor: pointer;
+`;
+
 const ChatRoom = props => {
   return (
     <>
@@ -88,7 +92,10 @@ const ChatRoom = props => {
       </ChatUl>
       <MessageDiv>
         <MessageIconWrapper>
-          <Icon size='22px' xPoint='-236px' yPoint='-99px' />
+          <MessageLabel htmlFor='ImgUpload'>
+            <Icon size='22px' xPoint='-236px' yPoint='-99px' />
+            <Input id='ImgUpload' type='file' className='ir' />
+          </MessageLabel>
         </MessageIconWrapper>
         <Input
           className='input_chat-comment'
