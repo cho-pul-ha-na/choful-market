@@ -17,10 +17,14 @@ const fadeInOut = keyframes`
 
 const Wrapper = styled.div`
   width: 100vw;
+  height: 100vh;
+  background-color: #fff;
   display: ${props => props.display};
   justify-content: center;
-  margin-top: 246px;
-  animation: ${fadeInOut} 0.5s linear forwards;
+  img {
+    margin-top: 246px;
+    animation: ${fadeInOut} 0.5s linear forwards;
+  }
 `;
 
 const SplashScreen = () => {
@@ -31,7 +35,7 @@ const SplashScreen = () => {
   }, 1500);
   return (
     <Wrapper display={display}>
-      <Logo size="200px" imgSrc={FullLogoImg} imgAlt="메인 로고 이미지"></Logo>
+      <Logo size='200px' imgSrc={FullLogoImg} imgAlt='메인 로고 이미지'></Logo>
     </Wrapper>
   );
 };
