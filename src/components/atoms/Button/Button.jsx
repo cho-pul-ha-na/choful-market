@@ -48,6 +48,7 @@ const Button = ({
   buttonImg,
   className,
   onClick,
+  ...props
 }) => {
   return (
     <StyledButton
@@ -62,6 +63,7 @@ const Button = ({
       buttonImg={buttonImg}
       className={className}
       onClick={onClick}
+      {...props}
     >
       {label}
     </StyledButton>
