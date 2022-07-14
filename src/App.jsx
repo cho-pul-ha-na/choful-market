@@ -4,7 +4,7 @@ import ChatRoom from './pages/ChatRoom';
 import EmailLogin from './pages/EmailLogin';
 import EmailSignUp from './pages/EmailSignUp';
 import Home from './pages/Home/Home';
-import Login from './pages/Login';
+import SNSLogin from './pages/SNSLogin/SNSLogin';
 import MyProfile from './pages/MyProfile';
 import MyProfileAddProduct from './pages/MyProfileAddProduct';
 import PostUpload from './pages/PostUpload';
@@ -23,7 +23,7 @@ function App() {
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
+        <Route path='/login' element={<SNSLogin />} />
         <Route path='/login/email' element={<EmailLogin />} />
         <Route path='/login/signUp' element={<EmailSignUp />} />
         <Route path='/login/setProfile' element={<SetProfile />} />
