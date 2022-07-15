@@ -1,4 +1,4 @@
-import { useMatch } from 'react-router-dom';
+import { useMatch, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from '../../atoms/Icon/Icon';
 import { CommonWrapper } from '../../common/commonWrapper';
@@ -44,9 +44,22 @@ const Nav = () => {
   const matchChat = useMatch('/chat/list');
   const matchProfile = useMatch('/myProfile/:id');
 
+  const path = useLocation().pathname;
+
   return (
     // <CommonWrapper>
-    <NavUl>
+    <NavUl
+      className={
+        path.includes('upload') ||
+        path.includes('login') ||
+        path.includes('edit') ||
+        path.includes('add') ||
+        path.includes('post') ||
+        path.includes('chat/room')
+          ? 'hide'
+          : null
+      }
+    >
       <NavWrapper>
         <NavLi>
           {/* Span을 눌러도 Link가 옮겨갈 수 있게 만들기 */}
