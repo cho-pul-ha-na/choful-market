@@ -6,6 +6,7 @@ import Input from '../../atoms/Input/Input';
 import { CommonWrapper } from '../../common/commonWrapper';
 
 const HeaderBox = styled.header`
+  width: 100%;
   border-bottom: 0.5px solid ${props => props.theme.color.gray.d2};
   background-color: white;
   z-index: 10;
@@ -38,8 +39,9 @@ const Header = () => {
   const handleButtonClick = () => {
     navigate(-1);
   };
+
   return (
-    <CommonWrapper>
+    <>
       {!path.includes('login') ? (
         <>
           <HeaderBox className={path.length === 1 ? 'hide' : null}>
@@ -114,7 +116,7 @@ const Header = () => {
       ) : (
         <></>
       )}
-    </CommonWrapper>
+    </>
   );
 };
 
