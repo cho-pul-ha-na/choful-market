@@ -4,7 +4,7 @@ import Icon from '../../atoms/Icon/Icon';
 import { CommonWrapper } from '../../common/commonWrapper';
 
 const NavUl = styled.ul`
-  position: absolute;
+  position: fixed;
   width: 100%;
   display: flex;
   background-color: #fff;
@@ -45,6 +45,7 @@ const Nav = () => {
   const matchProfile = useMatch('/myProfile/:id');
 
   return (
+    // <CommonWrapper>
     <NavUl>
       <NavWrapper>
         <NavLi>

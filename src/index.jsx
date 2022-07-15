@@ -5,11 +5,13 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import reset from 'styled-reset';
 import App from './App';
 import { mainTheme } from './theme';
+import './font/font.css';
 
 export const GlobalStyle = createGlobalStyle`
   ${reset}
   html {
     font-size: 10px;
+    font-family: 'IM_Hyemin-Bold';
   }
   * {
     box-sizing: border-box;
