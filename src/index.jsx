@@ -29,13 +29,12 @@ export const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
   .ir {
-  display: block;
-  overflow: hidden;
-  position: absolute;
-  text-indent: -9999px;
-  line-height: 0;
-  font-size: 1px;
-  color: transparent;
+    position: absolute;
+    clip: rect(0,0,0,0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow:hidden;
   }
   .hide {
     display: none;
