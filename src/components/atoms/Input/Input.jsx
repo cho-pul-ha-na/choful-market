@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-
 const StyledInput = styled.input`
   width: 100%;
   font-size: 14px;
@@ -34,6 +33,7 @@ const StyledTextArea = styled.textarea`
   height: 100%;
   border: none;
   resize: none;
+  padding: 10px;
   &::placeholder {
     font-size: 14px;
     line-height: 1;
@@ -41,18 +41,35 @@ const StyledTextArea = styled.textarea`
   }
 `;
 
-const Input = ({ isInput = true, type, id, placeholder = '', className }) => {
+const Input = ({
+  isInput = true,
+  inputRef,
+  type,
+  id,
+  placeholder = '',
+  className,
+  onInput,
+  value,
+  ...props
+}) => {
   return (
     <>
       {isInput ? (
         <StyledInput
+          ref={inputRef}
           type={type}
           id={id}
           placeholder={placeholder}
           className={className}
+          {...props}
         ></StyledInput>
       ) : (
-        <StyledTextArea placeholder={placeholder}></StyledTextArea>
+        <StyledTextArea
+          value={value}
+          placeholder={placeholder}
+          onInput={onInput}
+          ref={inputRef}
+        ></StyledTextArea>
       )}
     </>
   );
