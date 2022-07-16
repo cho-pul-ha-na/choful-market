@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useCallback, useRef, useEffect } from 'react';
 const StyledInput = styled.input`
   width: 100%;
   font-size: 14px;
@@ -44,47 +43,32 @@ const StyledTextArea = styled.textarea`
 
 const Input = ({
   isInput = true,
+  inputRef,
   type,
   id,
   placeholder = '',
   className,
-  onChange,
+  onInput,
   value,
+  ...props
 }) => {
-  const ref = useRef(null);
-
-  useEffect(() => {
-    if (ref === null || ref.current === null) {
-      return;
-    }
-    ref.current.style.height = '64px';
-    ref.current.style.height = ref.current.scrollHeight + 'px';
-  }, []);
-
-  const handleResizeHeight = useCallback(() => {
-    if (ref === null || ref === null) {
-      return;
-    }
-    ref.current.style.height = '64px';
-    ref.current.style.height = ref.current.scrollHeight + 'px';
-  }, []);
-
   return (
     <>
       {isInput ? (
         <StyledInput
+          ref={inputRef}
           type={type}
           id={id}
           placeholder={placeholder}
           className={className}
+          {...props}
         ></StyledInput>
       ) : (
         <StyledTextArea
-          placeholder={placeholder}
-          onChange={onChange}
           value={value}
-          ref={ref}
-          onInput={handleResizeHeight}
+          placeholder={placeholder}
+          onInput={onInput}
+          ref={inputRef}
         ></StyledTextArea>
       )}
     </>
