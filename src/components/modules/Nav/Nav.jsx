@@ -12,6 +12,9 @@ const NavUl = styled.ul`
   bottom: 0;
   padding: 12px 0 6px;
   z-index: 10;
+  &.hide {
+    display: none;
+  }
 `;
 
 const NavWrapper = styled(CommonWrapper)`
@@ -47,7 +50,6 @@ const Nav = () => {
   const path = useLocation().pathname;
 
   return (
-    // <CommonWrapper>
     <NavUl
       className={
         path.includes('upload') ||
