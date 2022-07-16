@@ -6,7 +6,7 @@ import EmailSignUp from './pages/EmailSignUp';
 import Home from './pages/Home/Home';
 import SNSLogin from './pages/SNSLogin/SNSLogin';
 import MyProfile from './pages/MyProfile';
-import MyProfileAddProduct from './pages/MyProfileAddProduct';
+import MyProfileAddProduct from './pages/MyProfileAddProduct/MyProfileAddProduct';
 import PostUpload from './pages/PostUpload/PostUpload';
 import Search from './pages/Search';
 import SetProfile from './pages/SetProfile';
