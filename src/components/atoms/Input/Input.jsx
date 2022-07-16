@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+import { useCallback, useRef, useEffect } from 'react';
 const StyledInput = styled.input`
   width: 100%;
   font-size: 14px;
@@ -34,6 +34,7 @@ const StyledTextArea = styled.textarea`
   height: 100%;
   border: none;
   resize: none;
+  padding: 10px;
   &::placeholder {
     font-size: 14px;
     line-height: 1;
@@ -41,7 +42,33 @@ const StyledTextArea = styled.textarea`
   }
 `;
 
-const Input = ({ isInput = true, type, id, placeholder = '', className }) => {
+const Input = ({
+  isInput = true,
+  type,
+  id,
+  placeholder = '',
+  className,
+  onChange,
+  value,
+}) => {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (ref === null || ref.current === null) {
+      return;
+    }
+    ref.current.style.height = '64px';
+    ref.current.style.height = ref.current.scrollHeight + 'px';
+  }, []);
+
+  const handleResizeHeight = useCallback(() => {
+    if (ref === null || ref === null) {
+      return;
+    }
+    ref.current.style.height = '64px';
+    ref.current.style.height = ref.current.scrollHeight + 'px';
+  }, []);
+
   return (
     <>
       {isInput ? (
@@ -52,7 +79,13 @@ const Input = ({ isInput = true, type, id, placeholder = '', className }) => {
           className={className}
         ></StyledInput>
       ) : (
-        <StyledTextArea placeholder={placeholder}></StyledTextArea>
+        <StyledTextArea
+          placeholder={placeholder}
+          onChange={onChange}
+          value={value}
+          ref={ref}
+          onInput={handleResizeHeight}
+        ></StyledTextArea>
       )}
     </>
   );

@@ -7,7 +7,7 @@ import Home from './pages/Home/Home';
 import SNSLogin from './pages/SNSLogin/SNSLogin';
 import MyProfile from './pages/MyProfile';
 import MyProfileAddProduct from './pages/MyProfileAddProduct';
-import PostUpload from './pages/PostUpload';
+import PostUpload from './pages/PostUpload/PostUpload';
 import Search from './pages/Search';
 import SetProfile from './pages/SetProfile';
 import YourProfile from './pages/YourProfile';
