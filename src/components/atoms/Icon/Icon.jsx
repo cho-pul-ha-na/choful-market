@@ -9,6 +9,7 @@ const IconCss = css`
   display: inline-block;
   background: url(${iconSprite}) ${props => props.xPoint}
     ${props => props.yPoint} no-repeat;
+  cursor: pointer;
   &.heart-active {
     background-position: -50px -236px;
   }
@@ -19,12 +20,14 @@ const IconCss = css`
     background-position: -56px -146px;
   }
 `;
+
 const IconDiv = styled.div`
   ${IconCss};
   &.right {
     float: right;
   }
 `;
+
 const IconLink = styled(NavLink)`
   ${IconCss};
   /* active 된 아이콘 좌표
@@ -39,7 +42,16 @@ const IconLink = styled(NavLink)`
     }; */
 `;
 
-const Icon = ({ to, size, xPoint, yPoint, title, isLink, className }) => {
+const Icon = ({
+  to,
+  size,
+  xPoint,
+  yPoint,
+  title,
+  isLink,
+  className,
+  onClick,
+}) => {
   return isLink ? (
     <IconLink
       to={to}
@@ -55,6 +67,7 @@ const Icon = ({ to, size, xPoint, yPoint, title, isLink, className }) => {
       yPoint={yPoint}
       title={title}
       className={className}
+      onClick={onClick}
     />
   );
 };

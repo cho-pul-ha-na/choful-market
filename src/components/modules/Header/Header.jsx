@@ -34,8 +34,8 @@ const HeaderSpan = styled.span`
 
 const Header = () => {
   const path = useLocation().pathname;
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   const handleButtonClick = () => {
     navigate(-1);
   };
@@ -51,7 +51,7 @@ const Header = () => {
                 xPoint='-236px'
                 yPoint='-55px'
                 title='뒤로가기 아이콘'
-                onclick={handleButtonClick}
+                onClick={handleButtonClick}
               />
               <Input
                 className={path.includes('search') ? null : 'hide'}
