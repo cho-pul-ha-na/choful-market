@@ -22,7 +22,7 @@ PassWordStory.args = {
   fontSize: '12px',
   lineHeight: '15px',
   color: '#767676',
-  label: '비밀번호'
+  label: '비밀번호',
 };
 
 export const UserNameStory = Template.bind({});
@@ -31,7 +31,7 @@ UserNameStory.args = {
   fontSize: '12px',
   lineHeight: '15px',
   color: '#767676',
-  label: '사용자 이름'
+  label: '사용자 이름',
 };
 
 export const ImgRegistrationStory = Template.bind({});
@@ -40,7 +40,7 @@ ImgRegistrationStory.args = {
   fontSize: '12px',
   lineHeight: '14px',
   color: '#767676',
-  label: '이미지 등록'
+  label: '이미지 등록',
 };
 
 export const BackgroundLabelStory = Template.bind({});
@@ -50,5 +50,5 @@ BackgroundLabelStory.args = {
   background: '#F2F2F2',
   display: 'block',
   border: '0.5px solid #DBDBDB',
-  borderRadius: '10px'
+  borderRadius: '10px',
 };

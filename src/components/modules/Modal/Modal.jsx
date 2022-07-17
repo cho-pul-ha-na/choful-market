@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from 'styled-components';
 
 const ModalBox = styled.div`
   position: fixed;
@@ -10,7 +10,7 @@ const ModalBox = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: ${props => props.theme.borderRadius.lv2};
-`
+`;
 const Overlay = styled.div`
   position: fixed;
   top: 0;
@@ -19,10 +19,10 @@ const Overlay = styled.div`
   right: 0;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 20;
-`
+`;
 const ModalButtons = styled.div`
   display: flex;
-`
+`;
 const ModalBtn = styled.button`
   flex-basis: 1;
   flex-grow: 1;
@@ -30,35 +30,33 @@ const ModalBtn = styled.button`
   font-weight: 400;
   font-size: 14px;
   &.caution {
-    color: ${props => props.theme.color.text.red}
+    color: ${props => props.theme.color.text.red};
   }
-`
+`;
 const ModalTit = styled.h3`
   font-weight: 500;
   font-size: 16px;
   padding: 22px;
   border-bottom: solid 1px ${props => props.theme.color.gray.d2};
-`
+`;
 const VerticalBar = styled.span`
   width: 1px;
   background-color: ${props => props.theme.color.gray.d2};
-`
+`;
 
 const Modal = ({ title, btnLeft, btnRight }) => {
   return (
     <Overlay>
       <ModalBox>
-        <ModalTit>
-          {title}
-        </ModalTit>
+        <ModalTit>{title}</ModalTit>
         <ModalButtons>
           <ModalBtn>{btnLeft}</ModalBtn>
           <VerticalBar />
-          <ModalBtn className="caution">{btnRight}</ModalBtn>
+          <ModalBtn className='caution'>{btnRight}</ModalBtn>
         </ModalButtons>
       </ModalBox>
     </Overlay>
-  )
-}
+  );
+};
 
 export default Modal;
