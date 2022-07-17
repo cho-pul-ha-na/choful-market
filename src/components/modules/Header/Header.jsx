@@ -75,7 +75,7 @@ const Header = () => {
                 }`}
               />
               <Button
-                label={path.includes('modification') ? '저장' : '업로드'}
+                label={path.includes('upload') ? '업로드' : '저장'}
                 fontSize='14px'
                 fontWeight='500'
                 lineHeight='18px'
@@ -84,7 +84,9 @@ const Header = () => {
                 txtColor={props => props.theme.color.text.white}
                 borderRadius='32px'
                 className={`btn_header + ${
-                  path.includes('upload') || path.includes('modification')
+                  path.includes('upload') ||
+                  path.includes('edit') ||
+                  path.includes('addProduct')
                     ? 'show'
                     : null
                 }`}

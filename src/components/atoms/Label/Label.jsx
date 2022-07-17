@@ -10,13 +10,17 @@ const LabelStyle = styled.label`
   background: ${props => props.background};
   border: ${props => props.border};
   border-radius: ${props => props.borderRadius};
-  display:${props => props.display};
+  display: ${props => props.display};
 `;
 
-const Label = ({ 
-  width, 
-  height, 
-  fontWeight, 
+const LabelText = styled.p`
+  display: inline;
+`;
+
+const Label = ({
+  width,
+  height,
+  fontWeight,
   fontSize,
   lineHeight,
   color,
@@ -25,21 +29,27 @@ const Label = ({
   borderRadius,
   label,
   htmlFor,
-  display,}) => {
-  return <LabelStyle 
-  width={width} 
-  height={height} 
-  fontSize={fontSize} 
-  fontWeight={fontWeight} 
-  lineHeight={lineHeight} 
-  color={color} 
-  background={background} 
-  border={border} 
-  borderRadius={borderRadius}
-  htmlFor={htmlFor}
-  display={display}>
-    {label}
-  </LabelStyle>
+  display,
+  children,
+}) => {
+  return (
+    <LabelStyle
+      width={width}
+      height={height}
+      fontSize={fontSize}
+      fontWeight={fontWeight}
+      lineHeight={lineHeight}
+      color={color}
+      background={background}
+      border={border}
+      borderRadius={borderRadius}
+      htmlFor={htmlFor}
+      display={display}
+    >
+      <LabelText>{label}</LabelText>
+      {children}
+    </LabelStyle>
+  );
 };
 
 export default Label;
