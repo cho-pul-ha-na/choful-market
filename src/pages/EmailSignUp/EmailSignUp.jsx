@@ -7,22 +7,28 @@ const FormWrapper = styled.div`
 `;
 
 const EmailSignUp = () => {
+  const inputData = [
+    {
+      label: '이메일',
+      placeholder: '이메일을 입력하세요.',
+      inputType: 'text',
+    },
+    {
+      label: '비밀번호',
+      placeholder: '비밀번호를 입력하세요.',
+      inputType: 'password',
+    },
+  ];
   return (
-  <CommonWrapper>
-    <FormWrapper>
-      <InputForm 
-      title='이메일로 회원가입' 
-      FirstLabel='이메일' 
-      FirstLabelType='text' 
-      SecLabel='비밀번호' 
-      SecLabelType='password' 
-      btnLabel='다음' 
-      FirstPlaceHolder='이메일을 입력하세요.' 
-      SecPlaceHolder='비밀번호 입력하세요.'>
-      </InputForm>
-    </FormWrapper>
-
-  </CommonWrapper>
+    <CommonWrapper>
+      <FormWrapper>
+        <InputForm
+          title='이메일로 회원가입'
+          inputData={inputData}
+          btnLabel='다음'
+        ></InputForm>
+      </FormWrapper>
+    </CommonWrapper>
   );
 };
 

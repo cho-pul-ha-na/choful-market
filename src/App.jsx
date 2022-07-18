@@ -9,7 +9,7 @@ import MyProfile from './pages/MyProfile';
 import MyProfileAddProduct from './pages/MyProfileAddProduct/MyProfileAddProduct';
 import PostUpload from './pages/PostUpload/PostUpload';
 import Search from './pages/Search';
-import SetProfile from './pages/SetProfile';
+import SetProfile from './pages/SetProfile/SetProfile';
 import YourProfile from './pages/YourProfile';
 import Header from './components/modules/Header/Header';
 import Nav from './components/modules/Nav/Nav';

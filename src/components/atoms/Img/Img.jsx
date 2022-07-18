@@ -6,7 +6,9 @@ const ImgSize = styled.img`
 `;
 
 const Img = ({ width, height, imgSrc, imgAlt }) => {
-  return <ImgSize width={width} height={height} src={imgSrc} alt={imgAlt}></ImgSize>;
+  return (
+    <ImgSize width={width} height={height} src={imgSrc} alt={imgAlt}></ImgSize>
+  );
 };
 
 export default Img;
