@@ -2,6 +2,8 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import InputForm from '../../components/modules/InputForm/InputForm';
 import { CommonWrapper } from '../../components/common/commonWrapper'
+import { Link } from 'react-router-dom';
+
 
 const SignUpDiv = styled.div`
     font-weight: 400;
@@ -26,7 +28,8 @@ const EmailLogin = () => {
         SecPlaceHolder='비밀번호 입력하세요.'>
         </InputForm>
 
-        <SignUpDiv>이메일로 회원가입</SignUpDiv>
+        <Link to='/login/signUp'>
+        <SignUpDiv>이메일로 회원가입</SignUpDiv></Link>
     </CommonWrapper>
     );
 };

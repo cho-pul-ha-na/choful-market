@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import ChatList from './pages/ChatList';
 import ChatRoom from './pages/ChatRoom';
 import EmailLogin from './pages/EmailLogin/EmailLogin';
-import EmailSignUp from './pages/EmailSignUp';
+import EmailSignUp from './pages/EmailSignUp/EmailSignUp';
 import Home from './pages/Home/Home';
 import SNSLogin from './pages/SNSLogin/SNSLogin';
 import MyProfile from './pages/MyProfile';
