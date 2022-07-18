@@ -32,24 +32,27 @@ const InputForm = ({ title, subTitle, inputData = [], btnLabel, children }) => {
       <FormSubtitle>{subTitle}</FormSubtitle>
       {children}
       <InputWrap>
-        {inputData.map(inputData => (
+        {inputData.map((inputData, index) => (
           <InputBox
+            key={`${inputData.label}${index}`}
             label={inputData.label}
             placeholder={inputData.placeholder}
             type={inputData.inputType}
           />
         ))}
       </InputWrap>
-      <Button
-        label={btnLabel}
-        fontSize='14px'
-        fontWeight='500'
-        lineHeight='18px'
-        padding='13px 0'
-        bgColor={props => props.theme.color.main.subGreen}
-        txtColor={props => props.theme.color.text.white}
-        borderRadius='44px'
-      />
+      {btnLabel ? (
+        <Button
+          label={btnLabel}
+          fontSize='14px'
+          fontWeight='500'
+          lineHeight='18px'
+          padding='13px 0'
+          bgColor={props => props.theme.color.main.subGreen}
+          txtColor={props => props.theme.color.text.white}
+          borderRadius='44px'
+        />
+      ) : null}
     </>
   );
 };
