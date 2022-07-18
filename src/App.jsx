@@ -13,7 +13,7 @@ import SetProfile from './pages/SetProfile/SetProfile';
 import YourProfile from './pages/YourProfile';
 import Header from './components/modules/Header/Header';
 import Nav from './components/modules/Nav/Nav';
-import MyProfileEdit from './pages/MyProfileEdit';
+import MyProfileEdit from './pages/MyProfileEdit/MyProfileEdit';
 import PostDetail from './pages/PostDetail';
 import Followers from './pages/Followers/Followers';
 
