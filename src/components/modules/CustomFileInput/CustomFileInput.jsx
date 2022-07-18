@@ -57,7 +57,7 @@ const CustomFileInput = () => {
           imgAlt='기본 프로필 이미지'
         />
         <Button
-          borderRadius='50%'
+          borderRadius={props => props.theme.borderRadius.circle}
           className='btn_gallery-small'
           buttonImg={GalleryButtonImg}
           onClick={handleProfileImgButtonClick}
