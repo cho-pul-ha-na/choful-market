@@ -6,43 +6,40 @@ const FormTitle = styled.h1`
   text-align: center;
   font-weight: 500;
   font-size: 24px;
-  margin-bottom: 40px;
+  margin-top: 30px;
 `;
 
-const InputWrap = styled.div`
+const FormSubtitle = styled.h2`
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+  text-align: center;
+  margin: 12px 0 30px;
+`;
+
+const InputWrap = styled.form`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   gap: 16px;
-  margin-bottom: 25px;
+  margin: 30px 0;
 `;
 
-const InputForm = ({
-  title,
-  FirstLabel,
-  FirstPlaceHolder,
-  FirstLabelType,
-  SecLabel,
-  SecPlaceHolder,
-  SecLabelType,
-  btnLabel,
-}) => {
+const InputForm = ({ title, subTitle, inputData = [], btnLabel, children }) => {
   return (
     <>
       <FormTitle>{title}</FormTitle>
+      <FormSubtitle>{subTitle}</FormSubtitle>
+      {children}
       <InputWrap>
-        <InputBox
-          label={FirstLabel}
-          placeholder={FirstPlaceHolder}
-          type={FirstLabelType}
-        />
-        <InputBox
-          label={SecLabel}
-          placeholder={SecPlaceHolder}
-          type={SecLabelType}
-        />
+        {inputData.map(inputData => (
+          <InputBox
+            label={inputData.label}
+            placeholder={inputData.placeholder}
+            type={inputData.inputType}
+          />
+        ))}
       </InputWrap>
-
       <Button
         label={btnLabel}
         fontSize='14px'

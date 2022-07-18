@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import InputForm from '../../components/modules/InputForm/InputForm';
 import { CommonWrapper } from '../../components/common/commonWrapper';
+import { Link } from 'react-router-dom';
 
-const SignUpDiv = styled.div`
+const SignUpLink = styled(Link)`
+  display: block;
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
@@ -12,20 +14,26 @@ const SignUpDiv = styled.div`
 `;
 
 const EmailLogin = () => {
+  const inputData = [
+    {
+      label: '이메일',
+      placeholder: '이메일을 입력하세요.',
+      inputType: 'text',
+    },
+    {
+      label: '비밀번호',
+      placeholder: '비밀번호를 입력하세요.',
+      inputType: 'password',
+    },
+  ];
   return (
     <CommonWrapper>
       <InputForm
         title='로그인'
-        FirstLabel='이메일'
-        FirstLabelType='text'
-        SecLabel='비밀번호'
-        SecLabelType='password'
+        inputData={inputData}
         btnLabel='로그인'
-        FirstPlaceHolder='이메일을 입력하세요.'
-        SecPlaceHolder='비밀번호 입력하세요.'
       ></InputForm>
-
-      <SignUpDiv>이메일로 회원가입</SignUpDiv>
+      <SignUpLink to='/login/signUp'>이메일로 회원가입</SignUpLink>
     </CommonWrapper>
   );
 };
