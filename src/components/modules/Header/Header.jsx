@@ -4,6 +4,8 @@ import Icon from '../../atoms/Icon/Icon';
 import Button from '../../atoms/Button/Button';
 import Input from '../../atoms/Input/Input';
 import { CommonWrapper } from '../../common/commonWrapper';
+import { useRecoilState } from 'recoil';
+import { searchValue } from '../../../atoms';
 
 const HeaderBox = styled.header`
   width: 100%;
@@ -39,7 +41,11 @@ const Header = () => {
   const handleButtonClick = () => {
     navigate(-1);
   };
-
+  const [searchTxt, setSearchValue] = useRecoilState(searchValue);
+  const handleOnSearch = e => {
+    setSearchValue(e.target.value);
+    console.log(searchTxt);
+  };
   return (
     <>
       {!path.includes('login') ? (
@@ -57,6 +63,7 @@ const Header = () => {
                 className={path.includes('search') ? null : 'hide'}
                 type='search'
                 placeholder='계정 검색'
+                onInput={handleOnSearch}
               />
               <HeaderSpan
                 className={path.includes('chat/room') ? null : 'hide'}

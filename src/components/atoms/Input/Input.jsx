@@ -1,4 +1,6 @@
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { idValue } from '../../../atoms';
 const StyledInput = styled.input`
   width: 100%;
   font-size: 14px;
@@ -61,6 +63,7 @@ const Input = ({
           id={id}
           placeholder={placeholder}
           className={className}
+          onInput={onInput}
           {...props}
         ></StyledInput>
       ) : (

@@ -5,6 +5,8 @@ import Img from '../../src/components/atoms/Img/Img';
 import Icon from '../components/atoms/Icon/Icon';
 import DefaultProfile from '../../src/assets/basic-profile-img.png';
 import ChatInmg from '../../src/assets/chat-example.png';
+import { RecoilState, useRecoilState } from 'recoil';
+import { chatValue } from '../atoms';
 
 const ChatUl = styled.ul`
   width: 100%;
@@ -67,6 +69,11 @@ const MessageLabel = styled.label`
 `;
 
 const ChatRoom = props => {
+  const [chatTxt, setChatvalue] = useRecoilState(chatValue);
+  const handleOnInput = e => {
+    setChatvalue(e.target.value);
+    console.log(chatTxt);
+  };
   return (
     <>
       <ChatUl>
@@ -101,6 +108,7 @@ const ChatRoom = props => {
           className='input_chat-comment'
           type='text'
           placeholder='메시지 입력하기...'
+          onInput={handleOnInput}
         />
       </MessageDiv>
     </>

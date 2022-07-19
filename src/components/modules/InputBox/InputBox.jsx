@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Input from '../../atoms/Input/Input';
 import Label from '../../atoms/Label/Label';
@@ -8,7 +10,21 @@ const ErrorP = styled.p`
   color: ${props => props.theme.color.text.red};
 `;
 
-const InputBox = ({ label, color, type, placeholder, isInput, error }) => {
+const InputBox = ({
+  id,
+  label,
+  color,
+  type,
+  placeholder,
+  recoilKey,
+  isInput,
+  error,
+}) => {
+  const [userInfo, setUserInfo] = useRecoilState(recoilKey);
+  const handleInput = e => {
+    setUserInfo(e.target.value);
+    console.log(userInfo);
+  };
   return (
     <div>
       <Label
@@ -17,8 +33,14 @@ const InputBox = ({ label, color, type, placeholder, isInput, error }) => {
         lineHeight='15px'
         color={color}
         label={label}
+        htmlFor={id}
       />
-      <Input type={type} placeholder={placeholder} />
+      <Input
+        type={type}
+        placeholder={placeholder}
+        onInput={handleInput}
+        id={id}
+      />
       <ErrorP></ErrorP>
     </div>
   );

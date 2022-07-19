@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import InputForm from '../../components/modules/InputForm/InputForm';
 import { CommonWrapper } from '../../components/common/commonWrapper';
 import { Link } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { idValue, passwordValue } from '../../atoms';
 
 const SignUpLink = styled(Link)`
   display: block;
@@ -16,16 +18,21 @@ const SignUpLink = styled(Link)`
 const EmailLogin = () => {
   const inputData = [
     {
+      id: 'user-email',
       label: '이메일',
       placeholder: '이메일을 입력하세요.',
       inputType: 'text',
+      recoilKey: idValue,
     },
     {
+      id: 'user-password',
       label: '비밀번호',
       placeholder: '비밀번호를 입력하세요.',
       inputType: 'password',
+      recoilKey: passwordValue,
     },
   ];
+
   return (
     <CommonWrapper>
       <InputForm
