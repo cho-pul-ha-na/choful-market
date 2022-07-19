@@ -25,19 +25,28 @@ const InputWrap = styled.form`
   margin: 30px 0;
 `;
 
-const InputForm = ({ title, subTitle, inputData = [], btnLabel, children }) => {
+const InputForm = ({
+  title,
+  subTitle,
+  inputData = [],
+  btnLabel,
+  children,
+  btnOnClick,
+}) => {
   return (
     <>
       <FormTitle>{title}</FormTitle>
       <FormSubtitle>{subTitle}</FormSubtitle>
-      {children}
       <InputWrap>
+        {children}
         {inputData.map((inputData, index) => (
           <InputBox
             key={`${inputData.label}${index}`}
+            id={inputData.id}
             label={inputData.label}
             placeholder={inputData.placeholder}
             type={inputData.inputType}
+            recoilKey={inputData.recoilKey}
           />
         ))}
       </InputWrap>
@@ -51,6 +60,7 @@ const InputForm = ({ title, subTitle, inputData = [], btnLabel, children }) => {
           bgColor={props => props.theme.color.main.subGreen}
           txtColor={props => props.theme.color.text.white}
           borderRadius='44px'
+          onClick={btnOnClick}
         />
       ) : null}
     </>

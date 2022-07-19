@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import Profile from '../components/atoms/Profile/Profile';
 import UserProfile from '../assets/default-profile.png';
+import { useRecoilState } from 'recoil';
+import { searchValue } from '../atoms';
 
 const SearchWrapper = styled.div`
   width: 100%;
