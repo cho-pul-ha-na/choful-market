@@ -54,10 +54,10 @@ const CustomFileInput = () => {
       // cors 에러 해결해야함
       const imgSrc = await uploadImg(e.target.files[0]);
       setProfileImgSrcState(imgSrc);
-      // if (reader.readyState === 2) {
-      //   console.log(reader.result);
-      //   setProfileImgSrcState(reader.result);
-      // }
+      if (reader.readyState === 2) {
+        console.log(reader.result);
+        setProfileImgSrcState(reader.result);
+      }
     };
     reader.readAsDataURL(e.target.files[0]);
   };

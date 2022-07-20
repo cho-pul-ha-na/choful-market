@@ -11,7 +11,6 @@ const LabelStyle = styled.label`
   border: ${props => props.border};
   border-radius: ${props => props.borderRadius};
   display: ${props => props.display};
-  overflow: hidden;
 `;
 
 const LabelText = styled.p`
