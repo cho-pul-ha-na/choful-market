@@ -1,13 +1,16 @@
-import { useEffect } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import Input from '../../atoms/Input/Input';
 import Label from '../../atoms/Label/Label';
 
 const ErrorP = styled.p`
+  margin-top: 6px;
   font-weight: 400;
   font-size: 12px;
   color: ${props => props.theme.color.text.red};
+  &.green {
+    color: ${props => props.theme.color.main.green};
+  }
 `;
 
 const InputBox = ({
@@ -19,12 +22,17 @@ const InputBox = ({
   recoilKey,
   isInput,
   error,
+  errMessage,
+  isValid,
+  needValid,
 }) => {
-  const [userInfo, setUserInfo] = useRecoilState(recoilKey);
-  const handleInput = e => {
-    setUserInfo(e.target.value);
-    console.log(userInfo);
+  const [inputValue, setInputValue] = useRecoilState(recoilKey);
+  const thisAtom = useRecoilValue(recoilKey);
+  const putInputValue = e => {
+    setInputValue(e.target.value);
+    // console.log(thisAtom);
   };
+
   return (
     <div>
       <Label
@@ -38,10 +46,13 @@ const InputBox = ({
       <Input
         type={type}
         placeholder={placeholder}
-        onInput={handleInput}
+        value={inputValue}
+        onInput={putInputValue}
         id={id}
       />
-      <ErrorP></ErrorP>
+      {needValid && thisAtom.length !== 0 && (
+        <ErrorP className={isValid && 'green'}>{errMessage}</ErrorP>
+      )}
     </div>
   );
 };
