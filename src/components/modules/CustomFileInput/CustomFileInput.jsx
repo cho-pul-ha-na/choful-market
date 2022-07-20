@@ -4,10 +4,11 @@ import Label from '../../atoms/Label/Label';
 import Img from '../../atoms/Img/Img';
 import Button from '../../atoms/Button/Button';
 import { useRef } from 'react';
-import { useState } from 'react';
+import axios from 'axios';
 
-import LabelImg from '../../../assets/basic-profile-img.png';
 import GalleryButtonImg from '../../../assets/img-button-color.png';
+import { useRecoilState } from 'recoil';
+import { profileImgSrc } from '../../../atoms';
 
 const CustomFileInputWrapper = styled.div`
   text-align: center;
@@ -23,27 +24,40 @@ const CustomFileInputWrapper = styled.div`
 `;
 
 const CustomFileInput = () => {
-  const [profileImgSrc, setProfileImgSrc] = useState(LabelImg);
+  const [profileImgSrcState, setProfileImgSrcState] =
+    useRecoilState(profileImgSrc);
 
   const profileImgInput = useRef();
 
-  const handleProfileImgButtonClick = () => {
+  const handleProfileImgButtonClick = e => {
+    e.preventDefault();
     profileImgInput.current.click();
   };
 
-  const handleProfileImgInputOnchange = e => {
-    if (e.target.files[0]) {
-      setProfileImgSrc(e.target.files[0]);
-    } else {
-      return;
+  const uploadImg = async imgFile => {
+    let formData = new FormData();
+    formData.append('image', imgFile);
+    try {
+      const res = await axios.post(
+        'https://mandarin.api.weniv.co.kr/image/uploadfile',
+        formData,
+      );
+      return `https://mandarin.api.weniv.co.kr/${res.data.filename}`;
+    } catch (error) {
+      console.log(error);
     }
-    // 이 부분은 아직 더 공부를 해야할 것 같습니다..ㅎ 내장함수라고 합니다!
+  };
+
+  const handleProfileImgInputOnchange = e => {
     const reader = new FileReader();
-    console.log(reader);
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setProfileImgSrc(reader.result);
-      }
+    reader.onload = async () => {
+      // cors 에러 해결해야함
+      const imgSrc = await uploadImg(e.target.files[0]);
+      setProfileImgSrcState(imgSrc);
+      // if (reader.readyState === 2) {
+      //   console.log(reader.result);
+      //   setProfileImgSrcState(reader.result);
+      // }
     };
     reader.readAsDataURL(e.target.files[0]);
   };
@@ -53,8 +67,9 @@ const CustomFileInput = () => {
         <Img
           width='110px'
           height='110px'
-          imgSrc={profileImgSrc}
+          imgSrc={profileImgSrcState}
           imgAlt='기본 프로필 이미지'
+          borderRadius={props => props.theme.borderRadius.circle}
         />
         <Button
           borderRadius={props => props.theme.borderRadius.circle}
