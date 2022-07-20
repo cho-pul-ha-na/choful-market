@@ -34,6 +34,10 @@ const StyledButton = styled.button`
   &.show {
     display: block;
   }
+  &.btn_next {
+    background-color: ${props => props.theme.color.main.green};
+    color: ${props => props.theme.color.text.white};
+  }
 `;
 
 const Button = ({

@@ -25,8 +25,8 @@ PassWordStory.args = {
   label: '비밀번호',
 };
 
-export const UserNameStory = Template.bind({});
-UserNameStory.args = {
+export const UsernameStory = Template.bind({});
+UsernameStory.args = {
   fontWeight: '500',
   fontSize: '12px',
   lineHeight: '15px',

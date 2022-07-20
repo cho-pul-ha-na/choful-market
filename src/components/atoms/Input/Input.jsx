@@ -52,6 +52,7 @@ const Input = ({
   className,
   onInput,
   value,
+  onChange,
   ...props
 }) => {
   return (
@@ -61,9 +62,11 @@ const Input = ({
           ref={inputRef}
           type={type}
           id={id}
+          value={value}
           placeholder={placeholder}
           className={className}
           onInput={onInput}
+          onChange={onChange}
           {...props}
         ></StyledInput>
       ) : (
