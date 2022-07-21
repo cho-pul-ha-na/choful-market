@@ -1,8 +1,9 @@
+import axios from 'axios';
 import styled from 'styled-components';
 import { CommonWrapper } from '../../components/common/commonWrapper';
 import { Link, useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { idValue, passwordValue } from '../../atoms';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { idValue, isLogin, passwordValue } from '../../atoms';
 import { useState } from 'react';
 import InputBox from '../../components/modules/InputBox/InputBox';
 import Button from '../../components/atoms/Button/Button';
@@ -34,12 +35,45 @@ const InputWrap = styled.form`
 `;
 
 const EmailLogin = () => {
-  const emailID = useRecoilValue(idValue);
-  const [isValid, setIsValid] = useState(false);
   const navigate = useNavigate();
-  const onclickNextBtn = () => {
-    navigate('/login/signUp');
+
+  const emailID = useRecoilValue(idValue);
+  const pwdValue = useRecoilValue(passwordValue);
+  const setIsLoginState = useSetRecoilState(isLogin);
+  const [pwdErrMessage, setPwdMessage] = useState('');
+  const [pwdNeedValid, setPwdNeedValid] = useState(true);
+  const [isValid, setIsValid] = useState(false);
+
+  const onClickLoginBtn = async e => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(
+        'https://mandarin.api.weniv.co.kr/user/login',
+        {
+          user: {
+            email: emailID,
+            password: pwdValue,
+          },
+        },
+      );
+      if (res.data.status === 422) {
+        let msg = res.data.message;
+        setPwdMessage(msg);
+      } else {
+        let token = res.data.user.refreshToken;
+        localStorage.setItem('token', token);
+        setIsLoginState(true);
+        navigate('/');
+      }
+    } catch (error) {
+      console.log(error.response.data);
+      let errMsg = error.response.data;
+      if (errMsg.includes('패스워드를 입력해주세요.')) {
+        setPwdMessage(errMsg);
+      }
+    }
   };
+
   return (
     <CommonWrapper>
       <FormWrapper>
@@ -52,12 +86,16 @@ const EmailLogin = () => {
             inputType='text'
             recoilKey={idValue}
             isValid={isValid}
+            errMessage={''}
           />
           <InputBox
             id='user-password'
             label='비밀번호'
             placeholder='비밀번호를 입력하세요.'
             type='password'
+            errMessage={pwdErrMessage}
+            isValid={isValid}
+            needValid={pwdNeedValid}
             recoilKey={passwordValue}
           />
         </InputWrap>
@@ -70,8 +108,9 @@ const EmailLogin = () => {
           bgColor={props => props.theme.color.main.subGreen}
           txtColor={props => props.theme.color.text.white}
           borderRadius='44px'
-          onClick={onclickNextBtn}
-          disabled={isValid ? true : false}
+          onClick={onClickLoginBtn}
+          disabled={!isValid ? false : true}
+          className={emailID && pwdValue && 'btn_next'}
         />
         <SignUpLink to='/login/signUp'>이메일로 회원가입</SignUpLink>
       </FormWrapper>

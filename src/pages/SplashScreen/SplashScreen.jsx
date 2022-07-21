@@ -16,11 +16,15 @@ const fadeInOut = keyframes`
 `;
 
 const Wrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   background-color: #fff;
   display: ${props => props.display};
   justify-content: center;
+  z-index: 100;
   img {
     margin-top: 246px;
     animation: ${fadeInOut} 0.5s linear forwards;

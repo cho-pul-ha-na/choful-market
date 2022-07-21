@@ -51,3 +51,8 @@ export const profileImgSrc = atom({
   key: 'profileImg',
   default: BasicProfileImg,
 });
+
+export const isLogin = atom({
+  key: 'isLogin',
+  default: false,
+});

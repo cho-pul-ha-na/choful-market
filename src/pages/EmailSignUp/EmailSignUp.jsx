@@ -25,11 +25,11 @@ const InputWrap = styled.form`
   margin: 40px 0 30px;
 `;
 const EmailSignUp = () => {
-  const [emailID, setEmailID] = useRecoilState(idValue);
+  const emailID = useRecoilValue(idValue);
   const [emailErrMessage, setErrMessage] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(false);
 
-  const [pwdValue, setPwdValue] = useRecoilState(passwordValue);
+  const pwdValue = useRecoilValue(passwordValue);
   const [pwdErrMessage, setPwdMessage] = useState('');
   const [isPwdValid, setIsPwdValid] = useState(false);
   const navigate = useNavigate();
