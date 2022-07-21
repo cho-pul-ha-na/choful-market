@@ -1,9 +1,15 @@
-import axios from 'axios';
-import { atom, selector } from 'recoil';
+import { atom } from 'recoil';
+
+import BasicProfileImg from './assets/basic-profile-img.png';
 
 export const idValue = atom({
   key: 'userID',
   default: '',
+});
+
+export const isEmailValidAtom = atom({
+  key: 'isEmailValid',
+  default: false,
 });
 
 export const passwordValue = atom({
@@ -26,39 +32,22 @@ export const searchValue = atom({
   default: '',
 });
 
-export const userNameValue = atom({
-  key: 'userName',
+export const usernameValue = atom({
+  key: 'username',
   default: '',
 });
 
-export const accountNameValue = atom({
-  key: 'accountName',
+export const accountnameValue = atom({
+  key: 'accountname',
   default: '',
 });
 
 export const userIntroValue = atom({
-  key: 'userInfo',
+  key: 'userIntro',
   default: '',
 });
 
-export const inputValue = selector({
-  key: 'inputSelector',
-  get: async ({ get }) => {
-    try {
-      const res = await axios.post(
-        'https://mandarin.api.weniv.co.kr/user/accountnamevalid',
-        {
-          user: {
-            accountname: accountNameValue,
-          },
-        },
-      );
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  set: ({ set }, newValue) => {
-    set(accountNameValue, newValue);
-  },
+export const profileImgSrc = atom({
+  key: 'profileImg',
+  default: BasicProfileImg,
 });
