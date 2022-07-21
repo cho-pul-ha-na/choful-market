@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import ChatList from './pages/ChatList';
 import ChatRoom from './pages/ChatRoom';
 import EmailLogin from './pages/EmailLogin/EmailLogin';
@@ -16,13 +16,22 @@ import Nav from './components/modules/Nav/Nav';
 import MyProfileEdit from './pages/MyProfileEdit/MyProfileEdit';
 import PostDetail from './pages/PostDetail';
 import Followers from './pages/Followers/Followers';
+import { useRecoilValue } from 'recoil';
+import { isLogin } from './atoms';
 
 function App() {
+  const isLoginState = useRecoilValue(isLogin);
+
   return (
     <>
       <Header />
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route
+          path='/'
+          element={
+            isLoginState ? <Home /> : <Navigate replace={true} to='/login' />
+          }
+        />
         <Route path='/login' element={<SNSLogin />} />
         <Route path='/login/email' element={<EmailLogin />} />
         <Route path='/login/signUp' element={<EmailSignUp />} />
