@@ -79,7 +79,7 @@ const EmailSignUp = () => {
     pwdValidate();
   }, [pwdValue]);
 
-  const onclickNextBtn = () => {
+  const onClickNextBtn = () => {
     navigate('/login/setProfile');
   };
 
@@ -117,7 +117,7 @@ const EmailSignUp = () => {
           bgColor={props => props.theme.color.main.subGreen}
           txtColor={props => props.theme.color.text.white}
           borderRadius='44px'
-          onClick={onclickNextBtn}
+          onClick={onClickNextBtn}
           disabled={isEmailValid && isPwdValid ? false : true}
           className={isEmailValid && isPwdValid && 'btn_next'}
         />
