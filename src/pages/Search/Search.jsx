@@ -16,7 +16,6 @@ const SearchUl = styled.ul`
   padding: 13px 16px 56.5px;
   margin: 0 auto 16px;
   box-sizing: border-box;
-  overflow-y: auto;
 `;
 
 const SearchLi = styled.li`
