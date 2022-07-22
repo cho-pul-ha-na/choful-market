@@ -45,7 +45,7 @@ const HeaderSpan = styled.span`
 const Header = () => {
   const path = useLocation().pathname;
   const userData = useRecoilValue(userDataAtom);
-  const token = userData.token;
+  const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const handleButtonClick = () => {
     navigate(-1);
@@ -76,7 +76,7 @@ const Header = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${token}`,
             'Content-type': 'application/json',
           },
         },
