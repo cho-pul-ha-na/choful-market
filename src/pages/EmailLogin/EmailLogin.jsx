@@ -2,8 +2,16 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { CommonWrapper } from '../../components/common/commonWrapper';
 import { Link, useNavigate } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { idValue, isLogin, passwordValue } from '../../atoms';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  accountnameValue,
+  idValue,
+  isLogin,
+  passwordValue,
+  userDataAtom,
+  userIntroValue,
+  usernameValue,
+} from '../../atoms';
 import { useState } from 'react';
 import InputBox from '../../components/modules/InputBox/InputBox';
 import Button from '../../components/atoms/Button/Button';
@@ -43,7 +51,10 @@ const EmailLogin = () => {
   const [pwdErrMessage, setPwdMessage] = useState('');
   const [pwdNeedValid, setPwdNeedValid] = useState(true);
   const [isValid, setIsValid] = useState(false);
-
+  const [userData, setUserData] = useRecoilState(userDataAtom);
+  const setUsername = useSetRecoilState(usernameValue);
+  const setAccountname = useSetRecoilState(accountnameValue);
+  const setIntro = useSetRecoilState(userIntroValue);
   const onClickLoginBtn = async e => {
     e.preventDefault();
     try {
@@ -60,9 +71,14 @@ const EmailLogin = () => {
         let msg = res.data.message;
         setPwdMessage(msg);
       } else {
-        let token = res.data.user.refreshToken;
+        let token = res.data.user.accessToken;
         localStorage.setItem('token', token);
+        let data = res.data.user;
         setIsLoginState(true);
+        setUserData(data);
+        setUsername(data.username);
+        setAccountname(data.accountname);
+        setIntro(data.intro);
         navigate('/');
       }
     } catch (error) {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { idValue, passwordValue } from '../../atoms';
 import { CommonWrapper } from '../../components/common/commonWrapper';

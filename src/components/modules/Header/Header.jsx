@@ -1,11 +1,19 @@
+import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from '../../atoms/Icon/Icon';
 import Button from '../../atoms/Button/Button';
 import Input from '../../atoms/Input/Input';
 import { CommonWrapper } from '../../common/commonWrapper';
-import { useRecoilState } from 'recoil';
-import { searchValue } from '../../../atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  accountnameValue,
+  profileImgSrc,
+  searchValue,
+  userDataAtom,
+  userIntroValue,
+  usernameValue,
+} from '../../../atoms';
 
 const HeaderBox = styled.header`
   width: 100%;
@@ -36,15 +44,54 @@ const HeaderSpan = styled.span`
 
 const Header = () => {
   const path = useLocation().pathname;
-
+  const userData = useRecoilValue(userDataAtom);
+  const token = userData.token;
   const navigate = useNavigate();
   const handleButtonClick = () => {
     navigate(-1);
   };
   const [searchTxt, setSearchValue] = useRecoilState(searchValue);
+  const [accountname, setAccountname] = useRecoilState(accountnameValue);
+  const [username, setUsername] = useRecoilState(usernameValue);
+  const [userIntro, setIntro] = useRecoilState(userIntroValue);
+  const [profileImgSrcValue, setProfileImgSrcValue] =
+    useRecoilState(profileImgSrc);
+
   const handleOnSearch = e => {
     setSearchValue(e.target.value);
-    console.log(searchTxt);
+  };
+
+  const onClickEditSaveBtn = async e => {
+    e.preventDefault();
+    try {
+      const res = await axios.put(
+        'https://mandarin.api.weniv.co.kr/user',
+        {
+          user: {
+            username: username,
+            accountname: accountname,
+            intro: userIntro,
+            image: profileImgSrcValue,
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+          },
+        },
+      );
+      let data = res.data.user;
+      setUsername(data.username);
+      setAccountname(data.accountname);
+      setIntro(data.intro);
+      setProfileImgSrcValue(data.image);
+      console.log(res);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+    navigate('/profile/:id');
   };
   return (
     <>
@@ -97,6 +144,7 @@ const Header = () => {
                     ? 'show'
                     : null
                 }`}
+                onClick={path.includes('edit') ? onClickEditSaveBtn : null}
               />
             </HeaderWrapper>
           </HeaderBox>

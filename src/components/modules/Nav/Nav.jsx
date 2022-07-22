@@ -45,7 +45,7 @@ const NavSpan = styled.span`
 const Nav = () => {
   const matchHome = useMatch('/');
   const matchChat = useMatch('/chat/list');
-  const matchProfile = useMatch('/myProfile/:id');
+  const matchProfile = useMatch('/profile/:id');
 
   const path = useLocation().pathname;
 
@@ -103,7 +103,7 @@ const Nav = () => {
         </NavLi>
         <NavLi>
           <Icon
-            to='/myProfile/:id'
+            to='/profile/:id'
             size='24px'
             xPoint={matchProfile !== null ? '-186px' : '-142px'}
             yPoint='-192px'
