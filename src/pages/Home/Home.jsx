@@ -37,7 +37,7 @@ const SearchFollowerText = styled.p`
   margin-top: 30px;
 `;
 
-const Home = ({ isHaveFollower = false }) => {
+const Home = ({ isHaveFollower = true }) => {
   return (
     <>
       <SplashScreen />

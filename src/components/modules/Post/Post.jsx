@@ -64,15 +64,15 @@ const Post = () => {
         <IconContainer>
           <Icon
             size='20px'
-            xPoint='-236px'
-            yPoint='-179px'
+            xpoint='-236px'
+            ypoint='-179px'
             title='하트모양 아이콘'
           />
           <LikeCommentCount>30</LikeCommentCount>
           <Icon
             size='20px'
-            xPoint='-192px'
-            yPoint='-142px'
+            xpoint='-192px'
+            ypoint='-142px'
             title='메시지 아이콘'
           />
           <LikeCommentCount>10</LikeCommentCount>

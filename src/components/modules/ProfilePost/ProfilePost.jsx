@@ -36,8 +36,8 @@ const ProfilePost = () => {
           <ViewBtn onClick={handleViewBtn}>
             <Icon
               size='26px'
-              xPoint='-10px'
-              yPoint='-146px'
+              xpoint='-10px'
+              ypoint='-146px'
               title='비활성화 된 게시글 리스트 아이콘'
               className={isList ? 'list-active' : null}
             />
@@ -45,8 +45,8 @@ const ProfilePost = () => {
           <ViewBtn onClick={handleViewBtn}>
             <Icon
               size='26px'
-              xPoint='-146px'
-              yPoint='-56px'
+              xpoint='-146px'
+              ypoint='-56px'
               title='비활성화 된 게시글 앨범타입 아이콘'
               className={isList ? null : 'album-active'}
             />

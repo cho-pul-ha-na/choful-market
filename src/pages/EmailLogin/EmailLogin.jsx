@@ -71,7 +71,7 @@ const EmailLogin = () => {
         let msg = res.data.message;
         setPwdMessage(msg);
       } else {
-        let token = res.data.user.accessToken;
+        let token = res.data.user.token;
         localStorage.setItem('token', token);
         let data = res.data.user;
         setIsLoginState(true);
