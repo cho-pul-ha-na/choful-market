@@ -10,7 +10,8 @@ import SplashScreen from '../SplashScreen/SplashScreen';
 
 const NotFollowerWrapper = styled.div`
   width: 100%;
-  height: calc(100vh - 56px);
+  height: calc(100vh - 105px);
+  /* height: 100vh; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -37,7 +38,7 @@ const SearchFollowerText = styled.p`
   margin-top: 30px;
 `;
 
-const Home = ({ isHaveFollower = false }) => {
+const Home = ({ isHaveFollower = true }) => {
   return (
     <>
       <SplashScreen />

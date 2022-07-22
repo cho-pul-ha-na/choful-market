@@ -33,8 +33,8 @@ const YourProfileBtn = () => {
       <IconButton>
         <Icon
           size='34px'
-          xPoint='-188px'
-          yPoint='-138px'
+          xpoint='-188px'
+          ypoint='-138px'
           title='채팅버튼'
           to='/chat/room'
           isLink
@@ -66,7 +66,7 @@ const YourProfileBtn = () => {
         />
       )}
       <IconButton>
-        <Icon size='34px' xPoint='-4px' yPoint='-231px' title='공유 아이콘' />
+        <Icon size='34px' xpoint='-4px' ypoint='-231px' title='공유 아이콘' />
       </IconButton>
     </ProfileInfoButtons>
   );

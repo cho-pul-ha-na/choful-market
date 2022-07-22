@@ -100,7 +100,7 @@ const ChatRoom = props => {
       <MessageDiv>
         <MessageIconWrapper>
           <MessageLabel htmlFor='ImgUpload'>
-            <Icon size='22px' xPoint='-236px' yPoint='-99px' />
+            <Icon size='22px' xpoint='-236px' ypoint='-99px' />
             <Input id='ImgUpload' type='file' className='ir' />
           </MessageLabel>
         </MessageIconWrapper>

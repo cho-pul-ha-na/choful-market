@@ -7,8 +7,8 @@ const IconCss = css`
   width: ${props => props.size};
   height: ${props => props.size};
   display: inline-block;
-  background: url(${iconSprite}) ${props => props.xPoint}
-    ${props => props.yPoint} no-repeat;
+  background: url(${iconSprite}) ${props => props.xpoint}
+    ${props => props.ypoint} no-repeat;
   cursor: pointer;
   &.heart-active {
     background-position: -50px -236px;
@@ -45,8 +45,8 @@ const IconLink = styled(NavLink)`
 const Icon = ({
   to,
   size,
-  xPoint,
-  yPoint,
+  xpoint,
+  ypoint,
   title,
   isLink,
   className,
@@ -56,15 +56,15 @@ const Icon = ({
     <IconLink
       to={to}
       size={size}
-      xPoint={xPoint}
-      yPoint={yPoint}
+      xpoint={xpoint}
+      ypoint={ypoint}
       title={title}
     />
   ) : (
     <IconDiv
       size={size}
-      xPoint={xPoint}
-      yPoint={yPoint}
+      xpoint={xpoint}
+      ypoint={ypoint}
       title={title}
       className={className}
       onClick={onClick}

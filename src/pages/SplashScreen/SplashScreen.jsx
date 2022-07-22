@@ -24,9 +24,9 @@ const Wrapper = styled.div`
   background-color: #fff;
   display: ${props => props.display};
   justify-content: center;
-  z-index: 100;
+  align-items: center;
+  z-index: 20;
   img {
-    margin-top: 246px;
     animation: ${fadeInOut} 0.5s linear forwards;
   }
 `;

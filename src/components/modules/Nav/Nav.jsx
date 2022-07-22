@@ -68,8 +68,8 @@ const Nav = () => {
           <Icon
             to='/'
             size='24px'
-            xPoint='-192px'
-            yPoint={matchHome !== null ? '-98px' : '-54px'}
+            xpoint='-192px'
+            ypoint={matchHome !== null ? '-98px' : '-54px'}
             title='홈 아이콘'
             isLink
           />
@@ -81,8 +81,8 @@ const Nav = () => {
           <Icon
             to='/chat/list'
             size='24px'
-            xPoint={matchChat !== null ? '-10px' : '-192px'}
-            yPoint={matchChat !== null ? '-192px' : '-142px'}
+            xpoint={matchChat !== null ? '-10px' : '-192px'}
+            ypoint={matchChat !== null ? '-192px' : '-142px'}
             title='메시지 아이콘'
             isLink
           />
@@ -94,8 +94,8 @@ const Nav = () => {
           <Icon
             to='/upload'
             size='24px'
-            xPoint='-192px'
-            yPoint='-10px'
+            xpoint='-192px'
+            ypoint='-10px'
             title='게시글 추가 아이콘'
             isLink
           />
@@ -105,8 +105,8 @@ const Nav = () => {
           <Icon
             to='/profile/:id'
             size='24px'
-            xPoint={matchProfile !== null ? '-186px' : '-142px'}
-            yPoint='-192px'
+            xpoint={matchProfile !== null ? '-186px' : '-142px'}
+            ypoint='-192px'
             title='유저 아이콘'
             isLink
           />

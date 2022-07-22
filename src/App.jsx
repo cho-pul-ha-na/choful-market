@@ -8,7 +8,7 @@ import SNSLogin from './pages/SNSLogin/SNSLogin';
 import MyProfile from './pages/MyProfile';
 import MyProfileAddProduct from './pages/MyProfileAddProduct/MyProfileAddProduct';
 import PostUpload from './pages/PostUpload/PostUpload';
-import Search from './pages/Search';
+import Search from './pages/Search/Search';
 import SetProfile from './pages/SetProfile/SetProfile';
 import YourProfile from './pages/YourProfile';
 import Header from './components/modules/Header/Header';
@@ -16,11 +16,21 @@ import Nav from './components/modules/Nav/Nav';
 import MyProfileEdit from './pages/MyProfileEdit/MyProfileEdit';
 import PostDetail from './pages/PostDetail';
 import Followers from './pages/Followers/Followers';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { isLogin } from './atoms';
 
 function App() {
-  const isLoginState = useRecoilValue(isLogin);
+  const token = localStorage.getItem('token');
+
+  const [isLoginState, setIsLoginState] = useRecoilState(isLogin);
+
+  setIsLoginState(() => {
+    if (token) {
+      return true;
+    } else {
+      return false;
+    }
+  });
 
   return (
     <>
