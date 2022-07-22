@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Profile from '../../components/atoms/Profile/Profile';
-import UserProfile from '../../assets/default-profile.png';
 import { CommonWrapper } from '../../components/common/commonWrapper';
 import { useRecoilValue } from 'recoil';
 import { searchUserData } from '../../atoms';
@@ -61,6 +60,7 @@ const Search = () => {
                 size='42px'
                 imgSrc={searchData.image}
                 imgAlt='프로필 이미지'
+                borderRadius={props => props.theme.borderRadius.circle}
               />
               <SearchDiv>
                 <SearchP>{searchData.username}</SearchP>
