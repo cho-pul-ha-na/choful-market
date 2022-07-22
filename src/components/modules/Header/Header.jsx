@@ -76,7 +76,7 @@ const Header = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
             'Content-type': 'application/json',
           },
         },
