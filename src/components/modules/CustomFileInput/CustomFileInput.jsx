@@ -48,18 +48,9 @@ const CustomFileInput = () => {
     }
   };
 
-  const handleProfileImgInputOnchange = e => {
-    const reader = new FileReader();
-    reader.onload = async () => {
-      // cors 에러 해결해야함
-      const imgSrc = await uploadImg(e.target.files[0]);
-      setProfileImgSrcState(imgSrc);
-      if (reader.readyState === 2) {
-        console.log(reader.result);
-        setProfileImgSrcState(reader.result);
-      }
-    };
-    reader.readAsDataURL(e.target.files[0]);
+  const handleProfileImgInputOnchange = async e => {
+    const imgSrc = await uploadImg(e.target.files[0]);
+    setProfileImgSrcState(imgSrc);
   };
   return (
     <CustomFileInputWrapper>

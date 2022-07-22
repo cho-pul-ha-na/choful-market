@@ -61,3 +61,8 @@ export const userDataAtom = atom({
   key: 'userData',
   default: {},
 });
+
+export const searchUserData = atom({
+  key: 'searchUserData',
+  default: [],
+});

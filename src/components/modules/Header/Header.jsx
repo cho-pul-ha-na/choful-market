@@ -5,7 +5,7 @@ import Icon from '../../atoms/Icon/Icon';
 import Button from '../../atoms/Button/Button';
 import Input from '../../atoms/Input/Input';
 import { CommonWrapper } from '../../common/commonWrapper';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   accountnameValue,
   profileImgSrc,
@@ -13,7 +13,9 @@ import {
   userDataAtom,
   userIntroValue,
   usernameValue,
+  searchUserData,
 } from '../../../atoms';
+import { useEffect } from 'react';
 
 const HeaderBox = styled.header`
   width: 100%;
@@ -43,19 +45,46 @@ const HeaderSpan = styled.span`
 `;
 
 const Header = () => {
-  const path = useLocation().pathname;
-  const userData = useRecoilValue(userDataAtom);
   const token = localStorage.getItem('token');
+
+  const path = useLocation().pathname;
   const navigate = useNavigate();
-  const handleButtonClick = () => {
-    navigate(-1);
-  };
+
   const [searchTxt, setSearchValue] = useRecoilState(searchValue);
   const [accountname, setAccountname] = useRecoilState(accountnameValue);
   const [username, setUsername] = useRecoilState(usernameValue);
   const [userIntro, setIntro] = useRecoilState(userIntroValue);
   const [profileImgSrcValue, setProfileImgSrcValue] =
     useRecoilState(profileImgSrc);
+  const setSearchUserDataState = useSetRecoilState(searchUserData);
+
+  const handleButtonClick = () => {
+    navigate(-1);
+  };
+
+  useEffect(() => {
+    const searchData = async () => {
+      try {
+        const res = await axios.get(
+          `https://mandarin.api.weniv.co.kr/user/searchuser/?keyword=${searchTxt}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-type': 'application/json',
+            },
+          },
+        );
+        await setSearchUserDataState(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (searchTxt) {
+      searchData();
+    } else {
+      setSearchUserDataState([]);
+    }
+  }, [searchTxt]);
 
   const handleOnSearch = e => {
     setSearchValue(e.target.value);
@@ -64,23 +93,14 @@ const Header = () => {
   const onClickEditSaveBtn = async e => {
     e.preventDefault();
     try {
-      const res = await axios.put(
-        'https://mandarin.api.weniv.co.kr/user',
-        {
-          user: {
-            username: username,
-            accountname: accountname,
-            intro: userIntro,
-            image: profileImgSrcValue,
-          },
+      const res = await axios.put('https://mandarin.api.weniv.co.kr/user', {
+        user: {
+          username: username,
+          accountname: accountname,
+          intro: userIntro,
+          image: profileImgSrcValue,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
+      });
       let data = res.data.user;
       setUsername(data.username);
       setAccountname(data.accountname);
@@ -93,6 +113,7 @@ const Header = () => {
     }
     navigate('/profile/:id');
   };
+
   return (
     <>
       {!path.includes('login') ? (
@@ -101,8 +122,8 @@ const Header = () => {
             <HeaderWrapper>
               <Icon
                 size='22px'
-                xPoint='-236px'
-                yPoint='-55px'
+                xpoint='-236px'
+                ypoint='-55px'
                 title='뒤로가기 아이콘'
                 onClick={handleButtonClick}
               />
@@ -119,8 +140,8 @@ const Header = () => {
               </HeaderSpan>
               <Icon
                 size='24px'
-                xPoint='-54px'
-                yPoint='-192px'
+                xpoint='-54px'
+                ypoint='-192px'
                 title='비활성화 된 더보기 아이콘'
                 className={`right ${
                   path.includes('search') || path.includes('Profile')
@@ -161,11 +182,13 @@ const Header = () => {
                 도촌동풀벌레 찌르찌르
               </HeaderSpan>
               <Icon
+                to='/search'
                 size='24px'
-                xPoint='-98px'
-                yPoint='-192px'
+                xpoint='-98px'
+                ypoint='-192px'
                 title='검색 아이콘'
                 className={'right'}
+                isLink
               />
             </HeaderWrapper>
           </HeaderBox>

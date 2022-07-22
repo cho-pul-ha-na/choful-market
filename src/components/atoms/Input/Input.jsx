@@ -1,6 +1,4 @@
-import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { idValue } from '../../../atoms';
 const StyledInput = styled.input`
   width: 100%;
   font-size: 14px;
@@ -25,8 +23,10 @@ const StyledInput = styled.input`
     border-radius: 32px;
     background: ${props => props.theme.color.gray.d1};
     padding: 7px 16px;
-    color: ${props => props.theme.color.gray.d3};
     font-size: 14px;
+    &::placeholder {
+      color: ${props => props.theme.color.gray.d3};
+    }
   }
 `;
 
