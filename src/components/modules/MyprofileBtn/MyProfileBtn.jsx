@@ -24,8 +24,8 @@ const ProfileLink = styled(Link)`
 const MyProfileBtn = () => {
   return (
     <MyProfileInfoButtons>
-      <ProfileLink to='profile/:id/edit'>프로필 수정</ProfileLink>
-      <ProfileLink to='profile/:id/addProduct'>상품 등록</ProfileLink>
+      <ProfileLink to='edit'>프로필 수정</ProfileLink>
+      <ProfileLink to='addProduct'>상품 등록</ProfileLink>
     </MyProfileInfoButtons>
   );
 };
