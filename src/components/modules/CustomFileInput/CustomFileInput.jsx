@@ -74,7 +74,7 @@ const CustomFileInput = () => {
         type='file'
         className='ir'
         id='profile-img'
-        accept='image/*'
+        accept='.jpg, *.gif, .png, .jpeg, .bmp, .tif, .heic'
         onChange={handleProfileImgInputOnchange}
       />
     </CustomFileInputWrapper>
