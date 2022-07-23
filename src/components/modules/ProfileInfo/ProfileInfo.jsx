@@ -6,6 +6,16 @@ import UserProfile from '../../../assets/user-profile.png';
 import MyProfileBtn from '../MyprofileBtn/MyProfileBtn';
 import YourProfileBtn from '../YourProfileBtn/YourProfileBtn';
 import { CommonWrapper } from '../../common/commonWrapper';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  accountnameValue,
+  userDataAtom,
+  userIntroValue,
+  usernameValue,
+} from '../../../atoms';
+import axios from 'axios';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const ProfileInfoSection = styled.section`
   width: 100%;
@@ -59,28 +69,59 @@ const ProfileSpan = styled.span`
 
 const ProfileInfo = () => {
   const path = useLocation().pathname;
+  const accountname = useRecoilValue(accountnameValue);
+  const username = useRecoilValue(usernameValue);
+  const userintro = useRecoilValue(userIntroValue);
+  const userData = useRecoilValue(userDataAtom);
+  const [myinfo, setMyinfo] = useState({});
+
+  const token = localStorage.getItem('token');
+
+  const profileGet = async () => {
+    // console.log(token);
+    // console.log(accountname);
+    try {
+      const res = await axios.get(
+        `https://mandarin.api.weniv.co.kr/user/myinfo`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+          },
+        },
+      );
+      setMyinfo(res.data.user);
+      console.log(res.data.user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    profileGet();
+  }, []);
   return (
     <>
       <ProfileInfoSection>
         <CommonWrapper>
           <FollowWrap>
             <div>
-              <FollowNum>2950</FollowNum>
+              <FollowNum>{myinfo.followerCount}</FollowNum>
               <FollowSpan>followers</FollowSpan>
             </div>
             <div>
               <Profile size='110px' imgSrc={UserProfile} />
             </div>
             <div>
-              <FollowNum className='gray'>128</FollowNum>
+              <FollowNum className='gray'>{myinfo.followingCount}</FollowNum>
               <FollowSpan>followings</FollowSpan>
             </div>
           </FollowWrap>
           {/* props.profile.accountname */}
-          <ProfileH1>도촌동풀벌레 찌르찌르</ProfileH1>
+          <ProfileH1>{username}</ProfileH1>
           {/* props.profile.username */}
-          <ProfileH2>@ dochon_Grassbug</ProfileH2>
-          <ProfileSpan>찌르찌르 풀벌레 화분을 좋아해</ProfileSpan>
+          <ProfileH2>@ {accountname}</ProfileH2>
+          <ProfileSpan>{userintro}</ProfileSpan>
 
           {path.includes('yourProfile') ? <YourProfileBtn /> : <MyProfileBtn />}
         </CommonWrapper>
