@@ -1,3 +1,4 @@
+import axios from 'axios';
 import styled from 'styled-components';
 import Input from '../../components/atoms/Input/Input';
 import { CommonWrapper } from '../../components/common/commonWrapper';
@@ -5,9 +6,10 @@ import Profile from '../../components/atoms/Profile/Profile';
 import FeedProfileDefault from '../../assets/feed-profile-default.png';
 import UploadImg from '../../assets/upload-file.png';
 import { useCallback, useRef, useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { postTxtValue } from '../../atoms';
-
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { postTxtValue, uploadImgSrcAtom } from '../../atoms';
+import Img from '../../components/atoms/Img/Img';
+import ReactDOM from 'react-dom/client';
 const UploadWrapper = styled(CommonWrapper)`
   position: relative;
 `;
@@ -36,10 +38,38 @@ const ImgUploadLabel = styled.label`
   right: 16px;
   cursor: pointer;
 `;
-
+const ItemBox = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+const ItemDiv = styled.div`
+  width: 70px;
+  height: 50px;
+`;
 const PostUpload = () => {
-  const inputRef = useRef(null);
+  const [propfileImgSrc, setProfileImgSrc] = useState(FeedProfileDefault);
+  const [uploadImgSrc, setUploadImgSrc] = useRecoilState(uploadImgSrcAtom);
+  // let [selctedImgs, setSelectedImgs] = useRecoilState('');
 
+  const [imgSrcs, setImgSrcs] = useState([]);
+
+  const uploadImg = async imgFile => {
+    let formData = new FormData();
+    formData.append('image', imgFile);
+    try {
+      const res = await axios.post(
+        'https://mandarin.api.weniv.co.kr/image/uploadfile',
+        formData,
+      );
+      console.log(res);
+      return `https://mandarin.api.weniv.co.kr/${res.data.filename}`;
+      // selctedImgs();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const inputRef = useRef(null);
   useEffect(() => {
     if (inputRef === null || inputRef.current === null) {
       return;
@@ -57,11 +87,28 @@ const PostUpload = () => {
     setPostTxt(e.target.value);
   }, []);
 
-  const [propfileImgSrc, setProfileImgSrc] = useState(FeedProfileDefault);
+  const [postImgSrc, setPostImgSrc] = useState('');
+  const [postTxt, setPostTxt] = useRecoilState(postTxtValue);
   // async나 axios로 데이터를 받아온 게 확인되면 setProfileImgSrc(user데이터의 프로필이미지 src) 하는 함수 추가
 
-  const [postTxt, setPostTxt] = useRecoilState(postTxtValue);
-  console.log(postTxt);
+  let arraySelectedImgs = [];
+  let selectedImgsUrl = '';
+
+  const handleImgInputOnchange = async e => {
+    const files = e.target.files;
+
+    Array.from(files).map(async (e, i) => {
+      const url = await uploadImg(e);
+      arraySelectedImgs.push(url);
+      setImgSrcs(prev => [...prev, url]);
+      console.log(imgSrcs);
+      console.log(arraySelectedImgs);
+    });
+    selectedImgsUrl = arraySelectedImgs.join(',');
+    setPostImgSrc(selectedImgsUrl);
+  };
+
+  // 밑에는 헤더로 들어갈 부분!
 
   return (
     <UploadWrapper>
@@ -80,6 +127,11 @@ const PostUpload = () => {
             onInput={handleResizeHeight}
             inputRef={inputRef}
           />
+          <ItemBox id='root'>
+            {imgSrcs.map((imgSrc, i) => (
+              <Img key={i} width='50px' height='50px' imgSrc={imgSrc}></Img>
+            ))}
+          </ItemBox>
         </TextAreaDiv>
       </FlexDiv>
       <ImgUploadLabel htmlFor='post-upload-img'>
@@ -88,9 +140,10 @@ const PostUpload = () => {
       <Input
         type='file'
         className='ir'
-        accept='image/*'
+        accept='.jpg, .gif, .png, .jpeg, .bmp, .tif, .heic'
         multiple
         id='post-upload-img'
+        onChange={handleImgInputOnchange}
       />
     </UploadWrapper>
   );

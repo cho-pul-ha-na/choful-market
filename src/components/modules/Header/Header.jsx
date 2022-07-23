@@ -14,8 +14,11 @@ import {
   userIntroValue,
   usernameValue,
   searchUserData,
+  postTxtValue,
+  uploadImgSrcAtom,
 } from '../../../atoms';
 import { useEffect } from 'react';
+import { useState } from 'react';
 
 const HeaderBox = styled.header`
   width: 100%;
@@ -60,6 +63,31 @@ const Header = () => {
 
   const handleButtonClick = () => {
     navigate(-1);
+  };
+  const txtValue = useRecoilValue(postTxtValue);
+  const uploadImgSrc = useRecoilValue(uploadImgSrcAtom);
+  const onClickUploadBtn = async e => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(
+        'https://mandarin.api.weniv.co.kr/post',
+        {
+          post: {
+            content: txtValue,
+            image: uploadImgSrc,
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+          },
+        },
+      );
+      console.log(res);
+      const postId = res.data.post.id;
+      navigate(`/post/${postId}`);
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -165,7 +193,13 @@ const Header = () => {
                     ? 'show'
                     : null
                 }`}
-                onClick={path.includes('edit') ? onClickEditSaveBtn : null}
+                onClick={
+                  path.includes('upload')
+                    ? onClickUploadBtn
+                    : path.includes('edit')
+                    ? onClickEditSaveBtn
+                    : null
+                }
               />
             </HeaderWrapper>
           </HeaderBox>
