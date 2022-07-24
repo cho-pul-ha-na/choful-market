@@ -3,13 +3,12 @@ import styled from 'styled-components';
 import Input from '../../components/atoms/Input/Input';
 import { CommonWrapper } from '../../components/common/commonWrapper';
 import Profile from '../../components/atoms/Profile/Profile';
-import FeedProfileDefault from '../../assets/feed-profile-default.png';
 import UploadImg from '../../assets/upload-file.png';
 import { useCallback, useRef, useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { postTxtValue, uploadImgSrcAtom } from '../../atoms';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { postTxtValue, profileImgSrc, uploadImgSrcAtom } from '../../atoms';
 import Img from '../../components/atoms/Img/Img';
-import ReactDOM from 'react-dom/client';
+
 const UploadWrapper = styled(CommonWrapper)`
   position: relative;
 `;
@@ -38,19 +37,16 @@ const ImgUploadLabel = styled.label`
   right: 16px;
   cursor: pointer;
 `;
-const ItemBox = styled.div`
+
+const ItemBox = styled.ul`
   display: flex;
   gap: 10px;
+  margin-top: 10px;
 `;
-const ItemDiv = styled.div`
-  width: 70px;
-  height: 50px;
-`;
-const PostUpload = () => {
-  const [propfileImgSrc, setProfileImgSrc] = useState(FeedProfileDefault);
-  const [uploadImgSrc, setUploadImgSrc] = useRecoilState(uploadImgSrcAtom);
-  // let [selctedImgs, setSelectedImgs] = useRecoilState('');
 
+const PostUpload = () => {
+  const setUploadImgSrc = useSetRecoilState(uploadImgSrcAtom);
+  const profileImg = useRecoilValue(profileImgSrc);
   const [imgSrcs, setImgSrcs] = useState([]);
 
   const uploadImg = async imgFile => {
@@ -87,8 +83,7 @@ const PostUpload = () => {
     setPostTxt(e.target.value);
   }, []);
 
-  const [postImgSrc, setPostImgSrc] = useState('');
-  const [postTxt, setPostTxt] = useRecoilState(postTxtValue);
+  const setPostTxt = useSetRecoilState(postTxtValue);
   // async나 axios로 데이터를 받아온 게 확인되면 setProfileImgSrc(user데이터의 프로필이미지 src) 하는 함수 추가
 
   let arraySelectedImgs = [];
@@ -96,18 +91,20 @@ const PostUpload = () => {
 
   const handleImgInputOnchange = async e => {
     const files = e.target.files;
-
-    Array.from(files).map(async (e, i) => {
-      const url = await uploadImg(e);
-      arraySelectedImgs.push(url);
-      setImgSrcs(prev => [...prev, url]);
-      console.log(imgSrcs);
-      console.log(arraySelectedImgs);
-    });
-    selectedImgsUrl = arraySelectedImgs.join(',');
-    setPostImgSrc(selectedImgsUrl);
+    if (files.length < 4) {
+      Array.from(files).map(async (file, i) => {
+        const url = await uploadImg(file);
+        arraySelectedImgs.push(url);
+        setImgSrcs(prev => [...prev, url]);
+        console.log(imgSrcs);
+        console.log(arraySelectedImgs);
+      });
+      selectedImgsUrl = arraySelectedImgs.join(',');
+      setUploadImgSrc(selectedImgsUrl);
+    } else {
+      window.alert('이미지는 3개까지 업로드 가능합니다.');
+    }
   };
-
   // 밑에는 헤더로 들어갈 부분!
 
   return (
@@ -116,7 +113,7 @@ const PostUpload = () => {
         <ProfileImgDiv>
           <Profile
             size='42px'
-            imgSrc={propfileImgSrc}
+            imgSrc={profileImg}
             imgAlt='피드 프로필 기본이미지'
           />
         </ProfileImgDiv>
@@ -129,7 +126,9 @@ const PostUpload = () => {
           />
           <ItemBox id='root'>
             {imgSrcs.map((imgSrc, i) => (
-              <Img key={i} width='50px' height='50px' imgSrc={imgSrc}></Img>
+              <li>
+                <Img key={i} width='80px' height='80px' imgSrc={imgSrc}></Img>
+              </li>
             ))}
           </ItemBox>
         </TextAreaDiv>
