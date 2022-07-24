@@ -66,3 +66,8 @@ export const searchUserData = atom({
   key: 'searchUserData',
   default: [],
 });
+
+export const uploadImgSrcAtom = atom({
+  key: 'uploadImgSrc',
+  default: '',
+});

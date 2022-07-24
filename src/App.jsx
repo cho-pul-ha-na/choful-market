@@ -48,7 +48,16 @@ function App() {
         <Route path='/login/setProfile' element={<SetProfile />} />
         <Route path='/search' element={<Search />} />
         <Route path='/yourProfile/:id' element={<YourProfile />} />
-        <Route path='/profile/:id' element={<MyProfile />} />
+        <Route
+          path='/profile/:id'
+          element={
+            isLoginState ? (
+              <MyProfile />
+            ) : (
+              <Navigate replace={true} to='/login' />
+            )
+          }
+        />
         <Route path='/profile/:id/edit' element={<MyProfileEdit />} />
         <Route path='/profile/:id/follower' element={<Followers />} />
         <Route
@@ -56,7 +65,16 @@ function App() {
           element={<MyProfileAddProduct />}
         />
         <Route path='/post/:post_id' element={<PostDetail />} />
-        <Route path='/upload' element={<PostUpload />} />
+        <Route
+          path='/upload'
+          element={
+            isLoginState ? (
+              <PostUpload />
+            ) : (
+              <Navigate replace={true} to='/login' />
+            )
+          }
+        />
         <Route path='/chat/list' element={<ChatList />} />
         <Route path='/chat/room' element={<ChatRoom />} />
       </Routes>
