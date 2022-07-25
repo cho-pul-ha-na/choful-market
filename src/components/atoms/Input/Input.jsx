@@ -18,6 +18,10 @@ const StyledInput = styled.input`
   &[type='file'] {
     border: none;
   }
+  &.input_chat-comment,
+  &[type='text'] {
+    flex-basis: 1;
+  }
   &[type='search'] {
     border: none;
     border-radius: 32px;
