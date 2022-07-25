@@ -39,14 +39,15 @@ const PostUserInfoLi = styled.li`
   }
 `;
 
-const PostUserInfo = () => {
+const PostUserInfo = ({ author }) => {
+  console.log(author);
   return (
     <PostUserInfohWrapper>
       <PostUserInfoDiv>
         <Profile size='42px' imgSrc={UserProfile} imgAlt='프로필 이미지' />
         <PostUserInfoUl>
-          <PostUserInfoLi>애월읍 위니브 감귤농장</PostUserInfoLi>
-          <PostUserInfoLi>@weniv_Mandarin</PostUserInfoLi>
+          <PostUserInfoLi>{author.username}</PostUserInfoLi>
+          <PostUserInfoLi>{author.accountname}</PostUserInfoLi>
         </PostUserInfoUl>
         <Icon size='18px' xpoint='-88px' ypoint='-236px' />
       </PostUserInfoDiv>

@@ -8,7 +8,6 @@ import PostUserInfo from '../PostUserInfo/PostUserInfo';
 const PostWrapper = styled.article`
   width: 100%;
   padding: 4px 0px;
-  margin: 20px auto 0;
   & div:first-child {
     padding: 0;
   }
@@ -29,17 +28,22 @@ const PostText = styled.p`
 const IconContainer = styled.div`
   display: flex;
   margin-top: 12px;
+  gap: 16px;
+  /* align-items: center; */
   div {
-    margin-right: 6px;
+    vertical-align: middle;
   }
 `;
 
-const LikeCommentCount = styled.p`
+const CountNum = styled.dt`
   font-size: 12px;
-  line-height: 20px;
+  line-height: 12px;
   font-weight: 400;
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 5px;
   color: ${props => props.theme.color.gray.d4};
-  margin-right: 16px;
+  margin-left: 6px;
 `;
 
 const CreatedDate = styled.p`
@@ -50,34 +54,46 @@ const CreatedDate = styled.p`
   margin-top: 16px;
 `;
 
-const Post = () => {
+const Post = ({ data }) => {
+  console.log(data);
+  const day = data.createdAt;
+  let year = day?.slice(0, 4);
+  let month = day?.slice(5, 7);
+  let date = day?.slice(8, 10);
+
   return (
     <PostWrapper>
-      <PostUserInfo />
+      <PostUserInfo author={data.author} />
       <PostContent>
-        <PostText>
-          옷을 인생을 그러므로 없으면 것은 이상은 것은 우리의 위하여, 뿐이다.
-          이상의 청춘의 뼈 따뜻한 그들의 그와 약동하다. 대고, 못할 넣는 풍부하게
-          뛰노는 인생의 힘있다
-        </PostText>
-        <Img width='100%' imgSrc={PostImg} imgAlt='게시글 이미지' />
+        <PostText>{data.content}</PostText>
+        {data.image ? (
+          <Img width='100%' imgSrc={data.image} imgAlt='게시글 이미지' />
+        ) : null}
         <IconContainer>
-          <Icon
-            size='20px'
-            xpoint='-236px'
-            ypoint='-179px'
-            title='하트모양 아이콘'
-          />
-          <LikeCommentCount>30</LikeCommentCount>
-          <Icon
-            size='20px'
-            xpoint='-192px'
-            ypoint='-142px'
-            title='메시지 아이콘'
-          />
-          <LikeCommentCount>10</LikeCommentCount>
+          <div>
+            <dt className='ir'>좋아요</dt>
+            <Icon
+              size='20px'
+              xpoint='-236px'
+              ypoint='-179px'
+              title='하트모양 아이콘'
+            />
+            <CountNum>{data.heartCount}</CountNum>
+          </div>
+          <div>
+            <dt className='ir'>댓글</dt>
+            <Icon
+              size='20px'
+              xpoint='-192px'
+              ypoint='-142px'
+              title='메시지 아이콘'
+            />
+            <CountNum>{data.commentCount}</CountNum>
+          </div>
         </IconContainer>
-        <CreatedDate>2020년 10월 21일</CreatedDate>
+        <CreatedDate>
+          {year}년 {month}월 {date}일
+        </CreatedDate>
       </PostContent>
     </PostWrapper>
   );

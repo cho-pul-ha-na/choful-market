@@ -2,48 +2,68 @@ import styled from 'styled-components';
 import { CommonWrapper } from '../../components/common/commonWrapper';
 import Post from '../../components/modules/Post/Post';
 import Comment from '../../components/modules/Comment/Comment';
-import Input from '../../components/atoms/Input/Input';
-import Profile from '../../components/atoms/Profile/Profile';
-import UserProfile from '../../assets/basic-profile-img.png';
+import PostCommentInput from '../../components/modules/PostCommentInput/PostCommentInput';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 
-const Line = styled.hr`
-  width: 100%;
-  height: 1px;
-  background-color: ${props => props.theme.color.gray.d2};
-  margin-top: 20px;
+const PostWrap = styled.div`
+  padding: 20px 16px;
+  border-bottom: 0.5px solid ${props => props.theme.color.gray.d2};
 `;
 
-const CommentDiv = styled.div`
+const CommentUl = styled.ul`
+  padding: 20px 16px;
   width: 100%;
+  height: 100%;
   display: flex;
-  padding: 13px 16px;
-  margin-top: 20px;
-  background-color: ${props => props.theme.color.text.white};
-  border-top: 0.5px solid ${props => props.theme.color.gray.d2};
-`;
-
-const CommentProfileWrapper = styled.div`
-  margin-right: 18px;
+  flex-direction: column;
+  gap: 16px;
 `;
 
 const PostDetail = () => {
+  const params = useParams();
+  const postId = params.post_id;
+  const token = localStorage.getItem('token');
+  const [postData, setPostData] = useState(null);
+
+  const setData = async () => {
+    try {
+      const res = await axios.get(
+        `https://mandarin.api.weniv.co.kr/post/${postId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+          },
+        },
+      );
+      console.log(res);
+      const info = res.data.post;
+      setPostData(info);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    setData();
+  }, []);
+
   return (
-    <CommonWrapper>
-      <Post />
-      <Line />
-      <Comment />
-      <Comment />
-      <CommentDiv>
-        <CommentProfileWrapper>
-          <Profile size='42px' imgSrc={UserProfile} imgAlt='프로필 이미지' />
-        </CommentProfileWrapper>
-        <Input
-          className='input_chat-comment'
-          type='text'
-          placeholder='댓글 입력하기...'
-        />
-      </CommentDiv>
-    </CommonWrapper>
+    <>
+      <CommonWrapper>
+        <PostWrap>{postData && <Post data={postData} />}</PostWrap>
+        {postData && (
+          <CommentUl>
+            {postData.comments.map(data => {
+              <Comment data={data} />;
+            })}
+          </CommentUl>
+        )}
+        <PostCommentInput />
+      </CommonWrapper>
+    </>
   );
 };
 
