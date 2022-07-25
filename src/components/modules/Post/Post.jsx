@@ -35,7 +35,7 @@ const IconContainer = styled.div`
   }
 `;
 
-const CountNum = styled.dt`
+const CountNum = styled.dd`
   font-size: 12px;
   line-height: 12px;
   font-weight: 400;
