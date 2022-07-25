@@ -10,7 +10,6 @@ import {
   accountnameValue,
   profileImgSrc,
   searchValue,
-  userDataAtom,
   userIntroValue,
   usernameValue,
   searchUserData,
@@ -18,7 +17,6 @@ import {
   uploadImgSrcAtom,
 } from '../../../atoms';
 import { useEffect } from 'react';
-import { useState } from 'react';
 
 const HeaderBox = styled.header`
   width: 100%;
@@ -32,7 +30,7 @@ const HeaderBox = styled.header`
 
 const HeaderWrapper = styled(CommonWrapper)`
   height: 48px;
-  padding: 8px 16px;
+  padding: 8px 12px 8px 16px;
   position: relative;
   display: flex;
   justify-content: space-between;
