@@ -19,9 +19,14 @@ const IconCss = css`
   &.list-active {
     background-position: -56px -146px;
   }
+  &.delete {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+  }
 `;
 
-const IconDiv = styled.div`
+const IconSpan = styled.span`
   ${IconCss};
   &.right {
     float: right;
@@ -61,7 +66,7 @@ const Icon = ({
       title={title}
     />
   ) : (
-    <IconDiv
+    <IconSpan
       size={size}
       xpoint={xpoint}
       ypoint={ypoint}
