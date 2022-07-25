@@ -9,23 +9,25 @@ const IconButton = styled.button`
   border: 1px solid #dbdbdb;
   border-radius: 30px;
 `;
+
 const ProfileInfoFlex = css`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
+
 const ProfileInfoButtons = styled.div`
   ${ProfileInfoFlex};
+  width: 208px;
   gap: 10px;
-  justify-content: center;
-  margin: 24px 90px 0;
+  margin: 24px auto 0;
 `;
 
 const YourProfileBtn = () => {
   const [isFollow, setFollowStatus] = useState(true);
 
   const handleFollowBtn = () => {
-    setFollowStatus(isFollow ? false : true);
+    setFollowStatus(prev => !prev);
   };
 
   return (
@@ -50,7 +52,7 @@ const YourProfileBtn = () => {
           txtColor={props => props.theme.color.text.gray}
           borderRadius='30px'
           className='btn_active'
-          onclick={handleFollowBtn}
+          onClick={handleFollowBtn}
         />
       ) : (
         <Button
@@ -59,10 +61,10 @@ const YourProfileBtn = () => {
           fontWeight='500'
           lineHeight='18px'
           padding='8px 0'
-          bgColor={props => props.theme.color.main.subGreen}
+          bgColor={props => props.theme.color.main.green}
           txtColor={props => props.theme.color.text.white}
           borderRadius='30px'
-          onclick={handleFollowBtn}
+          onClick={handleFollowBtn}
         />
       )}
       <IconButton>

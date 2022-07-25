@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import Img from '../../atoms/Img/Img';
-import ProductImgExample from '../../../assets/product-img-example.png';
 import { CommonWrapper } from '../../common/commonWrapper';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const ForSaleSec = styled.section`
   padding: 20px 16px;
@@ -29,51 +31,52 @@ const ForSaleStrong = styled.strong`
   color: ${props => props.theme.color.main.brown};
 `;
 const ForSale = () => {
+  const token = localStorage.getItem('token');
+
+  const { id } = useParams();
+
+  const [productData, setProductData] = useState([]);
+
+  const getProductData = async () => {
+    try {
+      const res = await axios.get(
+        `https://mandarin.api.weniv.co.kr/product/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+          },
+        },
+      );
+      setProductData(res.data.product);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getProductData();
+  }, []);
   return (
     <CommonWrapper>
       <ForSaleSec>
         <ForSaleH2>판매 중인 상품</ForSaleH2>
         <ForSaleUl>
-          <li>
-            <Img
-              width='140px'
-              height='90px'
-              imgSrc={ProductImgExample}
-              imgAlt='상품 이미지'
-            />
-            <ForSaleH3>애월읍 노지 감귤</ForSaleH3>
-            <ForSaleStrong>35,000원</ForSaleStrong>
-          </li>
-          <li>
-            <Img
-              width='140px'
-              height='90px'
-              imgSrc={ProductImgExample}
-              imgAlt='상품 이미지'
-            />
-            <ForSaleH3>애월읍 노지 감귤</ForSaleH3>
-            <ForSaleStrong>35,000원</ForSaleStrong>
-          </li>
-          <li>
-            <Img
-              width='140px'
-              height='90px'
-              imgSrc={ProductImgExample}
-              imgAlt='상품 이미지'
-            />
-            <ForSaleH3>애월읍 노지 감귤</ForSaleH3>
-            <ForSaleStrong>35,000원</ForSaleStrong>
-          </li>
-          <li>
-            <Img
-              width='140px'
-              height='90px'
-              imgSrc={ProductImgExample}
-              imgAlt='상품 이미지'
-            />
-            <ForSaleH3>애월읍 노지 감귤</ForSaleH3>
-            <ForSaleStrong>35,000원</ForSaleStrong>
-          </li>
+          {productData.map(product => (
+            <li key={product.id}>
+              <Img
+                width='140px'
+                height='90px'
+                borderRadius='8px'
+                imgSrc={product.itemImage}
+                imgAlt='상품 이미지'
+              />
+              <ForSaleH3>{product.itemName}</ForSaleH3>
+              <ForSaleStrong>
+                {product.price.toLocaleString('ko-kr')}원
+              </ForSaleStrong>
+            </li>
+          ))}
         </ForSaleUl>
       </ForSaleSec>
     </CommonWrapper>
