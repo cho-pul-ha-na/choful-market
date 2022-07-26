@@ -137,7 +137,7 @@ const Header = () => {
     } catch (error) {
       console.log(error);
     }
-    navigate('/profile/:id');
+    navigate(`/profile/${accountname}`);
   };
 
   return (
