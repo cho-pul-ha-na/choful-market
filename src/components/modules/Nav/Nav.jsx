@@ -1,5 +1,7 @@
 import { useMatch, useLocation } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { accountnameValue } from '../../../atoms';
 import Icon from '../../atoms/Icon/Icon';
 import { CommonWrapper } from '../../common/commonWrapper';
 
@@ -48,6 +50,8 @@ const Nav = () => {
   const matchProfile = useMatch('/profile/:id');
 
   const path = useLocation().pathname;
+
+  const accountname = useRecoilValue(accountnameValue);
 
   return (
     <NavUl
@@ -103,7 +107,7 @@ const Nav = () => {
         </NavLi>
         <NavLi>
           <Icon
-            to='/profile/:id'
+            to={`/profile/${accountname}`}
             size='24px'
             xpoint={matchProfile !== null ? '-186px' : '-142px'}
             ypoint='-192px'

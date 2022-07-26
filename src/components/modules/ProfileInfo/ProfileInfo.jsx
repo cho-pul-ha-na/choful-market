@@ -1,18 +1,10 @@
 import styled, { css } from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import Profile from '../../atoms/Profile/Profile';
-import UserProfile from '../../../assets/user-profile.png';
 import MyProfileBtn from '../MyprofileBtn/MyProfileBtn';
 import YourProfileBtn from '../YourProfileBtn/YourProfileBtn';
 import { CommonWrapper } from '../../common/commonWrapper';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import {
-  accountnameValue,
-  userDataAtom,
-  userIntroValue,
-  usernameValue,
-} from '../../../atoms';
 import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -69,17 +61,13 @@ const ProfileSpan = styled.span`
 
 const ProfileInfo = () => {
   const path = useLocation().pathname;
-  const accountname = useRecoilValue(accountnameValue);
-  const username = useRecoilValue(usernameValue);
-  const userintro = useRecoilValue(userIntroValue);
-  const userData = useRecoilValue(userDataAtom);
-  const [myinfo, setMyinfo] = useState({});
+  const { id } = useParams();
+
+  const [userinfo, setUserinfo] = useState({});
 
   const token = localStorage.getItem('token');
 
-  const profileGet = async () => {
-    // console.log(token);
-    // console.log(accountname);
+  const getMyprofile = async () => {
     try {
       const res = await axios.get(
         `https://mandarin.api.weniv.co.kr/user/myinfo`,
@@ -90,38 +78,61 @@ const ProfileInfo = () => {
           },
         },
       );
-      setMyinfo(res.data.user);
-      console.log(res.data.user);
+      setUserinfo(res.data.user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getYourprofile = async () => {
+    try {
+      const res = await axios.get(
+        `https://mandarin.api.weniv.co.kr/profile/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+          },
+        },
+      );
+      setUserinfo(res.data.profile);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    profileGet();
+    if (path.includes('yourProfile')) {
+      getYourprofile();
+    } else {
+      getMyprofile();
+    }
   }, []);
+
   return (
     <>
       <ProfileInfoSection>
         <CommonWrapper>
           <FollowWrap>
             <div>
-              <FollowNum>{myinfo.followerCount}</FollowNum>
+              <FollowNum>{userinfo.followerCount}</FollowNum>
               <FollowSpan>followers</FollowSpan>
             </div>
             <div>
-              <Profile size='110px' imgSrc={UserProfile} />
+              <Profile
+                size='110px'
+                borderRadius={props => props.theme.borderRadius.circle}
+                imgSrc={userinfo.image}
+              />
             </div>
             <div>
-              <FollowNum className='gray'>{myinfo.followingCount}</FollowNum>
+              <FollowNum className='gray'>{userinfo.followingCount}</FollowNum>
               <FollowSpan>followings</FollowSpan>
             </div>
           </FollowWrap>
-          {/* props.profile.accountname */}
-          <ProfileH1>{username}</ProfileH1>
-          {/* props.profile.username */}
-          <ProfileH2>@ {accountname}</ProfileH2>
-          <ProfileSpan>{userintro}</ProfileSpan>
+          <ProfileH1>{userinfo.username}</ProfileH1>
+          <ProfileH2>@ {userinfo.accountname}</ProfileH2>
+          <ProfileSpan>{userinfo.intro}</ProfileSpan>
 
           {path.includes('yourProfile') ? <YourProfileBtn /> : <MyProfileBtn />}
         </CommonWrapper>

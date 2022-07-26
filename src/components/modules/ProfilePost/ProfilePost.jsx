@@ -4,12 +4,13 @@ import { CommonWrapper } from '../../common/commonWrapper';
 import Icon from '../../atoms/Icon/Icon';
 import Post from '../Post/Post';
 import { useState } from 'react';
+import GalleryPost from '../GalleryPost/GalleryPost';
 
 const ViewWrapper = styled(CommonWrapper)`
   padding: 0px 16px;
 `;
 const ViewPostWrapper = styled(ViewWrapper)`
-  padding-bottom: 90px;
+  padding-bottom: 58px;
 `;
 const ViewBtnDiv = styled.div`
   width: 100%;
@@ -27,13 +28,13 @@ const ViewBtn = styled.button`
 const ProfilePost = () => {
   const [isList, setViewType] = useState(true);
   const handleViewBtn = () => {
-    return isList ? setViewType(false) : setViewType(true);
+    setViewType(prev => !prev);
   };
   return (
     <>
       <ViewBtnDiv>
         <ViewWrapper>
-          <ViewBtn onClick={handleViewBtn}>
+          <ViewBtn onClick={handleViewBtn} disabled={isList}>
             <Icon
               size='26px'
               xpoint='-10px'
@@ -42,7 +43,7 @@ const ProfilePost = () => {
               className={isList ? 'list-active' : null}
             />
           </ViewBtn>
-          <ViewBtn onClick={handleViewBtn}>
+          <ViewBtn onClick={handleViewBtn} disabled={!isList}>
             <Icon
               size='26px'
               xpoint='-146px'
@@ -53,9 +54,7 @@ const ProfilePost = () => {
           </ViewBtn>
         </ViewWrapper>
       </ViewBtnDiv>
-      <ViewPostWrapper>
-        <Post />
-      </ViewPostWrapper>
+      <ViewPostWrapper>{isList ? <Post /> : <GalleryPost />}</ViewPostWrapper>
     </>
   );
 };

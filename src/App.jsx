@@ -1,16 +1,16 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import ChatList from './pages/ChatList';
 import ChatRoom from './pages/ChatRoom';
 import EmailLogin from './pages/EmailLogin/EmailLogin';
 import EmailSignUp from './pages/EmailSignUp/EmailSignUp';
 import Home from './pages/Home/Home';
 import SNSLogin from './pages/SNSLogin/SNSLogin';
-import MyProfile from './pages/MyProfile';
+import MyProfile from './pages/MyProfile/MyProfile';
 import MyProfileAddProduct from './pages/MyProfileAddProduct/MyProfileAddProduct';
 import PostUpload from './pages/PostUpload/PostUpload';
 import Search from './pages/Search/Search';
 import SetProfile from './pages/SetProfile/SetProfile';
-import YourProfile from './pages/YourProfile';
+import YourProfile from './pages/YourProfile/YourProfile';
 import Header from './components/modules/Header/Header';
 import Nav from './components/modules/Nav/Nav';
 import MyProfileEdit from './pages/MyProfileEdit/MyProfileEdit';
@@ -18,19 +18,24 @@ import PostDetail from './pages/PostDetail/PostDetail';
 import Followers from './pages/Followers/Followers';
 import { useRecoilState } from 'recoil';
 import { isLogin } from './atoms';
+import { useEffect } from 'react';
 
 function App() {
   const token = localStorage.getItem('token');
 
   const [isLoginState, setIsLoginState] = useRecoilState(isLogin);
 
-  setIsLoginState(() => {
-    if (token) {
-      return true;
-    } else {
-      return false;
-    }
-  });
+  let location = useLocation();
+
+  useEffect(() => {
+    setIsLoginState(() => {
+      if (token) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }, [location]);
 
   return (
     <>

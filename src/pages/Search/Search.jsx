@@ -3,6 +3,7 @@ import Profile from '../../components/atoms/Profile/Profile';
 import { CommonWrapper } from '../../components/common/commonWrapper';
 import { useRecoilValue } from 'recoil';
 import { searchUserData } from '../../atoms';
+import { Link } from 'react-router-dom';
 
 const SearchWrapper = styled.div`
   display: flex;
@@ -18,9 +19,11 @@ const SearchUl = styled.ul`
 `;
 
 const SearchLi = styled.li`
-  display: flex;
   margin-top: 16px;
   cursor: pointer;
+  a {
+    display: flex;
+  }
 `;
 
 const SearchDiv = styled.div`
@@ -56,16 +59,18 @@ const Search = () => {
         <SearchUl>
           {searchUserDataState.map(searchData => (
             <SearchLi key={searchData._id}>
-              <Profile
-                size='42px'
-                imgSrc={searchData.image}
-                imgAlt='프로필 이미지'
-                borderRadius={props => props.theme.borderRadius.circle}
-              />
-              <SearchDiv>
-                <SearchP>{searchData.username}</SearchP>
-                <SearchP>{`@${searchData.accountname}`}</SearchP>
-              </SearchDiv>
+              <Link to={`/yourProfile/${searchData.accountname}`}>
+                <Profile
+                  size='42px'
+                  imgSrc={searchData.image}
+                  imgAlt='프로필 이미지'
+                  borderRadius={props => props.theme.borderRadius.circle}
+                />
+                <SearchDiv>
+                  <SearchP>{searchData.username}</SearchP>
+                  <SearchP>{`@ ${searchData.accountname}`}</SearchP>
+                </SearchDiv>
+              </Link>
             </SearchLi>
           ))}
         </SearchUl>

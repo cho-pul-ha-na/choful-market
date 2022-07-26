@@ -1,19 +1,15 @@
 import styled from 'styled-components';
 import Profile from '../../atoms/Profile/Profile';
 import Icon from '../../atoms/Icon/Icon';
-import UserProfile from '../../../assets/basic-profile-img.png';
 
-const PostUserInfohWrapper = styled.div`
+const PostUserInfoWrapper = styled.div`
   width: 100%;
-  height: 100%;
-  padding: 24px 16px 0;
 `;
 
 const PostUserInfoDiv = styled.div`
+  display: flex;
   padding: 5px 0 6px;
   margin: 0 auto 16px;
-  box-sizing: border-box;
-  display: flex;
 `;
 
 const PostUserInfoUl = styled.ul`
@@ -23,9 +19,6 @@ const PostUserInfoUl = styled.ul`
 
 const PostUserInfoLi = styled.li`
   font-weight: 400;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   &:nth-child(1) {
     font-weight: 500;
     font-size: 14px;
@@ -40,18 +33,22 @@ const PostUserInfoLi = styled.li`
 `;
 
 const PostUserInfo = ({ author }) => {
-  console.log(author);
   return (
-    <PostUserInfohWrapper>
+    <PostUserInfoWrapper>
       <PostUserInfoDiv>
-        <Profile size='42px' imgSrc={UserProfile} imgAlt='프로필 이미지' />
+        <Profile
+          size='42px'
+          borderRadius={props => props.theme.borderRadius.circle}
+          imgSrc={author.image}
+          imgAlt='프로필 이미지'
+        />
         <PostUserInfoUl>
           <PostUserInfoLi>{author.username}</PostUserInfoLi>
-          <PostUserInfoLi>{author.accountname}</PostUserInfoLi>
+          <PostUserInfoLi>{`@ ${author.accountname}`}</PostUserInfoLi>
         </PostUserInfoUl>
         <Icon size='18px' xpoint='-88px' ypoint='-236px' />
       </PostUserInfoDiv>
-    </PostUserInfohWrapper>
+    </PostUserInfoWrapper>
   );
 };
 

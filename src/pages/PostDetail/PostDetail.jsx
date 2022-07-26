@@ -26,9 +26,9 @@ const PostDetail = () => {
   const params = useParams();
   const postId = params.post_id;
   const token = localStorage.getItem('token');
-  const [postData, setPostData] = useState(null);
+  const [postData, setPostData] = useState();
 
-  const setData = async () => {
+  const getPostDetailData = async () => {
     try {
       const res = await axios.get(
         `https://mandarin.api.weniv.co.kr/post/${postId}`,
@@ -39,15 +39,14 @@ const PostDetail = () => {
           },
         },
       );
-      console.log(res);
-      const info = res.data.post;
-      setPostData(info);
+      setPostData(res.data.post);
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
-    setData();
+    getPostDetailData();
   }, []);
 
   return (
@@ -56,9 +55,9 @@ const PostDetail = () => {
         <PostWrap>{postData && <Post data={postData} />}</PostWrap>
         {postData && (
           <CommentUl>
-            {postData.comments.map(data => {
-              <Comment data={data} />;
-            })}
+            {postData?.comments?.map(data => (
+              <Comment data={data} />
+            ))}
           </CommentUl>
         )}
         <PostCommentInput />
