@@ -64,7 +64,7 @@ const Header = () => {
   };
   // 포스트 업로드 버튼
   const txtValue = useRecoilValue(postTxtValue);
-  const [uploadImgSrc, setuploadImgSrc] = useRecoilState(uploadImgSrcArray);
+  const [uploadImgSrc, setUploadImgSrc] = useRecoilState(uploadImgSrcArray);
 
   const onClickUploadBtn = async e => {
     const images = uploadImgSrc.join(', ');
@@ -88,7 +88,7 @@ const Header = () => {
       console.log(res);
       const postId = res.data.post.id;
       navigate(`/post/${postId}`);
-      setuploadImgSrc([]);
+      setUploadImgSrc([]);
     } catch (error) {
       console.log(error);
     }
