@@ -1,7 +1,9 @@
 import styled, { css } from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../../atoms/Button/Button';
 import Icon from '../../atoms/Icon/Icon';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const IconButton = styled.button`
   width: 34px;
@@ -23,13 +25,58 @@ const ProfileInfoButtons = styled.div`
   margin: 24px auto 0;
 `;
 
-const YourProfileBtn = () => {
-  const [isFollow, setFollowStatus] = useState(true);
+const YourProfileBtn = ({
+  setFollowerCountFunc,
+  setFollowingCountFunc,
+  isFollowBool,
+  setIsFollowState,
+}) => {
+  const token = localStorage.getItem('token');
 
-  const handleFollowBtn = () => {
-    setFollowStatus(prev => !prev);
+  const { id } = useParams();
+
+  const handleFollowBtn = async e => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(
+        `https://mandarin.api.weniv.co.kr/profile/${id}/follow`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+          },
+        },
+      );
+      const data = res.data.profile;
+      setFollowerCountFunc(data.followerCount);
+      setFollowingCountFunc(data.followingCount);
+      setIsFollowState(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  const handleUnfollowBtn = async e => {
+    e.preventDefault();
+    try {
+      const res = await axios.delete(
+        `https://mandarin.api.weniv.co.kr/profile/${id}/unfollow`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+          },
+        },
+      );
+      const data = res.data.profile;
+      setFollowerCountFunc(data.followerCount);
+      setFollowingCountFunc(data.followingCount);
+      setIsFollowState(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <ProfileInfoButtons>
       <IconButton>
@@ -42,7 +89,7 @@ const YourProfileBtn = () => {
           isLink
         />
       </IconButton>
-      {isFollow ? (
+      {isFollowBool ? (
         <Button
           label='언팔로우'
           fontSize='14px'
@@ -52,7 +99,7 @@ const YourProfileBtn = () => {
           txtColor={props => props.theme.color.text.gray}
           borderRadius='30px'
           className='btn_active'
-          onClick={handleFollowBtn}
+          onClick={handleUnfollowBtn}
         />
       ) : (
         <Button

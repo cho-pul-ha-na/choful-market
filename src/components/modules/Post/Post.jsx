@@ -63,6 +63,8 @@ const Post = ({ data }) => {
   const { id } = useParams();
 
   const [postData, setPostData] = useState([]);
+  const [hearted, setHearted] = useState(false);
+  const [heartCount, setHeartCount] = useState(postData.heartCount);
 
   const changeDateFormat = date => {
     const year = date.slice(0, 4);
@@ -71,8 +73,6 @@ const Post = ({ data }) => {
 
     return `${year}년 ${month}월 ${day}일`;
   };
-  const [hearted, setHearted] = useState(data.hearted);
-  const [heartCount, setHeartCount] = useState(data.heartCount);
   // 좋아요 기능
   const onClickLikeBtn = async e => {
     console.log(token);
@@ -179,7 +179,7 @@ const Post = ({ data }) => {
                   title='하트모양 아이콘'
                   className={hearted ? 'heart-active' : null}
                 />
-                <CountNum>{heartCount}</CountNum>
+                <CountNum>{postData.heartCount}</CountNum>
               </div>
               <div>
                 <Link to={`/post/${postData.id}`}>

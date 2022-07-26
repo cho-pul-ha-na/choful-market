@@ -60,12 +60,15 @@ const ProfileSpan = styled.span`
 `;
 
 const ProfileInfo = () => {
+  const token = localStorage.getItem('token');
+
   const path = useLocation().pathname;
   const { id } = useParams();
 
   const [userinfo, setUserinfo] = useState({});
-
-  const token = localStorage.getItem('token');
+  const [followerCount, setFollowerCount] = useState();
+  const [followingCount, setFollowingCount] = useState();
+  const [isFollowState, setIsFollowState] = useState();
 
   const getMyprofile = async () => {
     try {
@@ -78,7 +81,10 @@ const ProfileInfo = () => {
           },
         },
       );
+      console.log(res.data.user);
       setUserinfo(res.data.user);
+      setFollowerCount(res.data.user.followerCount);
+      setFollowingCount(res.data.user.followingCount);
     } catch (error) {
       console.log(error);
     }
@@ -96,6 +102,9 @@ const ProfileInfo = () => {
         },
       );
       setUserinfo(res.data.profile);
+      setFollowerCount(res.data.profile.followerCount);
+      setFollowingCount(res.data.profile.followingCount);
+      setIsFollowState(res.data.profile.isfollow);
     } catch (error) {
       console.log(error);
     }
@@ -115,7 +124,7 @@ const ProfileInfo = () => {
         <CommonWrapper>
           <FollowWrap>
             <div>
-              <FollowNum>{userinfo.followerCount}</FollowNum>
+              <FollowNum>{followerCount}</FollowNum>
               <FollowSpan>followers</FollowSpan>
             </div>
             <div>
@@ -126,15 +135,23 @@ const ProfileInfo = () => {
               />
             </div>
             <div>
-              <FollowNum className='gray'>{userinfo.followingCount}</FollowNum>
+              <FollowNum className='gray'>{followingCount}</FollowNum>
               <FollowSpan>followings</FollowSpan>
             </div>
           </FollowWrap>
           <ProfileH1>{userinfo.username}</ProfileH1>
           <ProfileH2>@ {userinfo.accountname}</ProfileH2>
           <ProfileSpan>{userinfo.intro}</ProfileSpan>
-
-          {path.includes('yourProfile') ? <YourProfileBtn /> : <MyProfileBtn />}
+          {path.includes('yourProfile') ? (
+            <YourProfileBtn
+              setFollowerCountFunc={setFollowerCount}
+              setFollowingCountFunc={setFollowingCount}
+              isFollowBool={isFollowState}
+              setIsFollowState={setIsFollowState}
+            />
+          ) : (
+            <MyProfileBtn />
+          )}
         </CommonWrapper>
       </ProfileInfoSection>
     </>
