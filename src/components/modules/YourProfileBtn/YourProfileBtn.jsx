@@ -25,37 +25,15 @@ const ProfileInfoButtons = styled.div`
   margin: 24px auto 0;
 `;
 
-const YourProfileBtn = ({ setFollowerCountFunc, setFollowingCountFunc }) => {
+const YourProfileBtn = ({
+  setFollowerCountFunc,
+  setFollowingCountFunc,
+  isFollowBool,
+  setIsFollowState,
+}) => {
   const token = localStorage.getItem('token');
 
   const { id } = useParams();
-
-  const [isFollow, setFollowStatus] = useState();
-
-  useEffect(() => {
-    checkFollow();
-  }, []);
-
-  const checkFollow = async () => {
-    try {
-      const res = await axios.post(
-        `https://mandarin.api.weniv.co.kr/profile/${id}/follow`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      const followBool = res.data.profile.isfollow;
-      setFollowStatus(() => {
-        return followBool ? true : false;
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleFollowBtn = async e => {
     e.preventDefault();
@@ -73,7 +51,7 @@ const YourProfileBtn = ({ setFollowerCountFunc, setFollowingCountFunc }) => {
       const data = res.data.profile;
       setFollowerCountFunc(data.followerCount);
       setFollowingCountFunc(data.followingCount);
-      setFollowStatus(data.isfollow);
+      setIsFollowState(true);
     } catch (error) {
       console.log(error);
     }
@@ -94,12 +72,11 @@ const YourProfileBtn = ({ setFollowerCountFunc, setFollowingCountFunc }) => {
       const data = res.data.profile;
       setFollowerCountFunc(data.followerCount);
       setFollowingCountFunc(data.followingCount);
-      setFollowStatus(data.isfollow);
+      setIsFollowState(false);
     } catch (error) {
       console.log(error);
     }
   };
-
   return (
     <ProfileInfoButtons>
       <IconButton>
@@ -112,7 +89,7 @@ const YourProfileBtn = ({ setFollowerCountFunc, setFollowingCountFunc }) => {
           isLink
         />
       </IconButton>
-      {isFollow ? (
+      {isFollowBool ? (
         <Button
           label='언팔로우'
           fontSize='14px'

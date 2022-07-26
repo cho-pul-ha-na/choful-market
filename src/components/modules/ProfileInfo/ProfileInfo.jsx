@@ -68,14 +68,7 @@ const ProfileInfo = () => {
   const [userinfo, setUserinfo] = useState({});
   const [followerCount, setFollowerCount] = useState();
   const [followingCount, setFollowingCount] = useState();
-
-  const setFollowerCountFunc = followerCount => {
-    setFollowerCount(followerCount);
-  };
-
-  const setFollowingCountFunc = followingCount => {
-    setFollowingCount(followingCount);
-  };
+  const [isFollowState, setIsFollowState] = useState();
 
   const getMyprofile = async () => {
     try {
@@ -111,6 +104,7 @@ const ProfileInfo = () => {
       setUserinfo(res.data.profile);
       setFollowerCount(res.data.profile.followerCount);
       setFollowingCount(res.data.profile.followingCount);
+      setIsFollowState(res.data.profile.isfollow);
     } catch (error) {
       console.log(error);
     }
@@ -148,11 +142,12 @@ const ProfileInfo = () => {
           <ProfileH1>{userinfo.username}</ProfileH1>
           <ProfileH2>@ {userinfo.accountname}</ProfileH2>
           <ProfileSpan>{userinfo.intro}</ProfileSpan>
-
           {path.includes('yourProfile') ? (
             <YourProfileBtn
-              setFollowerCountFunc={setFollowerCountFunc}
-              setFollowingCountFunc={setFollowingCountFunc}
+              setFollowerCountFunc={setFollowerCount}
+              setFollowingCountFunc={setFollowingCount}
+              isFollowBool={isFollowState}
+              setIsFollowState={setIsFollowState}
             />
           ) : (
             <MyProfileBtn />
