@@ -14,7 +14,7 @@ import {
   usernameValue,
   searchUserData,
   postTxtValue,
-  uploadImgSrcAtom,
+  uploadImgSrcArray,
 } from '../../../atoms';
 import { useEffect } from 'react';
 
@@ -62,9 +62,12 @@ const Header = () => {
   const handleButtonClick = () => {
     navigate(-1);
   };
+  // 포스트 업로드 버튼
   const txtValue = useRecoilValue(postTxtValue);
-  const uploadImgSrc = useRecoilValue(uploadImgSrcAtom);
+  const [uploadImgSrc, setuploadImgSrc] = useRecoilState(uploadImgSrcArray);
+
   const onClickUploadBtn = async e => {
+    const images = uploadImgSrc.join(', ');
     e.preventDefault();
     try {
       const res = await axios.post(
@@ -72,7 +75,7 @@ const Header = () => {
         {
           post: {
             content: txtValue,
-            image: uploadImgSrc,
+            image: images,
           },
         },
         {
@@ -85,7 +88,10 @@ const Header = () => {
       console.log(res);
       const postId = res.data.post.id;
       navigate(`/post/${postId}`);
-    } catch (error) {}
+      setuploadImgSrc([]);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {

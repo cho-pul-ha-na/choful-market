@@ -56,6 +56,7 @@ const Icon = ({
   isLink,
   className,
   onClick,
+  id,
 }) => {
   return isLink ? (
     <IconLink
@@ -73,6 +74,7 @@ const Icon = ({
       title={title}
       className={className}
       onClick={onClick}
+      id={id}
     />
   );
 };
