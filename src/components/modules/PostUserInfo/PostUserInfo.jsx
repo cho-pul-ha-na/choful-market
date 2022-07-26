@@ -4,11 +4,6 @@ import Icon from '../../atoms/Icon/Icon';
 
 const PostUserInfoWrapper = styled.div`
   width: 100%;
-  padding: 24px 16px 0;
-  margin-top: 20px;
-  &:first-child {
-    padding: 0 16px;
-  }
 `;
 
 const PostUserInfoDiv = styled.div`

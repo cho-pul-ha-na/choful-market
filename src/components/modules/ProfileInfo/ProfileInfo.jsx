@@ -2,7 +2,6 @@ import styled, { css } from 'styled-components';
 import { useLocation, useParams } from 'react-router-dom';
 
 import Profile from '../../atoms/Profile/Profile';
-import UserProfile from '../../../assets/user-profile.png';
 import MyProfileBtn from '../MyprofileBtn/MyProfileBtn';
 import YourProfileBtn from '../YourProfileBtn/YourProfileBtn';
 import { CommonWrapper } from '../../common/commonWrapper';

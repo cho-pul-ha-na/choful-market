@@ -10,7 +10,7 @@ const ViewWrapper = styled(CommonWrapper)`
   padding: 0px 16px;
 `;
 const ViewPostWrapper = styled(ViewWrapper)`
-  padding-bottom: 90px;
+  padding-bottom: 58px;
 `;
 const ViewBtnDiv = styled.div`
   width: 100%;

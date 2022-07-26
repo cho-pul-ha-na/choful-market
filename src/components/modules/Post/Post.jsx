@@ -7,14 +7,17 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const PostWrapper = styled.article`
+const PostWrapper = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
   width: 100%;
   padding: 4px 0px;
-  margin: 0 auto;
+  margin: 16px auto;
 `;
 
-const PostContent = styled.ul`
-  padding-left: 70px;
+const PostContent = styled.div`
+  padding-left: 54px;
 `;
 
 const PostText = styled.p`
@@ -29,7 +32,6 @@ const IconContainer = styled.div`
   display: flex;
   margin-top: 12px;
   gap: 16px;
-  /* align-items: center; */
   div {
     vertical-align: middle;
   }
@@ -98,14 +100,18 @@ const Post = ({ data }) => {
   return (
     <PostWrapper>
       {postData?.map(postData => (
-        <div key={postData.id}>
+        <li key={postData.id}>
           <Link to={`/yourProfile/${postData.author.accountname}`}>
             <PostUserInfo author={postData.author} />
           </Link>
           <PostContent>
-            <PostText as={Link} to={`/post/${postData.id}`}>
-              {postData.content}
-            </PostText>
+            {!path.includes('post') ? (
+              <PostText as={Link} to={`/post/${postData.id}`}>
+                {postData.content}
+              </PostText>
+            ) : (
+              <PostText>{postData.content}</PostText>
+            )}
             {postData.image ? (
               <Link to={`/post/${postData.id}`}>
                 <Img
@@ -142,7 +148,7 @@ const Post = ({ data }) => {
             </IconContainer>
             <CreatedDate>{changeDateFormat(postData.createdAt)}</CreatedDate>
           </PostContent>
-        </div>
+        </li>
       ))}
     </PostWrapper>
   );
