@@ -8,6 +8,7 @@ import {
   idValue,
   isLogin,
   passwordValue,
+  profileImgSrc,
   userDataAtom,
   userIntroValue,
   usernameValue,
@@ -55,6 +56,8 @@ const EmailLogin = () => {
   const setUsername = useSetRecoilState(usernameValue);
   const setAccountname = useSetRecoilState(accountnameValue);
   const setIntro = useSetRecoilState(userIntroValue);
+  const setProfileImgSrc = useSetRecoilState(profileImgSrc);
+
   const onClickLoginBtn = async e => {
     e.preventDefault();
     try {
@@ -79,6 +82,7 @@ const EmailLogin = () => {
         setUsername(data.username);
         setAccountname(data.accountname);
         setIntro(data.intro);
+        setProfileImgSrc(data.image);
         navigate('/');
       }
     } catch (error) {
