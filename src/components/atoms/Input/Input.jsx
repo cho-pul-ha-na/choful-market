@@ -45,6 +45,9 @@ const StyledTextArea = styled.textarea`
     line-height: 1;
     color: ${props => props.theme.color.gray.d3};
   }
+  &:focus {
+    outline: none;
+  }
 `;
 
 const Input = ({

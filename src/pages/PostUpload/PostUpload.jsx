@@ -4,10 +4,11 @@ import Input from '../../components/atoms/Input/Input';
 import { CommonWrapper } from '../../components/common/commonWrapper';
 import Profile from '../../components/atoms/Profile/Profile';
 import UploadImg from '../../assets/upload-file.png';
-import { useCallback, useRef, useEffect, useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { postTxtValue, profileImgSrc, uploadImgSrcAtom } from '../../atoms';
+import { useCallback, useRef, useEffect } from 'react';
+import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
+import { postTxtValue, profileImgSrc, uploadImgSrcArray } from '../../atoms';
 import Img from '../../components/atoms/Img/Img';
+import Icon from '../../components/atoms/Icon/Icon';
 
 const UploadWrapper = styled(CommonWrapper)`
   position: relative;
@@ -44,10 +45,14 @@ const ItemBox = styled.ul`
   margin-top: 10px;
 `;
 
+const SelectedImgLi = styled.li`
+  position: relative;
+`;
+
 const PostUpload = () => {
-  const setUploadImgSrc = useSetRecoilState(uploadImgSrcAtom);
+  const setPostTxt = useSetRecoilState(postTxtValue);
+  const [imgArr, setImgArr] = useRecoilState(uploadImgSrcArray);
   const profileImg = useRecoilValue(profileImgSrc);
-  const [imgSrcs, setImgSrcs] = useState([]);
 
   const uploadImg = async imgFile => {
     let formData = new FormData();
@@ -57,15 +62,34 @@ const PostUpload = () => {
         'https://mandarin.api.weniv.co.kr/image/uploadfile',
         formData,
       );
-      console.log(res);
       return `https://mandarin.api.weniv.co.kr/${res.data.filename}`;
-      // selctedImgs();
     } catch (error) {
       console.log(error);
     }
   };
 
+  // 미리보기
+  const preview = e => {
+    const files = e.target.files;
+    if (imgArr.length + files.length < 4) {
+      Array.from(files).map(async file => {
+        const url = await uploadImg(file);
+        console.log(url);
+        return setImgArr([...imgArr, url]);
+      });
+    } else {
+      window.alert('이미지는 3개까지 업로드 가능합니다.');
+    }
+  };
+
+  // 삭제버튼 함수
+  const removeImg = async e => {
+    const key = e.target.id;
+    setImgArr(imgArr.filter(e => e !== key));
+  };
+
   const inputRef = useRef(null);
+
   useEffect(() => {
     if (inputRef === null || inputRef.current === null) {
       return;
@@ -82,30 +106,6 @@ const PostUpload = () => {
     inputRef.current.style.height = inputRef.current.scrollHeight + 'px';
     setPostTxt(e.target.value);
   }, []);
-
-  const setPostTxt = useSetRecoilState(postTxtValue);
-  // async나 axios로 데이터를 받아온 게 확인되면 setProfileImgSrc(user데이터의 프로필이미지 src) 하는 함수 추가
-
-  let arraySelectedImgs = [];
-  let selectedImgsUrl = '';
-
-  const handleImgInputOnchange = async e => {
-    const files = e.target.files;
-    if (files.length < 4) {
-      Array.from(files).map(async (file, i) => {
-        const url = await uploadImg(file);
-        arraySelectedImgs.push(url);
-        setImgSrcs(prev => [...prev, url]);
-        console.log(imgSrcs);
-        console.log(arraySelectedImgs);
-      });
-      selectedImgsUrl = arraySelectedImgs.join(',');
-      setUploadImgSrc(selectedImgsUrl);
-    } else {
-      window.alert('이미지는 3개까지 업로드 가능합니다.');
-    }
-  };
-  // 밑에는 헤더로 들어갈 부분!
 
   return (
     <UploadWrapper>
@@ -124,11 +124,26 @@ const PostUpload = () => {
             onInput={handleResizeHeight}
             inputRef={inputRef}
           />
-          <ItemBox id='root'>
-            {imgSrcs.map((imgSrc, i) => (
-              <li>
-                <Img key={i} width='80px' height='80px' imgSrc={imgSrc}></Img>
-              </li>
+          <ItemBox>
+            {imgArr?.map((imgSrc, index) => (
+              <SelectedImgLi key={index}>
+                <Img
+                  width='100px'
+                  height='100px'
+                  imgSrc={imgSrc}
+                  borderRadius='5px'
+                  position='relative'
+                />
+                <Icon
+                  size='22px'
+                  xpoint='-236px'
+                  ypoint='-10px'
+                  title='삭제버튼'
+                  className='delete'
+                  onClick={removeImg}
+                  id={imgSrc}
+                />
+              </SelectedImgLi>
             ))}
           </ItemBox>
         </TextAreaDiv>
@@ -142,7 +157,7 @@ const PostUpload = () => {
         accept='.jpg, .gif, .png, .jpeg, .bmp, .tif, .heic'
         multiple
         id='post-upload-img'
-        onChange={handleImgInputOnchange}
+        onChange={preview}
       />
     </UploadWrapper>
   );
