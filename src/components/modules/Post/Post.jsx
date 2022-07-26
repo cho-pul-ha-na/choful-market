@@ -4,7 +4,7 @@ import Img from '../../atoms/Img/Img';
 import Icon from '../../atoms/Icon/Icon';
 import PostUserInfo from '../PostUserInfo/PostUserInfo';
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useMatch, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const PostWrapper = styled.ul`
@@ -18,6 +18,9 @@ const PostWrapper = styled.ul`
 
 const PostContent = styled.div`
   padding-left: 54px;
+  img {
+    margin-top: 16px;
+  }
 `;
 
 const PostText = styled.p`
@@ -58,6 +61,8 @@ const CreatedDate = styled.p`
 
 const Post = ({ data }) => {
   const token = localStorage.getItem('token');
+
+  const homeMatch = useMatch('/');
 
   const path = useLocation().pathname;
   const { id } = useParams();
@@ -141,7 +146,8 @@ const Post = ({ data }) => {
       getMyPostData();
     } else if (path.includes('post')) {
       setPostData([data]);
-      console.log('postData: ', postData);
+    } else if (homeMatch) {
+      setPostData([data]);
     }
   }, []);
   return (

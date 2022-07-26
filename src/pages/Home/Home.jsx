@@ -7,11 +7,13 @@ import * as S from '../../components/common/commonWrapper';
 import SymbolLogoGrayImg from '../../assets/symbol-logo-gray.png';
 import Post from '../../components/modules/Post/Post';
 import SplashScreen from '../SplashScreen/SplashScreen';
+import { useState } from 'react';
+import axios from 'axios';
+import { useEffect } from 'react';
 
 const NotFollowerWrapper = styled.div`
   width: 100%;
   height: calc(100vh - 105px);
-  /* height: 100vh; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -26,8 +28,7 @@ const NotFollowerWrapper = styled.div`
 const FeedWrapper = styled.div`
   width: 1005;
   height: calc(100vh - 56px);
-  padding: 20px 16px 30px;
-  overflow-y: scroll;
+  padding: 0 16px 30px;
 `;
 
 const SearchFollowerText = styled.p`
@@ -38,11 +39,45 @@ const SearchFollowerText = styled.p`
   margin-top: 30px;
 `;
 
-const Home = ({ isHaveFollower = true }) => {
+const Home = () => {
+  const token = localStorage.getItem('token');
+
+  const [feedPostData, setFeedPostData] = useState([]);
+
+  const getFeedPostData = async () => {
+    try {
+      const res = await axios.get(
+        `https://mandarin.api.weniv.co.kr/post/feed/?limit=${parseInt(20)}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+          },
+        },
+      );
+      console.log(res);
+      setFeedPostData(res.data.posts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getFeedPostData();
+  }, []);
+
   return (
     <>
       <SplashScreen />
-      {isHaveFollower ? (
+      {feedPostData.length > 0 ? (
+        <S.CommonWrapper>
+          <FeedWrapper>
+            {feedPostData?.map(data => (
+              <Post key={data.id} data={data} />
+            ))}
+          </FeedWrapper>
+        </S.CommonWrapper>
+      ) : (
         <S.CommonWrapper>
           <NotFollowerWrapper>
             <Logo size='100px' imgSrc={SymbolLogoGrayImg} imgAlt='' />
@@ -62,14 +97,6 @@ const Home = ({ isHaveFollower = true }) => {
               borderRadius='44px'
             />
           </NotFollowerWrapper>
-        </S.CommonWrapper>
-      ) : (
-        <S.CommonWrapper>
-          <FeedWrapper>
-            <Post />
-            <Post />
-            <Post />
-          </FeedWrapper>
         </S.CommonWrapper>
       )}
     </>
