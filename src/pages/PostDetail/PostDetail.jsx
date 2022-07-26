@@ -23,15 +23,15 @@ const CommentUl = styled.ul`
 `;
 
 const PostDetail = () => {
-  const params = useParams();
-  const postId = params.post_id;
+  const { id } = useParams();
+
   const token = localStorage.getItem('token');
   const [postData, setPostData] = useState();
 
   const getPostDetailData = async () => {
     try {
       const res = await axios.get(
-        `https://mandarin.api.weniv.co.kr/post/${postId}`,
+        `https://mandarin.api.weniv.co.kr/post/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

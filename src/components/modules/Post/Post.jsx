@@ -71,6 +71,53 @@ const Post = ({ data }) => {
 
     return `${year}년 ${month}월 ${day}일`;
   };
+  const [hearted, setHearted] = useState(data.hearted);
+  const [heartCount, setHeartCount] = useState(data.heartCount);
+  // 좋아요 기능
+  const onClickLikeBtn = async e => {
+    console.log(token);
+    console.log(id);
+    e.preventDefault();
+    try {
+      const res = await axios.post(
+        `https://mandarin.api.weniv.co.kr/post/${id}/heart`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+          },
+        },
+      );
+      console.log(res);
+      const data = res.data.post;
+      setHeartCount(data.heartCount);
+      setHearted(true);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onClickDislikeBtn = async e => {
+    e.preventDefault();
+    try {
+      const res = await axios.delete(
+        `https://mandarin.api.weniv.co.kr/post/${id}/unheart`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+          },
+        },
+      );
+      const data = res.data.post;
+      setHeartCount(data.heartCount);
+      setHearted(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getMyPostData = async () => {
     try {
@@ -123,15 +170,16 @@ const Post = ({ data }) => {
               </Link>
             ) : null}
             <IconContainer>
-              <div>
+              <div onClick={hearted ? onClickDislikeBtn : onClickLikeBtn}>
                 <dt className='ir'>좋아요</dt>
                 <Icon
                   size='20px'
                   xpoint='-236px'
                   ypoint='-179px'
                   title='하트모양 아이콘'
+                  className={hearted ? 'heart-active' : null}
                 />
-                <CountNum>{postData.heartCount}</CountNum>
+                <CountNum>{heartCount}</CountNum>
               </div>
               <div>
                 <Link to={`/post/${postData.id}`}>

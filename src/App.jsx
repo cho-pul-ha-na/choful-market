@@ -69,7 +69,7 @@ function App() {
           path='/profile/:id/addProduct'
           element={<MyProfileAddProduct />}
         />
-        <Route path='/post/:post_id' element={<PostDetail />} />
+        <Route path='/post/:id' element={<PostDetail />} />
         <Route
           path='/upload'
           element={
