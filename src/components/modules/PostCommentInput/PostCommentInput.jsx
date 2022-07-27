@@ -4,9 +4,7 @@ import Profile from '../../atoms/Profile/Profile';
 import UserProfile from '../../../assets/basic-profile-img.png';
 import { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { CommonWrapper } from '../../common/commonWrapper';
-import { useRef } from 'react';
 
 const InputWrap = styled(CommonWrapper)`
   width: 100%;
@@ -37,7 +35,6 @@ const InputBtn = styled.button`
 const PostCommentInput = ({ postId, setCommentList }) => {
   const token = localStorage.getItem('token');
   const [txt, setTxt] = useState('');
-  const navigate = useNavigate();
 
   const onChangeInput = e => {
     setTxt(e.target.value);
@@ -59,7 +56,6 @@ const PostCommentInput = ({ postId, setCommentList }) => {
         },
       );
       console.log(res);
-      // navigate(`/post/${postId}`);
       setCommentList();
       setTxt('');
     } catch (error) {}

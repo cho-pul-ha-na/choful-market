@@ -4,7 +4,7 @@ import Post from '../../components/modules/Post/Post';
 import Comment from '../../components/modules/Comment/Comment';
 import PostCommentInput from '../../components/modules/PostCommentInput/PostCommentInput';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import DropUp from '../../components/modules/DropUp/DropUp';
 import Modal from '../../components/modules/Modal/Modal';
@@ -50,7 +50,6 @@ const PostDetail = () => {
   useEffect(() => {
     getPostDetailData();
   }, []);
-  const navigate = useNavigate();
 
   // 댓글 불러오기
   const [comments, setComments] = useState([]);
@@ -89,7 +88,6 @@ const PostDetail = () => {
             {comments.map(data => (
               <Comment
                 ref={clickedComment}
-                // accountname={data.author.accountname}
                 data={data}
                 commentId={data.id}
                 setDropUpShow={setDropUpShow}
@@ -114,6 +112,7 @@ const PostDetail = () => {
             btnRight='취소'
             isMy={isMy}
             setModalShow={setModalShow}
+            setCommentList={setCommentList}
             postId={id}
             commentId={commentId}
           />
