@@ -1,3 +1,4 @@
+import axios from 'axios';
 import styled from 'styled-components';
 
 const ModalBox = styled.div`
@@ -44,15 +45,44 @@ const VerticalBar = styled.span`
   background-color: ${props => props.theme.color.gray.d2};
 `;
 
-const Modal = ({ title, btnLeft, btnRight }) => {
+const Modal = ({
+  title,
+  btnLeft,
+  btnRight,
+  setModalShow,
+  setCommentList,
+  postId,
+  commentId,
+  isMy,
+}) => {
+  const token = localStorage.getItem('token');
+  const removeComment = async () => {
+    try {
+      const res = await axios.delete(
+        `https://mandarin.api.weniv.co.kr/post/${postId}/comments/${commentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+          },
+        },
+      );
+      console.log(res.data);
+      setCommentList();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <Overlay>
+    <Overlay onClick={() => setModalShow(false)}>
       <ModalBox>
         <ModalTit>{title}</ModalTit>
         <ModalButtons>
-          <ModalBtn>{btnLeft}</ModalBtn>
+          <ModalBtn className='caution' onClick={isMy ? removeComment : null}>
+            {btnLeft}
+          </ModalBtn>
           <VerticalBar />
-          <ModalBtn className='caution'>{btnRight}</ModalBtn>
+          <ModalBtn>{btnRight}</ModalBtn>
         </ModalButtons>
       </ModalBox>
     </Overlay>

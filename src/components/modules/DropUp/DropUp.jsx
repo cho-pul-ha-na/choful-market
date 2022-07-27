@@ -12,9 +12,11 @@ const Overlay = styled.div`
 const DropUpWrapper = styled.div`
   position: fixed;
   width: 100vw;
+  padding-bottom: 10px;
   bottom: 0;
   z-index: 30;
   overflow: auto;
+  border-radius: 10px 10px 0 0;
   background-color: #fff;
 `;
 const DragBar = styled.div`
@@ -30,15 +32,16 @@ const DropUpLi = styled.li`
   font-size: 14px;
 `;
 
-const DropUp = props => {
-  const list = props.menu;
+const DropUp = ({ menu, setDropUpShow, setModalShow }) => {
   return (
-    <Overlay>
+    <Overlay onClick={() => setDropUpShow(false)}>
       <DropUpWrapper>
         <DragBar />
         <ul>
-          {list.map((item, index) => (
-            <DropUpLi key={index}>{item}</DropUpLi>
+          {menu.map((item, index) => (
+            <DropUpLi onClick={() => setModalShow(true)} key={index}>
+              {item}
+            </DropUpLi>
           ))}
         </ul>
       </DropUpWrapper>
