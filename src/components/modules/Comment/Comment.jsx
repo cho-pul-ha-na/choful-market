@@ -57,7 +57,7 @@ const Comment = ({
     const created = Date.parse(createdTime);
     const subtrac = Math.floor((now - created) / 1000 / 60);
     if (subtrac < 1) {
-      timeMsg = '방금';
+      timeMsg = '방금 전';
     } else if (subtrac < 60) {
       timeMsg = `${subtrac}분 전`;
     } else {
