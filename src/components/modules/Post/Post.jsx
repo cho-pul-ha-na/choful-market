@@ -13,7 +13,7 @@ const PostWrapper = styled.ul`
   gap: 30px;
   width: 100%;
   padding: 4px 0px;
-  margin: 16px auto;
+  margin: 0 auto;
 `;
 
 const PostContent = styled.div`
