@@ -79,6 +79,25 @@ const PostDetail = () => {
   const clickedComment = useRef();
   const [isMy, setIsMy] = useState(false);
   const [commentId, setCommentId] = useState('');
+
+  const removeComment = async () => {
+    try {
+      const res = await axios.delete(
+        `https://mandarin.api.weniv.co.kr/post/${id}/comments/${commentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+          },
+        },
+      );
+      console.log(res.data);
+      setCommentList();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <CommonWrapper>
@@ -115,6 +134,7 @@ const PostDetail = () => {
             setCommentList={setCommentList}
             postId={id}
             commentId={commentId}
+            excutfunc={removeComment}
           />
         </div>
       </CommonWrapper>
