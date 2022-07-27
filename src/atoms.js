@@ -1,6 +1,7 @@
 import { atom } from 'recoil';
 
 import BasicProfileImg from './assets/basic-profile-img.png';
+import BasicProductImg from './assets/product-default.png';
 
 export const idValue = atom({
   key: 'userID',
@@ -70,4 +71,24 @@ export const searchUserData = atom({
 export const uploadImgSrcArray = atom({
   key: 'uploadImgSrc',
   default: [],
+});
+
+export const productImgAtom = atom({
+  key: 'productImg',
+  default: BasicProductImg,
+});
+
+export const productNameAtom = atom({
+  key: 'productName',
+  default: '',
+});
+
+export const productPriceAtom = atom({
+  key: 'productPrice',
+  default: 0,
+});
+
+export const productLinkAtom = atom({
+  key: 'productLink',
+  default: '',
 });
