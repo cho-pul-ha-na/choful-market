@@ -3,14 +3,15 @@ import { CommonWrapper } from '../../components/common/commonWrapper';
 import Post from '../../components/modules/Post/Post';
 import Comment from '../../components/modules/Comment/Comment';
 import PostCommentInput from '../../components/modules/PostCommentInput/PostCommentInput';
-import { useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import DropUp from '../../components/modules/DropUp/DropUp';
+import Modal from '../../components/modules/Modal/Modal';
 
 const PostWrap = styled.div`
-  padding: 20px 16px;
   border-bottom: 0.5px solid ${props => props.theme.color.gray.d2};
+  padding: 20px 16px;
 `;
 
 const CommentUl = styled.ul`
@@ -20,6 +21,7 @@ const CommentUl = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  margin-bottom: 68px;
 `;
 
 const PostDetail = () => {
@@ -48,22 +50,76 @@ const PostDetail = () => {
   useEffect(() => {
     getPostDetailData();
   }, []);
+  const navigate = useNavigate();
 
+  // 댓글 불러오기
+  const [comments, setComments] = useState([]);
+
+  const setCommentList = async () => {
+    try {
+      const res = await axios.get(
+        `https://mandarin.api.weniv.co.kr/post/${id}/comments`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+          },
+        },
+      );
+      const data = res.data.comments;
+      setComments(data);
+      console.log(data);
+    } catch (error) {}
+  };
+  useEffect(() => {
+    setCommentList();
+  }, []);
+
+  const [dropUpShow, setDropUpShow] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
+  const clickedComment = useRef();
+  const [isMy, setIsMy] = useState(false);
+  const [commentId, setCommentId] = useState('');
   return (
     <>
       <CommonWrapper>
         <PostWrap>{postData && <Post data={postData} />}</PostWrap>
         {postData && (
           <CommentUl>
-            {postData?.comments?.map(data => (
-              <Comment data={data} />
+            {comments.map(data => (
+              <Comment
+                ref={clickedComment}
+                // accountname={data.author.accountname}
+                data={data}
+                commentId={data.id}
+                setDropUpShow={setDropUpShow}
+                setIsMy={setIsMy}
+                setCommentId={setCommentId}
+              />
             ))}
           </CommentUl>
         )}
-        <PostCommentInput />
+        <PostCommentInput postId={id} setCommentList={setCommentList} />
+        <div className={dropUpShow ? '' : 'hide'}>
+          <DropUp
+            menu={isMy ? ['삭제하기'] : ['신고하기']}
+            setDropUpShow={setDropUpShow}
+            setModalShow={setModalShow}
+          />
+        </div>
+        <div className={modalShow ? '' : 'hide'}>
+          <Modal
+            title={isMy ? '댓글을 삭제할까요?' : '댓글을 신고할까요?'}
+            btnLeft={isMy ? '삭제' : '신고'}
+            btnRight='취소'
+            isMy={isMy}
+            setModalShow={setModalShow}
+            postId={id}
+            commentId={commentId}
+          />
+        </div>
       </CommonWrapper>
     </>
   );
 };
-
 export default PostDetail;
