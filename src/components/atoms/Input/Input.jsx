@@ -60,6 +60,7 @@ const Input = ({
   onInput,
   value,
   onChange,
+  recoilKey,
   ...props
 }) => {
   return (
@@ -74,6 +75,7 @@ const Input = ({
           className={className}
           onInput={onInput}
           onChange={onChange}
+          recoilKey={recoilKey}
           {...props}
         ></StyledInput>
       ) : (

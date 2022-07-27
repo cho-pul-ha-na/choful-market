@@ -1,4 +1,4 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Input from '../../atoms/Input/Input';
 import Label from '../../atoms/Label/Label';
@@ -27,10 +27,10 @@ const InputBox = ({
   needValid,
   inputValue,
 }) => {
-  const setInputValue = useSetRecoilState(recoilKey);
-  const thisAtom = useRecoilValue(recoilKey);
+  const [inputValueState, setInputValueState] = useRecoilState(recoilKey);
+
   const putInputValue = e => {
-    setInputValue(e.target.value);
+    setInputValueState(e.target.value);
   };
 
   return (
@@ -50,7 +50,7 @@ const InputBox = ({
         onInput={putInputValue}
         id={id}
       />
-      {needValid && thisAtom.length !== 0 && (
+      {needValid && inputValueState.length !== 0 && (
         <ErrorP className={isValid && 'green'}>{errMessage}</ErrorP>
       )}
     </div>
