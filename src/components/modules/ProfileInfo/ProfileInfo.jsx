@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 import Profile from '../../atoms/Profile/Profile';
 import MyProfileBtn from '../MyprofileBtn/MyProfileBtn';
@@ -123,10 +123,10 @@ const ProfileInfo = () => {
       <ProfileInfoSection>
         <CommonWrapper>
           <FollowWrap>
-            <div>
+            <Link to={`/profile/${userinfo.accountname}/follower`}>
               <FollowNum>{followerCount}</FollowNum>
               <FollowSpan>followers</FollowSpan>
-            </div>
+            </Link>
             <div>
               <Profile
                 size='110px'
@@ -134,10 +134,10 @@ const ProfileInfo = () => {
                 imgSrc={userinfo.image}
               />
             </div>
-            <div>
+            <Link to={`/profile/${userinfo.accountname}/following`}>
               <FollowNum className='gray'>{followingCount}</FollowNum>
               <FollowSpan>followings</FollowSpan>
-            </div>
+            </Link>
           </FollowWrap>
           <ProfileH1>{userinfo.username}</ProfileH1>
           <ProfileH2>@ {userinfo.accountname}</ProfileH2>
