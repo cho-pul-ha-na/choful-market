@@ -65,6 +65,7 @@ function App() {
         />
         <Route path='/profile/:id/edit' element={<MyProfileEdit />} />
         <Route path='/profile/:id/follower' element={<Followers />} />
+        <Route path='/profile/:id/following' element={<Followers />} />
         <Route
           path='/profile/:id/addProduct'
           element={<MyProfileAddProduct />}
