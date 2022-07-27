@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import Profile from '../../atoms/Profile/Profile';
 import Icon from '../../atoms/Icon/Icon';
-import UserProfile from '../../../assets/comment-profile.png';
+import { accountnameValue } from '../../../atoms';
+import { useRecoilValue } from 'recoil';
 
 const CommentUserInfoLi = styled.li`
   display: flex;
@@ -37,25 +38,64 @@ const CommentContent = styled.p`
   line-height: 18px;
   margin-top: 16px;
   padding-right: 10px;
+  color: #333333;
   word-break: keep-all;
   word-wrap: break-word;
 `;
 
-const Comment = ({ data }) => {
-  console.log(data);
-  // 아직 댓글달기 기능이 없어서 댓글 기능 추가 후 진행예정
+const Comment = ({
+  data,
+  isMyComment,
+  setDropUpShow,
+  setIsMy,
+  setCommentId,
+}) => {
+  let timeMsg = '';
+  const setTime = () => {
+    const createdTime = data.createdAt;
+    const now = Date.now();
+    const created = Date.parse(createdTime);
+    const subtrac = Math.floor((now - created) / 1000 / 60);
+    if (subtrac < 1) {
+      timeMsg = '방금';
+    } else if (subtrac < 60) {
+      timeMsg = `${subtrac}분 전`;
+    } else {
+      timeMsg = createdTime.slice(0, 10);
+    }
+  };
+  setTime();
+  const userAccountname = useRecoilValue(accountnameValue);
+
+  const handleMoreBtn = () => {
+    setIsMy(userAccountname === data.author.accountname);
+    setDropUpShow(true);
+    setCommentId(data.id);
+  };
+
   return (
     <CommentUserInfoLi>
-      <Profile size='42px' imgSrc={UserProfile} imgAlt='프로필 이미지' />
+      <Profile
+        size='42px'
+        imgSrc={data.author.image}
+        imgAlt='프로필 이미지'
+        borderRadius={props => props.theme.borderRadius.circle}
+      />
       <CommentTxt>
         <UserInfo>
-          <UserId>도촌동 풀벌레 찌르찌르</UserId>
-          <Time>ㆍ5분전</Time>
-          <Icon size='24px' xpoint='-54px' ypoint='-192px' />
+          <UserId>{data.author.username}</UserId>
+          <Time>{timeMsg}</Time>
+          <Icon
+            id={data.id}
+            accountname={data.author.accountname}
+            size='24px'
+            xpoint='-54px'
+            ypoint='-192px'
+            isMyComment={isMyComment}
+            onClick={handleMoreBtn}
+          />
         </UserInfo>
-        <CommentContent>
-          나도 어디서 꿀리진 않어 아무것도 난 한게 없어 너도 어디서 꿀리진 않닌
-        </CommentContent>
+        <CommentContent>{data.content}</CommentContent>
       </CommentTxt>
     </CommentUserInfoLi>
   );
