@@ -15,6 +15,10 @@ import {
   searchUserData,
   postTxtValue,
   uploadImgSrcArray,
+  productNameAtom,
+  productPriceAtom,
+  productLinkAtom,
+  productImgAtom,
 } from '../../../atoms';
 import { useEffect } from 'react';
 
@@ -62,6 +66,41 @@ const Header = () => {
   const handleButtonClick = () => {
     navigate(-1);
   };
+
+  //상품등록 버튼
+  const [productImg, setProductImgSrc] = useRecoilState(productImgAtom);
+  const productName = useRecoilValue(productNameAtom);
+  const productPrice = useRecoilValue(productPriceAtom);
+  const productLink = useRecoilValue(productLinkAtom);
+
+  const onClickPostUploadBtn = async e => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(
+        'https://mandarin.api.weniv.co.kr/product',
+        {
+          product: {
+            itemName: productName,
+            price: parseInt(productPrice),
+            link: productLink,
+            itemImage: productImg,
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+          },
+        },
+      );
+      console.log(res);
+      navigate(`/profile/${accountname}`);
+      setProductImgSrc();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // 포스트 업로드 버튼
   const txtValue = useRecoilValue(postTxtValue);
   const [uploadImgSrc, setUploadImgSrc] = useRecoilState(uploadImgSrcArray);
@@ -202,6 +241,8 @@ const Header = () => {
                     ? onClickUploadBtn
                     : path.includes('edit')
                     ? onClickEditSaveBtn
+                    : path.includes('addProduct')
+                    ? onClickPostUploadBtn
                     : null
                 }
               />
