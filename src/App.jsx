@@ -25,17 +25,9 @@ function App() {
 
   const [isLoginState, setIsLoginState] = useRecoilState(isLogin);
 
-  let location = useLocation();
-
-  useEffect(() => {
-    setIsLoginState(() => {
-      if (token) {
-        return true;
-      } else {
-        return false;
-      }
-    });
-  }, [location]);
+  setIsLoginState(() => {
+    return token ? true : false;
+  });
 
   return (
     <>
