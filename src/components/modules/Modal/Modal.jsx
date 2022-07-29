@@ -50,35 +50,18 @@ const Modal = ({
   btnLeft,
   btnRight,
   setModalShow,
+  excutfunc,
   setCommentList,
   postId,
   commentId,
   isMy,
 }) => {
-  const token = localStorage.getItem('token');
-  const removeComment = async () => {
-    try {
-      const res = await axios.delete(
-        `https://mandarin.api.weniv.co.kr/post/${postId}/comments/${commentId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      console.log(res.data);
-      setCommentList();
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
     <Overlay onClick={() => setModalShow(false)}>
       <ModalBox>
         <ModalTit>{title}</ModalTit>
         <ModalButtons>
-          <ModalBtn className='caution' onClick={isMy ? removeComment : null}>
+          <ModalBtn className='caution' onClick={excutfunc}>
             {btnLeft}
           </ModalBtn>
           <VerticalBar />
