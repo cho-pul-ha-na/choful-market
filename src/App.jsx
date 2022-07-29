@@ -74,7 +74,7 @@ function App() {
           }
         />
         <Route
-          path='upload/:postId'
+          path='/upload/:postId'
           element={
             isLoginState ? (
               <PostUpload />

@@ -92,7 +92,7 @@ const PostUserInfo = ({ author, postId }) => {
 
       <div className={dropUpShow ? null : 'hide'}>
         <DropUp
-          menu={['삭제하기', '수정하기']}
+          menu={isMy ? ['삭제하기', '수정하기'] : ['신고하기']}
           setDropUpShow={setDropUpShow}
           setModalShow={setModalShow}
           postId={postId}
