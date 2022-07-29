@@ -79,7 +79,6 @@ const PostDetail = () => {
   const clickedComment = useRef();
   const [isMy, setIsMy] = useState(false);
   const [commentId, setCommentId] = useState('');
-
   const removeComment = async () => {
     try {
       const res = await axios.delete(
@@ -97,7 +96,6 @@ const PostDetail = () => {
       console.log(error);
     }
   };
-
   return (
     <>
       <CommonWrapper>
@@ -119,9 +117,10 @@ const PostDetail = () => {
         <PostCommentInput postId={id} setCommentList={setCommentList} />
         <div className={dropUpShow ? '' : 'hide'}>
           <DropUp
-            menu={isMy ? ['삭제하기'] : ['신고하기']}
+            menu={isMy ? ['삭제하기', '수정하기'] : ['신고하기']}
             setDropUpShow={setDropUpShow}
             setModalShow={setModalShow}
+            postId={id}
           />
         </div>
         <div className={modalShow ? '' : 'hide'}>

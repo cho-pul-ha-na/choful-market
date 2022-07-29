@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Overlay = styled.div`
@@ -32,14 +33,25 @@ const DropUpLi = styled.li`
   font-size: 14px;
 `;
 
-const DropUp = ({ menu, setDropUpShow, setModalShow }) => {
+const DropUp = ({ menu, setDropUpShow, setModalShow, postId }) => {
+  const navigate = useNavigate();
+  const onClickPostEdit = () => {
+    console.log(postId);
+    // 밑의 함수가 작동하지 않습니다.
+    navigate(`/upload/${postId}`);
+  };
   return (
     <Overlay onClick={() => setDropUpShow(false)}>
       <DropUpWrapper>
         <DragBar />
         <ul>
           {menu.map((item, index) => (
-            <DropUpLi onClick={() => setModalShow(true)} key={index}>
+            <DropUpLi
+              onClick={
+                item === '수정하기' ? onClickPostEdit : () => setModalShow(true)
+              }
+              key={index}
+            >
               {item}
             </DropUpLi>
           ))}
