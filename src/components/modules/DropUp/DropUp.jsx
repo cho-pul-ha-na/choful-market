@@ -1,6 +1,14 @@
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
+const scrollUp = keyframes`
+  0% {
+    transform: translateY(130px)
+  }
+  100% {
+    transform: translateY(0)
+  }
+`;
 const Overlay = styled.div`
   position: fixed;
   top: 0;
@@ -19,6 +27,7 @@ const DropUpWrapper = styled.div`
   overflow: auto;
   border-radius: 10px 10px 0 0;
   background-color: #fff;
+  animation: ${scrollUp} 0.5s ease-in-out;
 `;
 const DragBar = styled.div`
   width: 50px;
@@ -37,7 +46,6 @@ const DropUp = ({ menu, setDropUpShow, setModalShow, postId }) => {
   const navigate = useNavigate();
   const onClickPostEdit = () => {
     console.log(postId);
-    // 밑의 함수가 작동하지 않습니다.
     navigate(`/upload/${postId}`);
   };
   return (
