@@ -21,6 +21,7 @@ const ProductForm = styled.form`
   display: flex;
   flex-direction: column;
   padding: 30px 14.7%;
+  gap: 16px;
   & label:not(:first-of-type) {
     margin-top: 16px;
   }
@@ -117,7 +118,7 @@ const MyProfileAddProduct = () => {
           color={props => props.theme.color.gray.d4}
           label='가격'
           htmlFor='product-price'
-          type='text'
+          type='number'
           id='prodcut-price'
           placeholder='숫자만 입력 가능합니다.'
           recoilKey={productPriceAtom}
