@@ -165,16 +165,18 @@ const Post = ({ data }) => {
             ) : (
               <PostText>{postData.content}</PostText>
             )}
-            {postData.image ? (
-              <Link to={`/post/${postData.id}`}>
-                <Img
-                  width='100%'
-                  borderRadius={props => props.theme.borderRadius.lv2}
-                  imgSrc={postData.image}
-                  imgAlt='게시글 이미지'
-                />
-              </Link>
-            ) : null}
+            {postData.image &&
+              postData.image.split(',').map(item => (
+                <Link to={`/post/${item.id}`}>
+                  <Img
+                    width='100%'
+                    borderRadius={props => props.theme.borderRadius.lv2}
+                    imgSrc={item}
+                    imgAlt='게시글 이미지'
+                  />
+                </Link>
+              ))}
+
             <IconContainer>
               <div onClick={hearted ? onClickDislikeBtn : onClickLikeBtn}>
                 <dt className='ir'>좋아요</dt>
