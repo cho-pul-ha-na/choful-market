@@ -226,7 +226,7 @@ const Header = () => {
                 fontWeight='500'
                 lineHeight='18px'
                 padding='7px 0'
-                bgColor={props => props.theme.color.main.green}
+                bgColor={props => props.theme.color.main.subGreen}
                 txtColor={props => props.theme.color.text.white}
                 borderRadius='32px'
                 className={`btn_header + ${
@@ -235,7 +235,11 @@ const Header = () => {
                   path.includes('addProduct')
                     ? 'show'
                     : null
-                }`}
+                } + ${
+                  productImg && productName && productLink && productPrice
+                    ? 'btn_next'
+                    : null
+                } + ${txtValue && uploadImgSrc ? 'btn_next' : null}`}
                 onClick={
                   path.includes('upload')
                     ? onClickUploadBtn
