@@ -6,6 +6,11 @@ const StyledInput = styled.input`
   border: none;
   border-bottom: 1px solid ${props => props.theme.color.gray.d2};
   padding: 8px 0;
+  -moz-appearance: textfield;
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
   &::placeholder {
     font-size: 14px;
     line-height: 1;
