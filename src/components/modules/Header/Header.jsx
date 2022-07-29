@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from '../../atoms/Icon/Icon';
 import Button from '../../atoms/Button/Button';
@@ -126,7 +126,7 @@ const Header = () => {
       );
       console.log(res);
       const postId = res.data.post.id;
-      navigate(`/post/${postId}`);
+      navigate(`/post/${postId}`, { replace: true });
       setUploadImgSrc([]);
     } catch (error) {
       console.log(error);
@@ -177,14 +177,41 @@ const Header = () => {
       setAccountname(data.accountname);
       setIntro(data.intro);
       setProfileImgSrcValue(data.image);
-      console.log(res);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
     navigate(`/profile/${accountname}`);
   };
 
+  // 포스트 수정 함수
+  const postId = useParams();
+  const editPostBtn = async e => {
+    const images = uploadImgSrc.join(', ');
+    e.preventDefault();
+    try {
+      const res = await axios.post(
+        `https://mandarin.api.weniv.co.kr/post/${postId}`,
+        {
+          post: {
+            content: txtValue,
+            image: images,
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+          },
+        },
+      );
+      console.log(res);
+      const postId = res.data.post.id;
+      navigate(`/post/${postId}`, { replace: true });
+      setUploadImgSrc([]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       {!path.includes('login') ? (
@@ -221,7 +248,13 @@ const Header = () => {
                 }`}
               />
               <Button
-                label={path.includes('upload') ? '업로드' : '저장'}
+                label={
+                  postId && path.includes('upload')
+                    ? '수정'
+                    : path.includes('upload')
+                    ? '업로드'
+                    : '저장'
+                }
                 fontSize='14px'
                 fontWeight='500'
                 lineHeight='18px'
@@ -241,7 +274,9 @@ const Header = () => {
                     : null
                 } + ${txtValue && uploadImgSrc ? 'btn_next' : null}`}
                 onClick={
-                  path.includes('upload')
+                  postId && path.includes('upload')
+                    ? editPostBtn
+                    : path.includes('upload')
                     ? onClickUploadBtn
                     : path.includes('edit')
                     ? onClickEditSaveBtn

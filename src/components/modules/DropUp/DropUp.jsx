@@ -1,5 +1,14 @@
-import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import styled, { keyframes } from 'styled-components';
 
+const scrollUp = keyframes`
+  0% {
+    transform: translateY(130px)
+  }
+  100% {
+    transform: translateY(0)
+  }
+`;
 const Overlay = styled.div`
   position: fixed;
   top: 0;
@@ -18,6 +27,7 @@ const DropUpWrapper = styled.div`
   overflow: auto;
   border-radius: 10px 10px 0 0;
   background-color: #fff;
+  animation: ${scrollUp} 0.5s ease-in-out;
 `;
 const DragBar = styled.div`
   width: 50px;
@@ -32,14 +42,24 @@ const DropUpLi = styled.li`
   font-size: 14px;
 `;
 
-const DropUp = ({ menu, setDropUpShow, setModalShow }) => {
+const DropUp = ({ menu, setDropUpShow, setModalShow, postId }) => {
+  const navigate = useNavigate();
+  const onClickPostEdit = () => {
+    console.log(postId);
+    navigate(`/upload/${postId}`);
+  };
   return (
     <Overlay onClick={() => setDropUpShow(false)}>
       <DropUpWrapper>
         <DragBar />
         <ul>
           {menu.map((item, index) => (
-            <DropUpLi onClick={() => setModalShow(true)} key={index}>
+            <DropUpLi
+              onClick={
+                item === '수정하기' ? onClickPostEdit : () => setModalShow(true)
+              }
+              key={index}
+            >
               {item}
             </DropUpLi>
           ))}

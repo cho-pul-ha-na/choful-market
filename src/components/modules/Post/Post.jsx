@@ -155,7 +155,7 @@ const Post = ({ data }) => {
       {postData?.map(postData => (
         <li key={postData.id}>
           <Link to={`/yourProfile/${postData.author.accountname}`}>
-            <PostUserInfo author={postData.author} />
+            <PostUserInfo author={postData.author} postId={postData.id} />
           </Link>
           <PostContent>
             {!path.includes('post') ? (
