@@ -64,7 +64,17 @@ function App() {
         />
         <Route path='/post/:id' element={<PostDetail />} />
         <Route
-          path='/upload'
+          path='/upload/'
+          element={
+            isLoginState ? (
+              <PostUpload />
+            ) : (
+              <Navigate replace={true} to='/login' />
+            )
+          }
+        />
+        <Route
+          path='upload/:postId'
           element={
             isLoginState ? (
               <PostUpload />
