@@ -36,22 +36,6 @@ const InputBox = ({
 
   const [classname, setClassname] = useState('');
 
-  // const inputBorder = activeBorder;
-
-  // const handleFocusBorder = border => {
-  //   setActiveBorder({
-  //     ...activeBorder,
-  //     [border]: false,
-  //   });
-  // };
-
-  // const handleBlurBorder = border => {
-  //   setActiveBorder({
-  //     ...activeBorder,
-  //     [border]: false,
-  //   });
-  // };
-
   return (
     <div>
       <Label
