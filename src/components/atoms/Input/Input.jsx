@@ -85,8 +85,8 @@ const Input = ({
           onInput={onInput}
           onChange={onChange}
           recoilKey={recoilKey}
-          onBlur={() => setClassname('')}
           onFocus={() => setClassname('show-border-bottom')}
+          onBlur={() => setClassname('')}
           {...props}
         ></StyledInput>
       ) : (
