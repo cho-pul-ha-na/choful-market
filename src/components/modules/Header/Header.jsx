@@ -19,8 +19,12 @@ import {
   productPriceAtom,
   productLinkAtom,
   productImgAtom,
+  isLogin,
 } from '../../../atoms';
 import { useEffect } from 'react';
+import DropUp from '../DropUp/DropUp';
+import Modal from '../Modal/Modal';
+import { useState } from 'react';
 
 const HeaderBox = styled.header`
   width: 100%;
@@ -212,6 +216,17 @@ const Header = () => {
       console.log(error);
     }
   };
+  const handleLogoutBtn = () => {
+    setDropUpShow(true);
+  };
+  const setIsLogin = useSetRecoilState(isLogin);
+  const logoutFunc = () => {
+    localStorage.removeItem('token');
+    setIsLogin(false);
+    navigate('/');
+  };
+  const [dropUpShow, setDropUpShow] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
   return (
     <>
       {!path.includes('login') ? (
@@ -246,6 +261,7 @@ const Header = () => {
                     ? 'hide'
                     : null
                 }`}
+                onClick={handleLogoutBtn}
               />
               <Button
                 label={
@@ -285,6 +301,22 @@ const Header = () => {
                     : null
                 }
               />
+              <div className={dropUpShow ? null : 'hide'}>
+                <DropUp
+                  menu={['설정 및 개인정보', '로그아웃']}
+                  setModalShow={setModalShow}
+                  setDropUpShow={setDropUpShow}
+                />
+              </div>
+              <div className={modalShow ? null : 'hide'}>
+                <Modal
+                  title='로그아웃 하시겠어요?😭'
+                  btnLeft='로그아웃'
+                  btnRight='취소'
+                  setModalShow={setModalShow}
+                  excutfunc={logoutFunc}
+                />
+              </div>
             </HeaderWrapper>
           </HeaderBox>
 
