@@ -37,6 +37,9 @@ const StyledInput = styled.input`
       color: ${props => props.theme.color.gray.d3};
     }
   }
+  &.show-border-bottom {
+    border-bottom: 1px solid ${props => props.theme.color.main.green};
+  }
 `;
 
 const StyledTextArea = styled.textarea`
@@ -66,6 +69,7 @@ const Input = ({
   value,
   onChange,
   recoilKey,
+  setClassname,
   ...props
 }) => {
   return (
@@ -81,6 +85,8 @@ const Input = ({
           onInput={onInput}
           onChange={onChange}
           recoilKey={recoilKey}
+          onBlur={() => setClassname('')}
+          onFocus={() => setClassname('show-border-bottom')}
           {...props}
         ></StyledInput>
       ) : (
