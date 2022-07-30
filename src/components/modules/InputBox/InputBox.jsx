@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Input from '../../atoms/Input/Input';
@@ -33,6 +34,24 @@ const InputBox = ({
     setInputValueState(e.target.value);
   };
 
+  const [classname, setClassname] = useState('');
+
+  // const inputBorder = activeBorder;
+
+  // const handleFocusBorder = border => {
+  //   setActiveBorder({
+  //     ...activeBorder,
+  //     [border]: false,
+  //   });
+  // };
+
+  // const handleBlurBorder = border => {
+  //   setActiveBorder({
+  //     ...activeBorder,
+  //     [border]: false,
+  //   });
+  // };
+
   return (
     <div>
       <Label
@@ -44,11 +63,13 @@ const InputBox = ({
         htmlFor={id}
       />
       <Input
+        className={classname}
         type={type}
         placeholder={placeholder}
         value={inputValue}
         onInput={putInputValue}
         id={id}
+        setClassname={setClassname}
       />
       {needValid && inputValueState.length !== 0 && (
         <ErrorP className={isValid && 'green'}>{errMessage}</ErrorP>
