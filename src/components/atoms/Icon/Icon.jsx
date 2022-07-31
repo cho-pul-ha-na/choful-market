@@ -10,6 +10,9 @@ const IconCss = css`
   background: url(${iconSprite}) ${props => props.xpoint}
     ${props => props.ypoint} no-repeat;
   cursor: pointer;
+  position: ${props => props.position};
+  top: ${props => props.top};
+  right: ${props => props.right};
   &.album-active {
     background-position: -146px -10px;
   }
@@ -27,6 +30,9 @@ const IconSpan = styled.span`
   ${IconCss};
   &.right {
     float: right;
+  }
+  &.hide {
+    display: none;
   }
 `;
 
@@ -54,6 +60,9 @@ const Icon = ({
   className,
   onClick,
   id,
+  position,
+  top,
+  right,
 }) => {
   return isLink ? (
     <IconLink
@@ -72,6 +81,9 @@ const Icon = ({
       className={className}
       onClick={onClick}
       id={id}
+      position={position}
+      top={top}
+      right={right}
     />
   );
 };
