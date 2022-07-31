@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import Icon from '../../atoms/Icon/Icon';
 import Img from '../../atoms/Img/Img';
 
 const GalleryWrapper = styled.div`
@@ -18,12 +19,14 @@ const GalleryWrapper = styled.div`
   }
 `;
 
+const ImgLink = styled(Link)`
+  position: relative;
+`;
+
 const GalleryPost = () => {
   const token = localStorage.getItem('token');
-
   const path = useLocation().pathname;
   const { id } = useParams();
-
   const [postData, setPostData] = useState([]);
 
   const getMyPostData = async () => {
@@ -47,19 +50,30 @@ const GalleryPost = () => {
     if (path.includes('yourProfile') || path.includes('profile')) {
       getMyPostData();
     }
+    console.log(postData);
   }, []);
 
   return (
     <GalleryWrapper>
       {postData.map(postData =>
         postData.image ? (
-          <Link to={`/post/${postData.id}`}>
+          <ImgLink to={`/post/${postData.id}`}>
             <Img
               key={postData.id}
-              imgSrc={postData.image}
+              imgSrc={postData.image.split(',')[0]}
               imgAlt='게시글 갤러리뷰 이미지'
             />
-          </Link>
+            <Icon
+              position='absolute'
+              top='5px'
+              right='5px'
+              size='20px'
+              xpoint='-236px'
+              ypoint='-139px'
+              title='여러장'
+              className={postData.image.split(',').length === 1 && 'hide'}
+            />
+          </ImgLink>
         ) : null,
       )}
     </GalleryWrapper>
