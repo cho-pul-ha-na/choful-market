@@ -9,9 +9,6 @@ const UserInfoWrapper = styled.div`
 `;
 
 const UserInfoDiv = styled.div`
-  padding: ${props => (props.className === 'chat' ? '2px 0 3px' : '5px 0 6px')};
-  margin: ${props =>
-    props.className === 'chat' ? '0 auto 20px' : '0 auto 16px'};
   box-sizing: border-box;
   display: flex;
 `;
@@ -49,18 +46,14 @@ const UserInfoDate = styled.span`
   flex-direction: column-reverse;
 `;
 
-const UserInformation = props => {
+const UserInformation = ({ imgsrc, name, text }) => {
   return (
     <UserInfoWrapper>
-      <UserInfoDiv className={props.className}>
-        <Profile size='42px' imgSrc={DefaultProfile} imgAlt='프로필 이미지' />
+      <UserInfoDiv>
+        <Profile size='42px' imgSrc={imgsrc} imgAlt='프로필 이미지' />
         <UserInfoUl>
-          <UserInfoLi className={props.className}>
-            애월읍 위니브 감귤농장
-          </UserInfoLi>
-          <UserInfoLi className={props.className}>
-            이번에 정정 언제하맨마씸?
-          </UserInfoLi>
+          <UserInfoLi>{name}</UserInfoLi>
+          <UserInfoLi>{text}</UserInfoLi>
         </UserInfoUl>
         <UserInfoDate>2020.10.25</UserInfoDate>
       </UserInfoDiv>
