@@ -36,6 +36,8 @@ const HeaderBox = styled.header`
   border-bottom: 0.5px solid ${props => props.theme.color.gray.d2};
   background-color: white;
   z-index: 10;
+  position: fixed;
+  top: 0;
   &.hide {
     display: none;
   }
@@ -255,7 +257,7 @@ const Header = () => {
               <HeaderSpan
                 className={path.includes('chat/room') ? null : 'hide'}
               >
-                도촌동풀벌레 찌르찌르
+                목동뚜벅초
               </HeaderSpan>
               <Icon
                 size='24px'
