@@ -19,6 +19,7 @@ const PostWrapper = styled.ul`
 
 const PostContent = styled.div`
   padding-left: 54px;
+  word-wrap: break-word;
 `;
 
 const PostText = styled.p`
