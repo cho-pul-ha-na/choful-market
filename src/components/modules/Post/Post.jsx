@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 import Img from '../../atoms/Img/Img';
-import Icon from '../../atoms/Icon/Icon';
 import PostUserInfo from '../PostUserInfo/PostUserInfo';
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useMatch, useParams } from 'react-router-dom';
 import axios from 'axios';
 import chatIcon from '../../../assets/icon-message-circle.png';
-import heartIcon from '../../../assets/icon-heart.png';
-import activeHeartIcon from '../../../assets/icon-heart-active.png';
+import LikeBtn from '../LikeBtn/LikeBtn';
+
 const PostWrapper = styled.ul`
   display: flex;
   flex-direction: column;
@@ -75,11 +74,9 @@ const Post = ({ data }) => {
   const homeMatch = useMatch('/');
 
   const path = useLocation().pathname;
-  const { id } = useParams();
+  let { id } = useParams();
 
   const [postData, setPostData] = useState([]);
-  const [hearted, setHearted] = useState(false);
-  const [heartCount, setHeartCount] = useState(postData.heartCount);
 
   const changeDateFormat = date => {
     const year = date.slice(0, 4);
@@ -88,50 +85,6 @@ const Post = ({ data }) => {
 
     return `${year}년 ${month}월 ${day}일`;
   };
-  // 좋아요 기능
-  const onClickLikeBtn = async e => {
-    e.preventDefault();
-    try {
-      const res = await axios.post(
-        `https://mandarin.api.weniv.co.kr/post/${id}/heart`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      console.log(res);
-      const data = res.data.post;
-      setHeartCount(data.heartCount);
-      setHearted(true);
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const onClickDislikeBtn = async e => {
-    e.preventDefault();
-    try {
-      const res = await axios.delete(
-        `https://mandarin.api.weniv.co.kr/post/${id}/unheart`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      const data = res.data.post;
-      setHeartCount(data.heartCount);
-      setHearted(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const getMyPostData = async () => {
     try {
       const res = await axios.get(
@@ -187,16 +140,7 @@ const Post = ({ data }) => {
                   ))}
             </PostImgLink>
             <IconContainer>
-              <div onClick={hearted ? onClickDislikeBtn : onClickLikeBtn}>
-                <dt className='ir'>좋아요</dt>
-                <Img
-                  width='24px'
-                  height='24px'
-                  imgSrc={hearted ? activeHeartIcon : heartIcon}
-                  imgAlt='좋아요 아이콘'
-                />
-                <CountNum>{postData.heartCount}</CountNum>
-              </div>
+              <LikeBtn heartCount={postData.heartCount} id={postData.id} />
               <div>
                 <Link to={`/post/${postData.id}`}>
                   <dt className='ir'>댓글</dt>
