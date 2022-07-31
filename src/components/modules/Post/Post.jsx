@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import Img from '../../atoms/Img/Img';
-
 import Icon from '../../atoms/Icon/Icon';
 import PostUserInfo from '../PostUserInfo/PostUserInfo';
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useMatch, useParams } from 'react-router-dom';
 import axios from 'axios';
-
+import chatIcon from '../../../assets/icon-message-circle.png';
+import heartIcon from '../../../assets/icon-heart.png';
+import activeHeartIcon from '../../../assets/icon-heart-active.png';
 const PostWrapper = styled.ul`
   display: flex;
   flex-direction: column;
@@ -18,9 +19,6 @@ const PostWrapper = styled.ul`
 
 const PostContent = styled.div`
   padding-left: 54px;
-  img {
-    margin-top: 16px;
-  }
 `;
 
 const PostText = styled.p`
@@ -58,7 +56,11 @@ const CreatedDate = styled.p`
   color: ${props => props.theme.color.gray.d4};
   margin-top: 16px;
 `;
-
+const PostImgLink = styled(Link)`
+  img {
+    margin-top: 16px;
+  }
+`;
 const Post = ({ data }) => {
   const token = localStorage.getItem('token');
 
@@ -167,36 +169,35 @@ const Post = ({ data }) => {
             )}
             {postData.image &&
               postData.image.split(',').map(item => (
-                <Link to={`/post/${item.id}`}>
+                <PostImgLink to={`/post/${postData.id}`}>
                   <Img
                     width='100%'
                     borderRadius={props => props.theme.borderRadius.lv2}
                     imgSrc={item}
                     imgAlt='게시글 이미지'
                   />
-                </Link>
+                </PostImgLink>
               ))}
 
             <IconContainer>
               <div onClick={hearted ? onClickDislikeBtn : onClickLikeBtn}>
                 <dt className='ir'>좋아요</dt>
-                <Icon
-                  size='20px'
-                  xpoint='-236px'
-                  ypoint='-179px'
-                  title='하트모양 아이콘'
-                  className={hearted ? 'heart-active' : null}
+                <Img
+                  width='24px'
+                  height='24px'
+                  imgSrc={hearted ? activeHeartIcon : heartIcon}
+                  imgAlt='좋아요 아이콘'
                 />
                 <CountNum>{postData.heartCount}</CountNum>
               </div>
               <div>
                 <Link to={`/post/${postData.id}`}>
                   <dt className='ir'>댓글</dt>
-                  <Icon
-                    size='20px'
-                    xpoint='-192px'
-                    ypoint='-142px'
-                    title='메시지 아이콘'
+                  <Img
+                    width='24px'
+                    height='24px'
+                    imgSrc={chatIcon}
+                    imgAlt='댓글 아이콘'
                   />
                   <CountNum>{postData.commentCount}</CountNum>
                 </Link>
