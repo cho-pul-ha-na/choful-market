@@ -288,7 +288,8 @@ const Header = () => {
                   productImg && productName && productLink && productPrice
                     ? 'btn_next'
                     : null
-                } + ${txtValue && uploadImgSrc ? 'btn_next' : null}`}
+                } + ${txtValue && uploadImgSrc ? 'btn_next' : null}
+                + ${accountname && username && userIntro ? 'btn_next' : null}`}
                 onClick={
                   postId && path.includes('upload')
                     ? editPostBtn
