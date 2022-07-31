@@ -56,9 +56,16 @@ const CreatedDate = styled.p`
   color: ${props => props.theme.color.gray.d4};
   margin-top: 16px;
 `;
+
 const PostImgLink = styled(Link)`
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
   img {
     margin-top: 16px;
+    &:not(:first-of-type) {
+      margin-left: 8px;
+    }
   }
 `;
 const Post = ({ data }) => {
@@ -82,8 +89,6 @@ const Post = ({ data }) => {
   };
   // 좋아요 기능
   const onClickLikeBtn = async e => {
-    console.log(token);
-    console.log(id);
     e.preventDefault();
     try {
       const res = await axios.post(
@@ -167,18 +172,19 @@ const Post = ({ data }) => {
             ) : (
               <PostText>{postData.content}</PostText>
             )}
-            {postData.image &&
-              postData.image.split(',').map(item => (
-                <PostImgLink to={`/post/${postData.id}`}>
-                  <Img
-                    width='100%'
-                    borderRadius={props => props.theme.borderRadius.lv2}
-                    imgSrc={item}
-                    imgAlt='게시글 이미지'
-                  />
-                </PostImgLink>
-              ))}
-
+            <PostImgLink to={`/post/${postData.id}`}>
+              {postData.image &&
+                postData.image
+                  .split(',')
+                  .map(item => (
+                    <Img
+                      width='100%'
+                      borderRadius={props => props.theme.borderRadius.lv2}
+                      imgSrc={item}
+                      imgAlt='게시글 이미지'
+                    />
+                  ))}
+            </PostImgLink>
             <IconContainer>
               <div onClick={hearted ? onClickDislikeBtn : onClickLikeBtn}>
                 <dt className='ir'>좋아요</dt>
