@@ -10,9 +10,6 @@ const IconCss = css`
   background: url(${iconSprite}) ${props => props.xpoint}
     ${props => props.ypoint} no-repeat;
   cursor: pointer;
-  &.heart-active {
-    background-position: -50px -236px;
-  }
   &.album-active {
     background-position: -146px -10px;
   }
