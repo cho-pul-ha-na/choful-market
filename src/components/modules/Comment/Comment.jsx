@@ -3,6 +3,7 @@ import Profile from '../../atoms/Profile/Profile';
 import Icon from '../../atoms/Icon/Icon';
 import { accountnameValue } from '../../../atoms';
 import { useRecoilValue } from 'recoil';
+import { Link } from 'react-router-dom';
 
 const CommentUserInfoLi = styled.li`
   display: flex;
@@ -75,15 +76,19 @@ const Comment = ({
 
   return (
     <CommentUserInfoLi>
-      <Profile
-        size='42px'
-        imgSrc={data.author.image}
-        imgAlt='프로필 이미지'
-        borderRadius={props => props.theme.borderRadius.circle}
-      />
+      <Link to={`/yourProfile/${data.author.accountname}`}>
+        <Profile
+          size='42px'
+          imgSrc={data.author.image}
+          imgAlt='프로필 이미지'
+          borderRadius={props => props.theme.borderRadius.circle}
+        />
+      </Link>
       <CommentTxt>
         <UserInfo>
-          <UserId>{data.author.username}</UserId>
+          <Link to={`/yourProfile/${data.author.accountname}`}>
+            <UserId>{data.author.username}</UserId>
+          </Link>
           <Time>{timeMsg}</Time>
           <Icon
             id={data.id}
