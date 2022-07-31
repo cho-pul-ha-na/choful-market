@@ -23,7 +23,6 @@ const FollowerLi = styled.li`
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  padding: 6px 0;
   a {
     display: flex;
     justify-content: space-between;
