@@ -222,6 +222,7 @@ const Header = () => {
   const setIsLogin = useSetRecoilState(isLogin);
   const logoutFunc = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('recoil-persist');
     setIsLogin(false);
     navigate('/');
   };
