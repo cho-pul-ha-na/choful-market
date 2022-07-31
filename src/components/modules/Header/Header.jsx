@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import {
+  useLocation,
+  useMatch,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from '../../atoms/Icon/Icon';
 import Button from '../../atoms/Button/Button';
@@ -107,6 +112,7 @@ const Header = () => {
 
   // 포스트 업로드 버튼
   const txtValue = useRecoilValue(postTxtValue);
+  const uploadMatch = useMatch('/upload');
   const [uploadImgSrc, setUploadImgSrc] = useRecoilState(uploadImgSrcArray);
 
   const onClickUploadBtn = async e => {
@@ -264,13 +270,7 @@ const Header = () => {
                 onClick={handleLogoutBtn}
               />
               <Button
-                label={
-                  postId && path.includes('upload')
-                    ? '수정'
-                    : path.includes('upload')
-                    ? '업로드'
-                    : '저장'
-                }
+                label={uploadMatch ? '업로드' : '저장'}
                 fontSize='14px'
                 fontWeight='500'
                 lineHeight='18px'
@@ -291,10 +291,10 @@ const Header = () => {
                 } + ${txtValue && uploadImgSrc ? 'btn_next' : null}
                 + ${accountname && username && userIntro ? 'btn_next' : null}`}
                 onClick={
-                  postId && path.includes('upload')
-                    ? editPostBtn
-                    : path.includes('upload')
+                  uploadMatch
                     ? onClickUploadBtn
+                    : path.includes('upload')
+                    ? editPostBtn
                     : path.includes('edit')
                     ? onClickEditSaveBtn
                     : path.includes('addProduct')
