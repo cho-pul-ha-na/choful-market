@@ -17,6 +17,7 @@ const Overlay = styled.div`
   right: 0;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 20;
+  cursor: auto;
 `;
 const DropUpWrapper = styled.div`
   position: fixed;
@@ -40,6 +41,7 @@ const DropUpLi = styled.li`
   padding: 14px 26px;
   font-weight: 400;
   font-size: 14px;
+  cursor: pointer;
 `;
 
 const DropUp = ({ menu, setDropUpShow, setModalShow, postId }) => {
