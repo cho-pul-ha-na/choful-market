@@ -8,7 +8,7 @@ import axios from 'axios';
 import { Link, useLocation, useParams } from 'react-router-dom';
 
 const FollowersWrapper = styled(CommonWrapper)`
-  padding: 24px 16px 0;
+  padding: 72px 16px 0;
 `;
 
 const FollowerUl = styled.ul`
