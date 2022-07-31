@@ -304,22 +304,6 @@ const Header = () => {
                     : null
                 }
               />
-              <div className={dropUpShow ? null : 'hide'}>
-                <DropUp
-                  menu={['설정 및 개인정보', '로그아웃']}
-                  setModalShow={setModalShow}
-                  setDropUpShow={setDropUpShow}
-                />
-              </div>
-              <div className={modalShow ? null : 'hide'}>
-                <Modal
-                  title='로그아웃 하시겠어요?😭'
-                  btnLeft='로그아웃'
-                  btnRight='취소'
-                  setModalShow={setModalShow}
-                  excutfunc={logoutFunc}
-                />
-              </div>
             </HeaderWrapper>
           </HeaderBox>
 
@@ -345,6 +329,22 @@ const Header = () => {
               />
             </HeaderWrapper>
           </HeaderBox>
+          <div className={dropUpShow ? null : 'hide'}>
+            <DropUp
+              menu={['설정 및 개인정보', '로그아웃']}
+              setModalShow={setModalShow}
+              setDropUpShow={setDropUpShow}
+            />
+          </div>
+          <div className={modalShow ? null : 'hide'}>
+            <Modal
+              title='로그아웃 하시겠어요?😭'
+              btnLeft='로그아웃'
+              btnRight='취소'
+              setModalShow={setModalShow}
+              excutfunc={logoutFunc}
+            />
+          </div>
         </>
       ) : (
         <></>
