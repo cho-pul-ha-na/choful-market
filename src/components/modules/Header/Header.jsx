@@ -165,17 +165,26 @@ const Header = () => {
     setSearchValue(e.target.value);
   };
 
-  const onClickEditSaveBtn = async e => {
+  const onClickProfileEditSaveBtn = async e => {
     e.preventDefault();
     try {
-      const res = await axios.put('https://mandarin.api.weniv.co.kr/user', {
-        user: {
-          username: username,
-          accountname: accountname,
-          intro: userIntro,
-          image: profileImgSrcValue,
+      const res = await axios.put(
+        'https://mandarin.api.weniv.co.kr/user',
+        {
+          user: {
+            username: username,
+            accountname: accountname,
+            intro: userIntro,
+            image: profileImgSrcValue,
+          },
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+          },
+        },
+      );
       let data = res.data.user;
       setUsername(data.username);
       setAccountname(data.accountname);
@@ -222,6 +231,7 @@ const Header = () => {
   const setIsLogin = useSetRecoilState(isLogin);
   const logoutFunc = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('recoil-persist');
     setIsLogin(false);
     navigate('/');
   };
@@ -296,7 +306,7 @@ const Header = () => {
                     : path.includes('upload')
                     ? onClickUploadBtn
                     : path.includes('edit')
-                    ? onClickEditSaveBtn
+                    ? onClickProfileEditSaveBtn
                     : path.includes('addProduct')
                     ? onClickPostUploadBtn
                     : null
