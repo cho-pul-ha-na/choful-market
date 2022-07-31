@@ -255,9 +255,19 @@ const Header = () => {
                 onInput={handleOnSearch}
               />
               <HeaderSpan
-                className={path.includes('chat/room') ? null : 'hide'}
+                className={
+                  path.includes('chat/room') || path.includes('follow')
+                    ? null
+                    : 'hide'
+                }
               >
-                목동뚜벅초
+                {path.includes('chat/room')
+                  ? '목동뚜벅초'
+                  : path.includes('follower')
+                  ? 'Follower'
+                  : path.includes('following')
+                  ? 'Following'
+                  : null}
               </HeaderSpan>
               <Icon
                 size='24px'
@@ -312,12 +322,7 @@ const Header = () => {
               <HeaderSpan className={path.length === 1 ? '' : 'hide'}>
                 초풀마켓 피드
               </HeaderSpan>
-              <HeaderSpan
-                className={path.includes('chat/room') ? null : 'hide'}
-              >
-                {/* 여기에 채팅하는 상대방 유저아이디 */}
-                도촌동풀벌레 찌르찌르
-              </HeaderSpan>
+
               <Icon
                 to='/search'
                 size='24px'
