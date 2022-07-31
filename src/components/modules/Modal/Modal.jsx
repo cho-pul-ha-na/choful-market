@@ -1,4 +1,3 @@
-import axios from 'axios';
 import styled from 'styled-components';
 
 const ModalBox = styled.div`
@@ -20,6 +19,7 @@ const Overlay = styled.div`
   right: 0;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 20;
+  cursor: auto;
 `;
 const ModalButtons = styled.div`
   display: flex;
@@ -30,6 +30,7 @@ const ModalBtn = styled.button`
   padding: 14px;
   font-weight: 400;
   font-size: 14px;
+  cursor: pointer;
   &.caution {
     color: ${props => props.theme.color.text.red};
   }

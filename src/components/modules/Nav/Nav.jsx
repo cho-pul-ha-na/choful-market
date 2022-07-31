@@ -22,6 +22,7 @@ const NavUl = styled.ul`
 const NavWrapper = styled(CommonWrapper)`
   display: flex;
   justify-content: space-between;
+  padding: 0;
 `;
 
 const NavLi = styled.li`
