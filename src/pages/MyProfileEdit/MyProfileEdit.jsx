@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import {
@@ -33,7 +32,7 @@ const MyProfileEdit = () => {
   const [isUsernameValid, setIsUsernameValid] = useState(false);
   const [usernameErrMsg, setUsernameErrMsg] = useState('');
   const userIntro = useRecoilValue(userIntroValue);
-  const { id } = useParams();
+  // const token = useRecoilValue(userDataAtom);
 
   const accountnameValidate = async () => {
     try {
@@ -61,7 +60,9 @@ const MyProfileEdit = () => {
       }
       setAccountnameErrMsg(msg);
       // 현재 본인 username일 때는 에러메시지 안뜨게 처리
-      if (id === accountname) {
+      const oldAccountName = userData.accountname;
+      if (oldAccountName === accountname) {
+        console.log(oldAccountName === accountname);
         setAccountnameErrMsg(null);
       }
     } catch (error) {
@@ -78,6 +79,7 @@ const MyProfileEdit = () => {
       setUsernameErrMsg('올바른 사용자이름이 아닙니다.');
     }
   };
+  const userData = useRecoilValue(userDataAtom);
   useEffect(() => {
     accountnameValidate();
   }, [accountname]);
