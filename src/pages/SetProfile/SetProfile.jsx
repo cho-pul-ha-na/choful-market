@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
+import axios from 'axios';
+
 import {
   accountnameValue,
   idValue,
@@ -15,30 +15,13 @@ import Button from '../../components/atoms/Button/Button';
 import { CommonWrapper } from '../../components/common/commonWrapper';
 import CustomFileInput from '../../components/modules/CustomFileInput/CustomFileInput';
 import InputBox from '../../components/modules/InputBox/InputBox';
-const FormWrapper = styled.div`
-  margin: 30px 34px;
-`;
-const FormTitle = styled.h1`
-  text-align: center;
-  font-weight: 500;
-  font-size: 24px;
-  margin-top: 30px;
-`;
-const InputWrap = styled.form`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  gap: 16px;
-  margin: 30px 0;
-`;
-const FormSubtitle = styled.h2`
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 14px;
-  text-align: center;
-  margin: 12px 0 30px;
-  color: ${props => props.theme.color.text.gray};
-`;
+import {
+  FormSubtitle,
+  FormTitle,
+  FormWrapper,
+  InputWrap,
+} from './setProfileStyle';
+
 const SetProfile = () => {
   const navigate = useNavigate();
 
@@ -67,7 +50,6 @@ const SetProfile = () => {
           image: profileImgSrcValue,
         },
       });
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -115,12 +97,10 @@ const SetProfile = () => {
 
   useEffect(() => {
     accountnameValidate();
-    console.log(accountname);
   }, [accountname]);
 
   useEffect(() => {
     usernameValid();
-    console.log(accountname);
   }, [username]);
 
   return (

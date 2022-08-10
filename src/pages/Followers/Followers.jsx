@@ -1,58 +1,17 @@
-import styled from 'styled-components';
-import Profile from '../../components/atoms/Profile/Profile';
-import FollwersProfile from '../../assets/comment-profile.png';
-import Button from '../../components/atoms/Button/Button';
-import { CommonWrapper } from '../../components/common/commonWrapper';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Link, useLocation, useParams } from 'react-router-dom';
+import axios from 'axios';
 
-const FollowersWrapper = styled(CommonWrapper)`
-  padding: 72px 16px 0;
-`;
-
-const FollowerUl = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-`;
-
-const FollowerLi = styled.li`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  a {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-  }
-`;
-
-const FollowerInfo = styled.div`
-  width: 280px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const FollowerUserName = styled.p`
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 18px;
-  margin-bottom: 6px;
-`;
-
-const FollowerIntro = styled.p`
-  font-size: 12px;
-  line-height: 15px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: ${props => props.theme.color.text.gray};
-`;
+import Profile from '../../components/atoms/Profile/Profile';
+import Button from '../../components/atoms/Button/Button';
+import {
+  FollowerInfo,
+  FollowerIntro,
+  FollowerLi,
+  FollowersWrapper,
+  FollowerUl,
+  FollowerUserName,
+} from './followersStyle';
 
 const Followers = () => {
   const token = localStorage.getItem('token');
