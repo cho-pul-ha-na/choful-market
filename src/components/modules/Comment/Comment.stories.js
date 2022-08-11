@@ -1,6 +1,5 @@
-import React from 'react';
+// import React from 'react';
 import Comment from './Comment';
-import { action } from '@storybook/addon-actions';
 import ProfileImg from '../../../assets/exampleImg/default-profile.png';
 
 export default {
