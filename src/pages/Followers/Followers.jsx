@@ -114,7 +114,7 @@ const Followers = () => {
               />
               <S.FollowerInfo>
                 <S.FollowerUserName>{followData.username}</S.FollowerUserName>
-                <S.ollowerIntro>{followData.intro}</S.ollowerIntro>
+                <S.FollowerIntro>{followData.intro}</S.FollowerIntro>
               </S.FollowerInfo>
             </Link>
             {followData.isfollow ? (

@@ -5,6 +5,7 @@ export const CommentUserInfoLi = styled.li`
   gap: 12px;
   justify-content: space-between;
 `;
+
 export const CommentTxt = styled.div`
   width: 100%;
 `;

@@ -4,9 +4,9 @@ import Profile from '../../components/atoms/Profile/Profile';
 import Input from '../../components/atoms/Input/Input';
 import Img from '../../components/atoms/Img/Img';
 import Icon from '../../components/atoms/Icon/Icon';
-import ChatInmg from '../../src/assets/chat-example.png';
+import ChatInmg from '../../../src/assets/chat-example.png';
 import { chatValue } from '../../atoms';
-import img3 from '../assets/exampleImg/feed-profile.png';
+import img3 from '../../assets/exampleImg/feed-profile.png';
 import * as S from './style';
 
 const ChatRoom = props => {
