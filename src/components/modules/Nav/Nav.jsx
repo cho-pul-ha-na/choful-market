@@ -1,49 +1,8 @@
 import { useMatch, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
 import { accountnameValue } from '../../../atoms';
 import Icon from '../../atoms/Icon/Icon';
-import { CommonWrapper } from '../../common/commonWrapper';
-
-const NavUl = styled.ul`
-  position: fixed;
-  width: 100%;
-  display: flex;
-  background-color: #fff;
-  border-top: 0.5px solid ${props => props.theme.color.gray.d2};
-  bottom: 0;
-  padding: 12px 0 6px;
-  z-index: 10;
-  &.hide {
-    display: none;
-  }
-`;
-
-const NavWrapper = styled(CommonWrapper)`
-  display: flex;
-  justify-content: space-between;
-  padding: 0;
-`;
-
-const NavLi = styled.li`
-  width: 84px;
-  display: flex;
-  flex-direction: column;
-  flex-basis: 1;
-  flex-shrink: 1;
-  align-items: center;
-  gap: 4px;
-`;
-
-const NavSpan = styled.span`
-  font-weight: 400;
-  font-size: 10px;
-  color: ${props => props.theme.color.text.gray};
-  &.activated {
-    color: ${props => props.theme.color.main.green};
-    font-weight: 500;
-  }
-`;
+import * as S from './style';
 
 const Nav = () => {
   const matchHome = useMatch('/');
@@ -55,7 +14,7 @@ const Nav = () => {
   const accountname = useRecoilValue(accountnameValue);
 
   return (
-    <NavUl
+    <S.NavUl
       className={
         path.includes('upload') ||
         path.includes('login') ||
@@ -67,8 +26,8 @@ const Nav = () => {
           : null
       }
     >
-      <NavWrapper>
-        <NavLi>
+      <S.NavWrapper>
+        <S.NavLi>
           {/* Span을 눌러도 Link가 옮겨갈 수 있게 만들기 */}
           <Icon
             to='/'
@@ -78,11 +37,11 @@ const Nav = () => {
             title='홈 아이콘'
             isLink
           />
-          <NavSpan className={matchHome !== null ? 'activated' : ''}>
+          <S.NavSpan className={matchHome !== null ? 'activated' : ''}>
             홈
-          </NavSpan>
-        </NavLi>
-        <NavLi>
+          </S.NavSpan>
+        </S.NavLi>
+        <S.NavLi>
           <Icon
             to='/chat/list'
             size='24px'
@@ -91,11 +50,11 @@ const Nav = () => {
             title='메시지 아이콘'
             isLink
           />
-          <NavSpan className={matchChat !== null ? 'activated' : ''}>
+          <S.NavSpan className={matchChat !== null ? 'activated' : ''}>
             채팅
-          </NavSpan>
-        </NavLi>
-        <NavLi>
+          </S.NavSpan>
+        </S.NavLi>
+        <S.NavLi>
           <Icon
             to='/upload'
             size='24px'
@@ -104,9 +63,9 @@ const Nav = () => {
             title='게시글 추가 아이콘'
             isLink
           />
-          <NavSpan active={null}>게시물 작성</NavSpan>
-        </NavLi>
-        <NavLi>
+          <S.NavSpan active={null}>게시물 작성</S.NavSpan>
+        </S.NavLi>
+        <S.NavLi>
           <Icon
             to={`/profile/${accountname}`}
             size='24px'
@@ -115,12 +74,12 @@ const Nav = () => {
             title='유저 아이콘'
             isLink
           />
-          <NavSpan className={matchProfile !== null ? 'activated' : ''}>
+          <S.NavSpan className={matchProfile !== null ? 'activated' : ''}>
             프로필
-          </NavSpan>
-        </NavLi>
-      </NavWrapper>
-    </NavUl>
+          </S.NavSpan>
+        </S.NavLi>
+      </S.NavWrapper>
+    </S.NavUl>
   );
 };
 
