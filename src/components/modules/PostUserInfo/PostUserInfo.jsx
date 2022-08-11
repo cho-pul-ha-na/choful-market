@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
+import { accountnameValue } from '../../../atoms';
 
+import axios from 'axios';
 import Profile from '../../atoms/Profile/Profile';
 import Icon from '../../atoms/Icon/Icon';
 import DropUp from '../DropUp/DropUp';
 import Modal from '../Modal/Modal';
-import axios from 'axios';
-import { accountnameValue } from '../../../atoms';
 import * as S from './style';
 
 const PostUserInfo = ({ author, postId }) => {
