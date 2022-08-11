@@ -1,28 +1,14 @@
-import styled from 'styled-components';
+import { useEffect, useState, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+
 import { CommonWrapper } from '../../components/common/commonWrapper';
 import Post from '../../components/modules/Post/Post';
 import Comment from '../../components/modules/Comment/Comment';
 import PostCommentInput from '../../components/modules/PostCommentInput/PostCommentInput';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { useEffect, useState, useRef } from 'react';
 import DropUp from '../../components/modules/DropUp/DropUp';
 import Modal from '../../components/modules/Modal/Modal';
-
-const PostWrap = styled.div`
-  border-bottom: 0.5px solid ${props => props.theme.color.gray.d2};
-  padding: 20px 16px;
-`;
-
-const CommentUl = styled.ul`
-  padding: 20px 16px;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 68px;
-`;
+import { CommentUl, PostWrap } from './style';
 
 const PostDetail = () => {
   const { id } = useParams();
@@ -51,7 +37,6 @@ const PostDetail = () => {
     getPostDetailData();
   }, []);
 
-  // 댓글 불러오기
   const [comments, setComments] = useState([]);
 
   const setCommentList = async () => {
@@ -67,7 +52,6 @@ const PostDetail = () => {
       );
       const data = res.data.comments;
       setComments(data);
-      console.log(data);
     } catch (error) {}
   };
   useEffect(() => {
@@ -79,6 +63,7 @@ const PostDetail = () => {
   const clickedComment = useRef();
   const [isMy, setIsMy] = useState(false);
   const [commentId, setCommentId] = useState('');
+
   const removeComment = async () => {
     try {
       const res = await axios.delete(
@@ -90,7 +75,6 @@ const PostDetail = () => {
           },
         },
       );
-      console.log(res.data);
       setCommentList();
     } catch (error) {
       console.log(error);

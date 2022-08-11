@@ -1,28 +1,15 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
 import {
   accountnameValue,
   userDataAtom,
   userIntroValue,
   usernameValue,
 } from '../../atoms';
-import { CommonWrapper } from '../../components/common/commonWrapper';
 import CustomFileInput from '../../components/modules/CustomFileInput/CustomFileInput';
 import InputBox from '../../components/modules/InputBox/InputBox';
-
-const ProfileEditWrapper = styled(CommonWrapper)`
-  padding: 30px 34px;
-`;
-
-const InputWrap = styled.form`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  gap: 16px;
-  margin: 30px 34px;
-`;
+import { InputWrap, ProfileEditWrapper } from './style';
 
 const MyProfileEdit = () => {
   const accountname = useRecoilValue(accountnameValue);
@@ -32,7 +19,6 @@ const MyProfileEdit = () => {
   const [isUsernameValid, setIsUsernameValid] = useState(false);
   const [usernameErrMsg, setUsernameErrMsg] = useState('');
   const userIntro = useRecoilValue(userIntroValue);
-  // const token = useRecoilValue(userDataAtom);
 
   const accountnameValidate = async () => {
     try {
@@ -59,10 +45,8 @@ const MyProfileEdit = () => {
         setIsAccountNameValid(false);
       }
       setAccountnameErrMsg(msg);
-      // 현재 본인 username일 때는 에러메시지 안뜨게 처리
       const oldAccountName = userData.accountname;
       if (oldAccountName === accountname) {
-        console.log(oldAccountName === accountname);
         setAccountnameErrMsg(null);
       }
     } catch (error) {

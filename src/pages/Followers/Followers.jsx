@@ -1,58 +1,10 @@
-import styled from 'styled-components';
-import Profile from '../../components/atoms/Profile/Profile';
-import FollwersProfile from '../../assets/comment-profile.png';
-import Button from '../../components/atoms/Button/Button';
-import { CommonWrapper } from '../../components/common/commonWrapper';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Link, useLocation, useParams } from 'react-router-dom';
+import axios from 'axios';
 
-const FollowersWrapper = styled(CommonWrapper)`
-  padding: 72px 16px 0;
-`;
-
-const FollowerUl = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-`;
-
-const FollowerLi = styled.li`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  a {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-  }
-`;
-
-const FollowerInfo = styled.div`
-  width: 280px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const FollowerUserName = styled.p`
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 18px;
-  margin-bottom: 6px;
-`;
-
-const FollowerIntro = styled.p`
-  font-size: 12px;
-  line-height: 15px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: ${props => props.theme.color.text.gray};
-`;
+import Profile from '../../components/atoms/Profile/Profile';
+import Button from '../../components/atoms/Button/Button';
+import * as S from './style';
 
 const Followers = () => {
   const token = localStorage.getItem('token');
@@ -149,10 +101,10 @@ const Followers = () => {
   }, [followChange]);
 
   return (
-    <FollowersWrapper>
-      <FollowerUl>
+    <S.FollowersWrapper>
+      <S.FollowerUl>
         {followData.map(followData => (
-          <FollowerLi key={followData._id}>
+          <S.FollowerLi key={followData._id}>
             <Link to={`/yourProfile/${followData.accountname}`}>
               <Profile
                 size='50px'
@@ -160,10 +112,10 @@ const Followers = () => {
                 imgAlt='프로필 이미지'
                 borderRadius={props => props.theme.borderRadius.circle}
               />
-              <FollowerInfo>
-                <FollowerUserName>{followData.username}</FollowerUserName>
-                <FollowerIntro>{followData.intro}</FollowerIntro>
-              </FollowerInfo>
+              <S.FollowerInfo>
+                <S.FollowerUserName>{followData.username}</S.FollowerUserName>
+                <S.ollowerIntro>{followData.intro}</S.ollowerIntro>
+              </S.FollowerInfo>
             </Link>
             {followData.isfollow ? (
               <Button
@@ -191,10 +143,10 @@ const Followers = () => {
                 onClick={handleFollowBtn}
               />
             )}
-          </FollowerLi>
+          </S.FollowerLi>
         ))}
-      </FollowerUl>
-    </FollowersWrapper>
+      </S.FollowerUl>
+    </S.FollowersWrapper>
   );
 };
 

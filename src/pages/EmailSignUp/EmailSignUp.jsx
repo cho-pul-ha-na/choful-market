@@ -1,29 +1,14 @@
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+
 import { idValue, passwordValue } from '../../atoms';
 import { CommonWrapper } from '../../components/common/commonWrapper';
-import { useNavigate } from 'react-router-dom';
 import InputBox from '../../components/modules/InputBox/InputBox';
-import { useEffect, useState } from 'react';
 import Button from '../../components/atoms/Button/Button';
+import { FormTitle, FormWrapper, InputWrap } from '../EmailLogin/style';
 
-const FormWrapper = styled.div`
-  margin: 30px 34px;
-`;
-const FormTitle = styled.h1`
-  text-align: center;
-  font-weight: 500;
-  font-size: 24px;
-  margin-top: 30px;
-`;
-const InputWrap = styled.form`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  gap: 16px;
-  margin: 40px 0 30px;
-`;
 const EmailSignUp = () => {
   const emailID = useRecoilValue(idValue);
   const [emailErrMessage, setErrMessage] = useState('');

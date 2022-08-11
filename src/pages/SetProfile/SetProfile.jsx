@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
+import axios from 'axios';
+
 import {
   accountnameValue,
   idValue,
@@ -15,30 +15,8 @@ import Button from '../../components/atoms/Button/Button';
 import { CommonWrapper } from '../../components/common/commonWrapper';
 import CustomFileInput from '../../components/modules/CustomFileInput/CustomFileInput';
 import InputBox from '../../components/modules/InputBox/InputBox';
-const FormWrapper = styled.div`
-  margin: 30px 34px;
-`;
-const FormTitle = styled.h1`
-  text-align: center;
-  font-weight: 500;
-  font-size: 24px;
-  margin-top: 30px;
-`;
-const InputWrap = styled.form`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  gap: 16px;
-  margin: 30px 0;
-`;
-const FormSubtitle = styled.h2`
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 14px;
-  text-align: center;
-  margin: 12px 0 30px;
-  color: ${props => props.theme.color.text.gray};
-`;
+import * as S from './style';
+
 const SetProfile = () => {
   const navigate = useNavigate();
 
@@ -67,7 +45,6 @@ const SetProfile = () => {
           image: profileImgSrcValue,
         },
       });
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -115,21 +92,19 @@ const SetProfile = () => {
 
   useEffect(() => {
     accountnameValidate();
-    console.log(accountname);
   }, [accountname]);
 
   useEffect(() => {
     usernameValid();
-    console.log(accountname);
   }, [username]);
 
   return (
     <CommonWrapper>
-      <FormWrapper>
-        <FormTitle>프로필 설정</FormTitle>
-        <FormSubtitle>나중에 언제든지 변경할 수 있풀!</FormSubtitle>
+      <S.FormWrapper>
+        <S.FormTitle>프로필 설정</S.FormTitle>
+        <S.FormSubtitle>나중에 언제든지 변경할 수 있풀!</S.FormSubtitle>
         <CustomFileInput />
-        <InputWrap>
+        <S.InputWrap>
           <InputBox
             label='사용자 이름'
             placeholder='2~10자 이내여야 합니다.'
@@ -157,7 +132,7 @@ const SetProfile = () => {
             validTarget={false}
             needValid={false}
           />
-        </InputWrap>
+        </S.InputWrap>
         <Button
           label='초풀마켓 시작하기'
           fontSize='14px'
@@ -171,7 +146,7 @@ const SetProfile = () => {
           disabled={isUsernameValid && isAccountnameValid ? false : true}
           className={isUsernameValid && isAccountnameValid && 'btn_next'}
         />
-      </FormWrapper>
+      </S.FormWrapper>
     </CommonWrapper>
   );
 };

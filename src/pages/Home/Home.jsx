@@ -1,43 +1,14 @@
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import Button from '../../components/atoms/Button/Button';
 import Logo from '../../components/atoms/Logo/Logo';
 import * as S from '../../components/common/commonWrapper';
-
 import SymbolLogoGrayImg from '../../assets/symbol-logo-gray.png';
 import Post from '../../components/modules/Post/Post';
 import SplashScreen from '../SplashScreen/SplashScreen';
-import { useState } from 'react';
-import axios from 'axios';
-import { useEffect } from 'react';
-
-const NotFollowerWrapper = styled.div`
-  width: 100%;
-  height: calc(100vh - 105px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  a {
-    width: 120px;
-    margin-top: 20px;
-    text-align: center;
-  }
-`;
-
-const FeedWrapper = styled.div`
-  width: 1005;
-  height: calc(100vh - 56px);
-  padding: 0 16px 30px;
-`;
-
-const SearchFollowerText = styled.p`
-  font-size: 14px;
-  font-weight: 400;
-  color: ${props => props.theme.color.gray.d4};
-  text-align: center;
-  margin-top: 30px;
-`;
+import { FeedWrapper, NotFollowerWrapper, SearchFollowerText } from './style';
 
 const Home = () => {
   const token = localStorage.getItem('token');
