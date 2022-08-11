@@ -1,20 +1,9 @@
-import styled from 'styled-components';
 import { useState } from 'react';
 import axios from 'axios';
 import Img from '../../atoms/Img/Img';
 import heartIcon from '../../../assets/icon-heart.png';
 import activeHeartIcon from '../../../assets/icon-heart-active.png';
-
-const CountNum = styled.dd`
-  font-size: 12px;
-  line-height: 12px;
-  font-weight: 400;
-  display: inline-block;
-  vertical-align: top;
-  margin-top: 5px;
-  color: ${props => props.theme.color.gray.d4};
-  margin-left: 6px;
-`;
+import { CountNum } from './style';
 
 const LikeBtn = ({ heartCount, id }) => {
   const token = localStorage.getItem('token');

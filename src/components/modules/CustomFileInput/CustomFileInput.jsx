@@ -1,27 +1,13 @@
-import styled from 'styled-components';
+import { useRef } from 'react';
+import { useRecoilState } from 'recoil';
+import axios from 'axios';
 import Input from '../../atoms/Input/Input';
 import Label from '../../atoms/Label/Label';
 import Img from '../../atoms/Img/Img';
 import Button from '../../atoms/Button/Button';
-import { useRef } from 'react';
-import axios from 'axios';
-
 import GalleryButtonImg from '../../../assets/img-button-color.png';
-import { useRecoilState } from 'recoil';
 import { profileImgSrc } from '../../../atoms';
-
-const CustomFileInputWrapper = styled.div`
-  text-align: center;
-  label {
-    position: relative;
-    cursor: pointer;
-  }
-  button {
-    position: absolute;
-    bottom: 3px;
-    right: 3px;
-  }
-`;
+import { CustomFileInputWrapper } from './style';
 
 const CustomFileInput = () => {
   const [profileImgSrcState, setProfileImgSrcState] =

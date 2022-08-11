@@ -1,17 +1,7 @@
 import { useRecoilState } from 'recoil';
-import styled from 'styled-components';
 import Input from '../../atoms/Input/Input';
 import Label from '../../atoms/Label/Label';
-
-const ErrorP = styled.p`
-  margin-top: 6px;
-  font-weight: 400;
-  font-size: 12px;
-  color: ${props => props.theme.color.text.red};
-  &.green {
-    color: ${props => props.theme.color.main.green};
-  }
-`;
+import { ErrorP } from './style';
 
 const InputBox = ({
   id,
