@@ -1,9 +1,9 @@
 import Profile from './Profile';
 
 import CommentProfile from '../../../assets/comment-profile.png';
-import DefaultProfile from '../../../assets/default-profile.png';
+import DefaultProfile from '../../../assets/exampleImg/default-profile.png';
 import FeedProfileDefault from '../../../assets/feed-profile-default.png';
-import FeedProfile from '../../../assets/feed-profile.png';
+import FeedProfile from '../../../assets/exampleImg/feed-profile.png';
 import UserProfile from '../../../assets/user-profile.png';
 
 export default {

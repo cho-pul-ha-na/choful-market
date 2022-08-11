@@ -1,27 +1,9 @@
+import { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import Icon from '../../atoms/Icon/Icon';
 import Img from '../../atoms/Img/Img';
-
-const GalleryWrapper = styled.div`
-  width: 100%;
-  padding: 16px;
-  display: grid;
-  grid-template-rows: repeat(auto, 1fr);
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  img {
-    width: 100%;
-    aspect-ratio: 1;
-  }
-`;
-
-const ImgLink = styled(Link)`
-  position: relative;
-`;
+import { GalleryWrapper, ImgLink } from './style';
 
 const GalleryPost = () => {
   const token = localStorage.getItem('token');

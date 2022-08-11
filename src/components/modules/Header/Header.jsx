@@ -1,16 +1,15 @@
-import axios from 'axios';
+import { useEffect, useState } from 'react';
 import {
   useLocation,
   useMatch,
   useNavigate,
   useParams,
 } from 'react-router-dom';
-import styled from 'styled-components';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import axios from 'axios';
 import Icon from '../../atoms/Icon/Icon';
 import Button from '../../atoms/Button/Button';
 import Input from '../../atoms/Input/Input';
-import { CommonWrapper } from '../../common/commonWrapper';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   accountnameValue,
   profileImgSrc,
@@ -26,39 +25,9 @@ import {
   productImgAtom,
   isLogin,
 } from '../../../atoms';
-import { useEffect } from 'react';
 import DropUp from '../DropUp/DropUp';
 import Modal from '../Modal/Modal';
-import { useState } from 'react';
-
-const HeaderBox = styled.header`
-  width: 100%;
-  border-bottom: 0.5px solid ${props => props.theme.color.gray.d2};
-  background-color: white;
-  z-index: 10;
-  position: fixed;
-  top: 0;
-  &.hide {
-    display: none;
-  }
-`;
-
-const HeaderWrapper = styled(CommonWrapper)`
-  height: 48px;
-  padding: 8px 12px 8px 16px;
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-`;
-
-const HeaderSpan = styled.span`
-  width: 100%;
-  font-weight: 500;
-  font-size: 18px;
-  background-color: inherit;
-`;
+import { HeaderBox, HeaderWrapper, HeaderSpan } from './style';
 
 const Header = () => {
   const token = localStorage.getItem('token');

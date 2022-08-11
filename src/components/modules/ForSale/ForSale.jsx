@@ -1,35 +1,10 @@
-import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import Img from '../../atoms/Img/Img';
 import { CommonWrapper } from '../../common/commonWrapper';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import * as S from './style';
 
-const ForSaleSec = styled.section`
-  padding: 20px 16px;
-`;
-const ForSaleUl = styled.ul`
-  display: flex;
-  gap: 10px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  overflow-y: hidden;
-`;
-const ForSaleH2 = styled.h2`
-  font-weight: 700;
-  font-size: 16px;
-  margin-bottom: 16px;
-`;
-const ForSaleH3 = styled.h3`
-  font-weight: 400;
-  font-size: 14px;
-  margin: 6px 0 4px;
-`;
-const ForSaleStrong = styled.strong`
-  font-weight: 700;
-  font-size: 12px;
-  color: ${props => props.theme.color.main.brown};
-`;
 const ForSale = () => {
   const token = localStorage.getItem('token');
 
@@ -59,9 +34,9 @@ const ForSale = () => {
   }, []);
   return (
     <CommonWrapper>
-      <ForSaleSec>
-        <ForSaleH2>판매 중인 상품</ForSaleH2>
-        <ForSaleUl>
+      <S.ForSaleSec>
+        <S.ForSaleH2>판매 중인 상품</S.ForSaleH2>
+        <S.ForSaleUl>
           {productData.map(product => (
             <li key={product.id}>
               <Img
@@ -71,14 +46,14 @@ const ForSale = () => {
                 imgSrc={product.itemImage}
                 imgAlt='상품 이미지'
               />
-              <ForSaleH3>{product.itemName}</ForSaleH3>
-              <ForSaleStrong>
+              <S.ForSaleH3>{product.itemName}</S.ForSaleH3>
+              <S.ForSaleStrong>
                 {product.price.toLocaleString('ko-kr')}원
-              </ForSaleStrong>
+              </S.ForSaleStrong>
             </li>
           ))}
-        </ForSaleUl>
-      </ForSaleSec>
+        </S.ForSaleUl>
+      </S.ForSaleSec>
     </CommonWrapper>
   );
 };
