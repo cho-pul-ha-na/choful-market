@@ -1,7 +1,9 @@
+import { NavLink } from 'react-router-dom';
+
 import styled from 'styled-components';
 import { css } from 'styled-components';
+
 import iconSprite from '../../../assets/icon_sprites.png';
-import { NavLink } from 'react-router-dom';
 
 export const IconCss = css`
   width: ${props => props.size};
