@@ -16,12 +16,7 @@ import {
 } from '../../atoms';
 import InputBox from '../../components/modules/InputBox/InputBox';
 import Button from '../../components/atoms/Button/Button';
-import {
-  FormTitle,
-  FormWrapper,
-  InputWrap,
-  SignUpLink,
-} from './emailLoginStyle';
+import * as S from './style';
 
 const EmailLogin = () => {
   const navigate = useNavigate();
@@ -76,9 +71,9 @@ const EmailLogin = () => {
 
   return (
     <CommonWrapper>
-      <FormWrapper>
-        <FormTitle>로그인</FormTitle>
-        <InputWrap>
+      <S.FormWrapper>
+        <S.FormTitle>로그인</S.FormTitle>
+        <S.InputWrap>
           <InputBox
             id='user-email'
             label='이메일'
@@ -98,7 +93,7 @@ const EmailLogin = () => {
             needValid={pwdNeedValid}
             recoilKey={passwordValue}
           />
-        </InputWrap>
+        </S.InputWrap>
         <Button
           label='로그인'
           fontSize='14px'
@@ -112,8 +107,8 @@ const EmailLogin = () => {
           disabled={!isValid ? false : true}
           className={emailID && pwdValue && 'btn_next'}
         />
-        <SignUpLink to='/login/signUp'>이메일로 회원가입</SignUpLink>
-      </FormWrapper>
+        <S.SignUpLink to='/login/signUp'>이메일로 회원가입</S.SignUpLink>
+      </S.FormWrapper>
     </CommonWrapper>
   );
 };

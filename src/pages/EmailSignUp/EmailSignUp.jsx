@@ -7,11 +7,7 @@ import { idValue, passwordValue } from '../../atoms';
 import { CommonWrapper } from '../../components/common/commonWrapper';
 import InputBox from '../../components/modules/InputBox/InputBox';
 import Button from '../../components/atoms/Button/Button';
-import {
-  FormTitle,
-  FormWrapper,
-  InputWrap,
-} from '../EmailLogin/emailLoginStyle';
+import { FormTitle, FormWrapper, InputWrap } from '../EmailLogin/style';
 
 const EmailSignUp = () => {
   const emailID = useRecoilValue(idValue);

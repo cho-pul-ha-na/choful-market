@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
 import {
   accountnameValue,
   userDataAtom,
@@ -10,7 +9,7 @@ import {
 } from '../../atoms';
 import CustomFileInput from '../../components/modules/CustomFileInput/CustomFileInput';
 import InputBox from '../../components/modules/InputBox/InputBox';
-import { InputWrap, ProfileEditWrapper } from './profileEditStyle';
+import { InputWrap, ProfileEditWrapper } from './style';
 
 const MyProfileEdit = () => {
   const accountname = useRecoilValue(accountnameValue);

@@ -15,12 +15,7 @@ import Button from '../../components/atoms/Button/Button';
 import { CommonWrapper } from '../../components/common/commonWrapper';
 import CustomFileInput from '../../components/modules/CustomFileInput/CustomFileInput';
 import InputBox from '../../components/modules/InputBox/InputBox';
-import {
-  FormSubtitle,
-  FormTitle,
-  FormWrapper,
-  InputWrap,
-} from './setProfileStyle';
+import * as S from './style';
 
 const SetProfile = () => {
   const navigate = useNavigate();
@@ -105,11 +100,11 @@ const SetProfile = () => {
 
   return (
     <CommonWrapper>
-      <FormWrapper>
-        <FormTitle>프로필 설정</FormTitle>
-        <FormSubtitle>나중에 언제든지 변경할 수 있풀!</FormSubtitle>
+      <S.FormWrapper>
+        <S.FormTitle>프로필 설정</S.FormTitle>
+        <S.FormSubtitle>나중에 언제든지 변경할 수 있풀!</S.FormSubtitle>
         <CustomFileInput />
-        <InputWrap>
+        <S.InputWrap>
           <InputBox
             label='사용자 이름'
             placeholder='2~10자 이내여야 합니다.'
@@ -137,7 +132,7 @@ const SetProfile = () => {
             validTarget={false}
             needValid={false}
           />
-        </InputWrap>
+        </S.InputWrap>
         <Button
           label='초풀마켓 시작하기'
           fontSize='14px'
@@ -151,7 +146,7 @@ const SetProfile = () => {
           disabled={isUsernameValid && isAccountnameValid ? false : true}
           className={isUsernameValid && isAccountnameValid && 'btn_next'}
         />
-      </FormWrapper>
+      </S.FormWrapper>
     </CommonWrapper>
   );
 };

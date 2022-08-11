@@ -8,15 +8,7 @@ import UploadImg from '../../assets/upload-file.png';
 import { postTxtValue, profileImgSrc, uploadImgSrcArray } from '../../atoms';
 import Img from '../../components/atoms/Img/Img';
 import Icon from '../../components/atoms/Icon/Icon';
-import {
-  FlexDiv,
-  ImgUploadLabel,
-  ItemBox,
-  ProfileImgDiv,
-  SelectedImgLi,
-  TextAreaDiv,
-  UploadWrapper,
-} from './postUploadStyle';
+import * as S from './style';
 
 const PostUpload = () => {
   const setPostTxt = useSetRecoilState(postTxtValue);
@@ -77,25 +69,25 @@ const PostUpload = () => {
   }, []);
 
   return (
-    <UploadWrapper>
-      <FlexDiv>
-        <ProfileImgDiv>
+    <S.UploadWrapper>
+      <S.FlexDiv>
+        <S.ProfileImgDiv>
           <Profile
             size='42px'
             imgSrc={profileImg}
             imgAlt='피드 프로필 기본이미지'
           />
-        </ProfileImgDiv>
-        <TextAreaDiv>
+        </S.ProfileImgDiv>
+        <S.TextAreaDiv>
           <Input
             isInput={false}
             placeholder='게시글 입력하기...'
             onInput={handleResizeHeight}
             inputRef={inputRef}
           />
-          <ItemBox>
+          <S.ItemBox>
             {imgArr?.map((imgSrc, index) => (
-              <SelectedImgLi key={index}>
+              <S.SelectedImgLi key={index}>
                 <Img
                   width='100px'
                   height='100px'
@@ -112,14 +104,14 @@ const PostUpload = () => {
                   onClick={removeImg}
                   id={imgSrc}
                 />
-              </SelectedImgLi>
+              </S.SelectedImgLi>
             ))}
-          </ItemBox>
-        </TextAreaDiv>
-      </FlexDiv>
-      <ImgUploadLabel htmlFor='post-upload-img'>
+          </S.ItemBox>
+        </S.TextAreaDiv>
+      </S.FlexDiv>
+      <S.ImgUploadLabel htmlFor='post-upload-img'>
         <img src={UploadImg} alt='' />
-      </ImgUploadLabel>
+      </S.ImgUploadLabel>
       <Input
         type='file'
         className='ir'
@@ -128,7 +120,7 @@ const PostUpload = () => {
         id='post-upload-img'
         onChange={preview}
       />
-    </UploadWrapper>
+    </S.UploadWrapper>
   );
 };
 

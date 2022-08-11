@@ -7,15 +7,7 @@ import Icon from '../../components/atoms/Icon/Icon';
 import ChatInmg from '../../src/assets/chat-example.png';
 import { chatValue } from '../../atoms';
 import img3 from '../assets/exampleImg/feed-profile.png';
-import {
-  ChatDiv,
-  ChatLi,
-  ChatUl,
-  MessageDiv,
-  MessageIconWrapper,
-  MessageLabel,
-  Wrapper,
-} from './chatroomStyle';
+import * as S from './style';
 
 const ChatRoom = props => {
   const setChatvalue = useSetRecoilState(chatValue);
@@ -25,45 +17,47 @@ const ChatRoom = props => {
 
   return (
     <>
-      <Wrapper>
-        <ChatUl>
-          <ChatLi>
+      <S.Wrapper>
+        <S.ChatUl>
+          <S.ChatLi>
             <Profile size='42px' imgSrc={img3} imgAlt='프로필 이미지' />
-            <ChatDiv className='you'>스투키 건강한가요?</ChatDiv>
-          </ChatLi>
-          <ChatLi>
+            <S.ChatDiv className='you'>스투키 건강한가요?</S.ChatDiv>
+          </S.ChatLi>
+          <S.ChatLi>
             <Profile size='42px' imgSrc={img3} imgAlt='프로필 이미지' />
-            <ChatDiv className='you'>
+            <S.ChatDiv className='you'>
               제가 애정으로 보살피고 싶은데 스투키는 처음 키워보는 거라 걱정이
               좀 됩니다. 키우기 많이 까다롭나요?
-            </ChatDiv>
-          </ChatLi>
-          <ChatLi>
-            <ChatDiv className='me'>일단 저희 강아지 사진 보실래요?</ChatDiv>
-          </ChatLi>
-          <ChatLi>
+            </S.ChatDiv>
+          </S.ChatLi>
+          <S.ChatLi>
+            <S.ChatDiv className='me'>
+              일단 저희 강아지 사진 보실래요?
+            </S.ChatDiv>
+          </S.ChatLi>
+          <S.ChatLi>
             <Img width='240px' height='240px' imgSrc={ChatInmg}></Img>
-          </ChatLi>
-          <ChatLi>
+          </S.ChatLi>
+          <S.ChatLi>
             <Profile size='42px' imgSrc={img3} imgAlt='프로필 이미지' />
-            <ChatDiv className='you'>직거래 어디서 가능하세요?</ChatDiv>
-          </ChatLi>
-        </ChatUl>
-        <MessageDiv>
-          <MessageIconWrapper>
-            <MessageLabel htmlFor='ImgUpload'>
+            <S.ChatDiv className='you'>직거래 어디서 가능하세요?</S.ChatDiv>
+          </S.ChatLi>
+        </S.ChatUl>
+        <S.MessageDiv>
+          <S.MessageIconWrapper>
+            <S.MessageLabel htmlFor='ImgUpload'>
               <Icon size='22px' xpoint='-236px' ypoint='-99px' />
               <Input id='ImgUpload' type='file' className='ir' />
-            </MessageLabel>
-          </MessageIconWrapper>
+            </S.MessageLabel>
+          </S.MessageIconWrapper>
           <Input
             className='input_chat-comment'
             type='text'
             placeholder='메시지 입력하기...'
             onInput={handleOnInput}
           />
-        </MessageDiv>
-      </Wrapper>
+        </S.MessageDiv>
+      </S.Wrapper>
     </>
   );
 };

@@ -4,22 +4,16 @@ import { useRecoilValue } from 'recoil';
 import { CommonWrapper } from '../../components/common/commonWrapper';
 import Profile from '../../components/atoms/Profile/Profile';
 import { searchUserData } from '../../atoms';
-import {
-  SearchDiv,
-  SearchLi,
-  SearchP,
-  SearchUl,
-  SearchWrapper,
-} from './searchStyle';
+import * as S from './style';
 
 const Search = () => {
   const searchUserDataState = useRecoilValue(searchUserData);
   return (
-    <SearchWrapper>
+    <S.SearchWrapper>
       <CommonWrapper>
-        <SearchUl>
+        <S.SearchUl>
           {searchUserDataState.map(searchData => (
-            <SearchLi key={searchData._id}>
+            <S.SearchLi key={searchData._id}>
               <Link to={`/yourProfile/${searchData.accountname}`}>
                 <Profile
                   size='42px'
@@ -27,16 +21,16 @@ const Search = () => {
                   imgAlt='프로필 이미지'
                   borderRadius={props => props.theme.borderRadius.circle}
                 />
-                <SearchDiv>
-                  <SearchP>{searchData.username}</SearchP>
-                  <SearchP>{`@ ${searchData.accountname}`}</SearchP>
-                </SearchDiv>
+                <S.SearchDiv>
+                  <S.SearchP>{searchData.username}</S.SearchP>
+                  <S.SearchP>{`@ ${searchData.accountname}`}</S.SearchP>
+                </S.SearchDiv>
               </Link>
-            </SearchLi>
+            </S.SearchLi>
           ))}
-        </SearchUl>
+        </S.SearchUl>
       </CommonWrapper>
-    </SearchWrapper>
+    </S.SearchWrapper>
   );
 };
 

@@ -15,7 +15,7 @@ import {
   productPriceAtom,
 } from '../../atoms';
 import InputBox from '../../components/modules/InputBox/InputBox';
-import { ProductForm } from './addProductStyle';
+import { ProductForm } from './style';
 
 const MyProfileAddProduct = () => {
   const [productImgSrc, setProductImgSrc] = useRecoilState(productImgAtom);

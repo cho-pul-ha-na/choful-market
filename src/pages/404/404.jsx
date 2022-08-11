@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Logo from '../../components/atoms/Logo/Logo';
 import Button from '../../components/atoms/Button/Button';
 import Img404 from '../../assets/not-found-logo.png';
-import { Text404, Wrapper } from './404style';
+import { Text404, Wrapper } from './style';
 
 const Page404 = () => {
   const navigate = useNavigate();

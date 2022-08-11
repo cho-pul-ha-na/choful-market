@@ -8,11 +8,7 @@ import * as S from '../../components/common/commonWrapper';
 import SymbolLogoGrayImg from '../../assets/symbol-logo-gray.png';
 import Post from '../../components/modules/Post/Post';
 import SplashScreen from '../SplashScreen/SplashScreen';
-import {
-  FeedWrapper,
-  NotFollowerWrapper,
-  SearchFollowerText,
-} from './homeStyle';
+import { FeedWrapper, NotFollowerWrapper, SearchFollowerText } from './style';
 
 const Home = () => {
   const token = localStorage.getItem('token');

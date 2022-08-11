@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import Logo from '../../components/atoms/Logo/Logo';
 import FullLogoImg from '../../assets/full-logo.png';
-import { Wrapper } from './splashStyle';
+import { Wrapper } from './style';
 
 const SplashScreen = () => {
   const [display, setDisplay] = useState('flex');

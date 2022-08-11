@@ -8,7 +8,7 @@ import Comment from '../../components/modules/Comment/Comment';
 import PostCommentInput from '../../components/modules/PostCommentInput/PostCommentInput';
 import DropUp from '../../components/modules/DropUp/DropUp';
 import Modal from '../../components/modules/Modal/Modal';
-import { CommentUl, PostWrap } from './postDetail';
+import { CommentUl, PostWrap } from './style';
 
 const PostDetail = () => {
   const { id } = useParams();
