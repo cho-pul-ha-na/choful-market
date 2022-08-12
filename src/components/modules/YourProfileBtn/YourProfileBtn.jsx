@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import Button from '../../atoms/Button/Button';
-import Icon from '../../atoms/Icon/Icon';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Button from '../../atoms/Button/Button';
+import Icon from '../../atoms/Icon/Icon';
 import { IconButton, ProfileInfoFlex, ProfileInfoButtons } from './style';
 
 const YourProfileBtn = ({
