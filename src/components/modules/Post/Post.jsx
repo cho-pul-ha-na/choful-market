@@ -1,73 +1,13 @@
-import styled from 'styled-components';
-import Img from '../../atoms/Img/Img';
-import PostUserInfo from '../PostUserInfo/PostUserInfo';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useMatch, useParams } from 'react-router-dom';
-import axios from 'axios';
-import chatIcon from '../../../assets/icon-message-circle.png';
+
+import Img from '../../atoms/Img/Img';
+import PostUserInfo from '../PostUserInfo/PostUserInfo';
 import LikeBtn from '../LikeBtn/LikeBtn';
+import chatIcon from '../../../assets/icon-message-circle.png';
+import * as S from './style';
 
-const PostWrapper = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  width: 100%;
-  padding: 4px 0px;
-  margin: 0 auto;
-`;
-
-const PostContent = styled.div`
-  padding-left: 54px;
-  word-wrap: break-word;
-`;
-
-const PostText = styled.p`
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 18px;
-  margin: 16px 0;
-  word-break: keep-all;
-`;
-
-const IconContainer = styled.div`
-  display: flex;
-  margin-top: 12px;
-  gap: 16px;
-  div {
-    vertical-align: middle;
-  }
-`;
-
-const CountNum = styled.dd`
-  font-size: 12px;
-  line-height: 12px;
-  font-weight: 400;
-  display: inline-block;
-  vertical-align: top;
-  margin-top: 5px;
-  color: ${props => props.theme.color.gray.d4};
-  margin-left: 6px;
-`;
-
-const CreatedDate = styled.p`
-  font-size: 10px;
-  font-weight: 400;
-  line-height: 12px;
-  color: ${props => props.theme.color.gray.d4};
-  margin-top: 16px;
-`;
-
-const PostImgLink = styled(Link)`
-  width: 100%;
-  display: flex;
-  overflow-x: auto;
-  img {
-    margin-top: 16px;
-    &:not(:first-of-type) {
-      margin-left: 8px;
-    }
-  }
-`;
 const Post = ({ data }) => {
   const token = localStorage.getItem('token');
 
@@ -112,21 +52,21 @@ const Post = ({ data }) => {
     }
   }, []);
   return (
-    <PostWrapper>
+    <S.PostWrapper>
       {postData?.map(postData => (
         <li key={postData.id}>
           <Link to={`/yourProfile/${postData.author.accountname}`}>
             <PostUserInfo author={postData.author} postId={postData.id} />
           </Link>
-          <PostContent>
+          <S.PostContent>
             {!path.includes('post') ? (
-              <PostText as={Link} to={`/post/${postData.id}`}>
+              <S.PostText as={Link} to={`/post/${postData.id}`}>
                 {postData.content}
-              </PostText>
+              </S.PostText>
             ) : (
-              <PostText>{postData.content}</PostText>
+              <S.PostText>{postData.content}</S.PostText>
             )}
-            <PostImgLink to={`/post/${postData.id}`}>
+            <S.PostImgLink to={`/post/${postData.id}`}>
               {postData.image &&
                 postData.image
                   .split(',')
@@ -138,8 +78,8 @@ const Post = ({ data }) => {
                       imgAlt='게시글 이미지'
                     />
                   ))}
-            </PostImgLink>
-            <IconContainer>
+            </S.PostImgLink>
+            <S.IconContainer>
               <LikeBtn heartCount={postData.heartCount} id={postData.id} />
               <div>
                 <Link to={`/post/${postData.id}`}>
@@ -150,15 +90,17 @@ const Post = ({ data }) => {
                     imgSrc={chatIcon}
                     imgAlt='댓글 아이콘'
                   />
-                  <CountNum>{postData.commentCount}</CountNum>
+                  <S.CountNum>{postData.commentCount}</S.CountNum>
                 </Link>
               </div>
-            </IconContainer>
-            <CreatedDate>{changeDateFormat(postData.createdAt)}</CreatedDate>
-          </PostContent>
+            </S.IconContainer>
+            <S.CreatedDate>
+              {changeDateFormat(postData.createdAt)}
+            </S.CreatedDate>
+          </S.PostContent>
         </li>
       ))}
-    </PostWrapper>
+    </S.PostWrapper>
   );
 };
 

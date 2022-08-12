@@ -1,29 +1,9 @@
-import styled, { css } from 'styled-components';
 import { useEffect, useState } from 'react';
 import Button from '../../atoms/Button/Button';
 import Icon from '../../atoms/Icon/Icon';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-
-const IconButton = styled.button`
-  width: 34px;
-  height: 34px;
-  border: 1px solid #dbdbdb;
-  border-radius: 30px;
-`;
-
-const ProfileInfoFlex = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ProfileInfoButtons = styled.div`
-  ${ProfileInfoFlex};
-  width: 208px;
-  gap: 10px;
-  margin: 24px auto 0;
-`;
+import { IconButton, ProfileInfoFlex, ProfileInfoButtons } from './style';
 
 const YourProfileBtn = ({
   setFollowerCountFunc,
