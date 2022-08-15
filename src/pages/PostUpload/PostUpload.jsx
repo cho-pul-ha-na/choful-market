@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useCallback, useRef, useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 
@@ -10,24 +9,14 @@ import Img from '../../components/atoms/Img/Img';
 import Icon from '../../components/atoms/Icon/Icon';
 import * as S from './style';
 
+import { uploadImg } from '../../apis/apis';
+
 const PostUpload = () => {
-  const setPostTxt = useSetRecoilState(postTxtValue);
+  const inputRef = useRef(null);
+
   const [imgArr, setImgArr] = useRecoilState(uploadImgSrcArray);
   const profileImg = useRecoilValue(profileImgSrc);
-
-  const uploadImg = async imgFile => {
-    let formData = new FormData();
-    formData.append('image', imgFile);
-    try {
-      const res = await axios.post(
-        'https://mandarin.api.weniv.co.kr/image/uploadfile',
-        formData,
-      );
-      return `https://mandarin.api.weniv.co.kr/${res.data.filename}`;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const setPostTxt = useSetRecoilState(postTxtValue);
 
   // 미리보기
   const preview = e => {
@@ -35,7 +24,6 @@ const PostUpload = () => {
     if (imgArr.length + files.length < 4) {
       Array.from(files).map(async file => {
         const url = await uploadImg(file);
-        console.log(url);
         return setImgArr([...imgArr, url]);
       });
     } else {
@@ -48,8 +36,6 @@ const PostUpload = () => {
     const key = e.target.id;
     setImgArr(imgArr.filter(e => e !== key));
   };
-
-  const inputRef = useRef(null);
 
   useEffect(() => {
     if (inputRef === null || inputRef.current === null) {

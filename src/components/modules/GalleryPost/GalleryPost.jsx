@@ -1,38 +1,26 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import axios from 'axios';
+
 import Icon from '../../atoms/Icon/Icon';
 import Img from '../../atoms/Img/Img';
 import { GalleryWrapper, ImgLink } from './style';
+import { getMyPostData } from '../../../apis/apis';
 
 const GalleryPost = () => {
+  const { id } = useParams();
   const token = localStorage.getItem('token');
   const path = useLocation().pathname;
-  const { id } = useParams();
+
   const [postData, setPostData] = useState([]);
 
-  const getMyPostData = async () => {
-    try {
-      const res = await axios.get(
-        `https://mandarin.api.weniv.co.kr/post/${id}/userpost`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      setPostData(res.data.post);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    if (path.includes('yourProfile') || path.includes('profile')) {
-      getMyPostData();
-    }
-    console.log(postData);
+    const setMyPostData = async () => {
+      if (path.includes('yourProfile') || path.includes('profile')) {
+        const myPostDatas = await getMyPostData(id, token);
+        setPostData(myPostDatas);
+      }
+    };
+    setMyPostData();
   }, []);
 
   return (

@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useMatch, useParams } from 'react-router-dom';
-import axios from 'axios';
 
 import Img from '../../atoms/Img/Img';
 import PostUserInfo from '../PostUserInfo/PostUserInfo';
 import LikeBtn from '../LikeBtn/LikeBtn';
 import chatIcon from '../../../assets/icon-message-circle.png';
 import * as S from './style';
+
+import { getMyPostData } from '../../../apis/apis';
 
 const Post = ({ data }) => {
   const token = localStorage.getItem('token');
@@ -25,31 +26,19 @@ const Post = ({ data }) => {
 
     return `${year}년 ${month}월 ${day}일`;
   };
-  const getMyPostData = async () => {
-    try {
-      const res = await axios.get(
-        `https://mandarin.api.weniv.co.kr/post/${id}/userpost`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      setPostData(res.data.post);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   useEffect(() => {
-    if (path.includes('yourProfile') || path.includes('profile')) {
-      getMyPostData();
-    } else if (path.includes('post')) {
-      setPostData([data]);
-    } else if (homeMatch) {
-      setPostData([data]);
-    }
+    const setData = async () => {
+      if (path.includes('yourProfile') || path.includes('profile')) {
+        const postDatas = await getMyPostData(id, token);
+        setPostData(postDatas);
+      } else if (path.includes('post')) {
+        setPostData([data]);
+      } else if (homeMatch) {
+        setPostData([data]);
+      }
+    };
+    setData();
   }, []);
   return (
     <S.PostWrapper>
@@ -80,7 +69,11 @@ const Post = ({ data }) => {
                   ))}
             </S.PostImgLink>
             <S.IconContainer>
-              <LikeBtn heartCount={postData.heartCount} id={postData.id} />
+              <LikeBtn
+                heartCount={postData.heartCount}
+                id={postData.id}
+                heartedBool={postData.hearted}
+              />
               <div>
                 <Link to={`/post/${postData.id}`}>
                   <dt className='ir'>댓글</dt>

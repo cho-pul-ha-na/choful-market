@@ -3,8 +3,8 @@ import * as S from './style';
 
 const DropUp = ({ menu, setDropUpShow, setModalShow, postId }) => {
   const navigate = useNavigate();
+
   const onClickPostEdit = () => {
-    console.log(postId);
     navigate(`/upload/${postId}`);
   };
   return (

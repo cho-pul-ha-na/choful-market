@@ -1,9 +1,6 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-
-import { CommonWrapper } from '../../components/common/commonWrapper';
 import {
   accountnameValue,
   idValue,
@@ -14,9 +11,13 @@ import {
   userIntroValue,
   usernameValue,
 } from '../../atoms';
+
+import { CommonWrapper } from '../../components/common/commonWrapper';
 import InputBox from '../../components/modules/InputBox/InputBox';
 import Button from '../../components/atoms/Button/Button';
 import * as S from './style';
+
+import { loginAxios } from '../../apis/apis';
 
 const EmailLogin = () => {
   const navigate = useNavigate();
@@ -33,39 +34,23 @@ const EmailLogin = () => {
   const setIntro = useSetRecoilState(userIntroValue);
   const setProfileImgSrc = useSetRecoilState(profileImgSrc);
 
-  const onClickLoginBtn = async e => {
+  const handleLoginBtn = async e => {
     e.preventDefault();
-    try {
-      const res = await axios.post(
-        'https://mandarin.api.weniv.co.kr/user/login',
-        {
-          user: {
-            email: emailID,
-            password: pwdValue,
-          },
-        },
-      );
-      if (res.data.status === 422) {
-        let msg = res.data.message;
-        setPwdMessage(msg);
-      } else {
-        let token = res.data.user.token;
-        localStorage.setItem('token', token);
-        let data = res.data.user;
-        setIsLoginState(true);
-        setUserData(data);
-        setUsername(data.username);
-        setAccountname(data.accountname);
-        setIntro(data.intro);
-        setProfileImgSrc(data.image);
-        navigate('/');
-      }
-    } catch (error) {
-      console.log(error.response.data);
-      let errMsg = error.response.data;
-      if (errMsg.includes('패스워드를 입력해주세요.')) {
-        setPwdMessage(errMsg);
-      }
+    const data = await loginAxios(emailID, pwdValue);
+    if (data.status === 422) {
+      let msg = data.message;
+      setPwdMessage(msg);
+    } else {
+      let token = data.user.token;
+      localStorage.setItem('token', token);
+      let userData = data.user;
+      setIsLoginState(true);
+      setUserData(userData);
+      setUsername(userData.username);
+      setAccountname(userData.accountname);
+      setIntro(userData.intro);
+      setProfileImgSrc(userData.image);
+      navigate('/');
     }
   };
 
@@ -103,7 +88,7 @@ const EmailLogin = () => {
           bgColor={props => props.theme.color.main.subGreen}
           txtColor={props => props.theme.color.text.white}
           borderRadius='44px'
-          onClick={onClickLoginBtn}
+          onClick={handleLoginBtn}
           disabled={!isValid ? false : true}
           className={emailID && pwdValue && 'btn_next'}
         />

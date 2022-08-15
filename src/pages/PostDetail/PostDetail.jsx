@@ -9,34 +9,14 @@ import PostCommentInput from '../../components/modules/PostCommentInput/PostComm
 import DropUp from '../../components/modules/DropUp/DropUp';
 import Modal from '../../components/modules/Modal/Modal';
 import { CommentUl, PostWrap } from './style';
+import { getPostDetailDataAxios } from '../../apis/apis';
 
 const PostDetail = () => {
   const { id } = useParams();
 
   const token = localStorage.getItem('token');
+
   const [postData, setPostData] = useState();
-
-  const getPostDetailData = async () => {
-    try {
-      const res = await axios.get(
-        `https://mandarin.api.weniv.co.kr/post/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      setPostData(res.data.post);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getPostDetailData();
-  }, []);
-
   const [comments, setComments] = useState([]);
 
   const setCommentList = async () => {
@@ -54,19 +34,29 @@ const PostDetail = () => {
       setComments(data);
     } catch (error) {}
   };
+
+  useEffect(() => {
+    const setData = async () => {
+      const postDetailData = await getPostDetailDataAxios(id, token);
+      setPostData(postDetailData);
+    };
+    setData();
+  }, []);
+
   useEffect(() => {
     setCommentList();
   }, []);
 
   const [dropUpShow, setDropUpShow] = useState(false);
   const [modalShow, setModalShow] = useState(false);
-  const clickedComment = useRef();
   const [isMy, setIsMy] = useState(false);
   const [commentId, setCommentId] = useState('');
 
+  const clickedComment = useRef();
+
   const removeComment = async () => {
     try {
-      const res = await axios.delete(
+      await axios.delete(
         `https://mandarin.api.weniv.co.kr/post/${id}/comments/${commentId}`,
         {
           headers: {

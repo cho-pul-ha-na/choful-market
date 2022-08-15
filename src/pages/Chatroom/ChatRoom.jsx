@@ -1,13 +1,14 @@
 import { useSetRecoilState } from 'recoil';
+import { chatValue } from '../../atoms';
 
 import Profile from '../../components/atoms/Profile/Profile';
 import Input from '../../components/atoms/Input/Input';
 import Img from '../../components/atoms/Img/Img';
 import Icon from '../../components/atoms/Icon/Icon';
-import ChatInmg from '../../../src/assets/chat-example.png';
-import { chatValue } from '../../atoms';
-import img3 from '../../assets/exampleImg/feed-profile.png';
 import * as S from './style';
+
+import ChatImg from '../../../src/assets/chat-example.png';
+import img3 from '../../assets/exampleImg/feed-profile.png';
 
 const ChatRoom = props => {
   const setChatvalue = useSetRecoilState(chatValue);
@@ -36,7 +37,7 @@ const ChatRoom = props => {
             </S.ChatDiv>
           </S.ChatLi>
           <S.ChatLi>
-            <Img width='240px' height='240px' imgSrc={ChatInmg}></Img>
+            <Img width='240px' height='240px' imgSrc={ChatImg}></Img>
           </S.ChatLi>
           <S.ChatLi>
             <Profile size='42px' imgSrc={img3} imgAlt='프로필 이미지' />

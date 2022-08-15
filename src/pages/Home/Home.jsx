@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import Button from '../../components/atoms/Button/Button';
 import Logo from '../../components/atoms/Logo/Logo';
@@ -10,31 +9,19 @@ import Post from '../../components/modules/Post/Post';
 import SplashScreen from '../SplashScreen/SplashScreen';
 import { FeedWrapper, NotFollowerWrapper, SearchFollowerText } from './style';
 
+import { getFeedPostDataAxios } from '../../apis/apis';
+
 const Home = () => {
   const token = localStorage.getItem('token');
 
   const [feedPostData, setFeedPostData] = useState([]);
 
-  const getFeedPostData = async () => {
-    try {
-      const res = await axios.get(
-        `https://mandarin.api.weniv.co.kr/post/feed/?limit=${parseInt(20)}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      console.log(res);
-      setFeedPostData(res.data.posts);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    getFeedPostData();
+    const setFeedData = async () => {
+      const feedData = await getFeedPostDataAxios(token);
+      setFeedPostData(feedData);
+    };
+    setFeedData();
   }, []);
 
   return (

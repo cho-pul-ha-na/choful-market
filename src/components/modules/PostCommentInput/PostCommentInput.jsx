@@ -12,9 +12,10 @@ const PostCommentInput = ({ postId, setCommentList }) => {
   const onChangeInput = e => {
     setTxt(e.target.value);
   };
+
   const AddComment = async () => {
     try {
-      const res = await axios.post(
+      await axios.post(
         `https://mandarin.api.weniv.co.kr/post/${postId}/comments`,
         {
           comment: {
@@ -28,7 +29,6 @@ const PostCommentInput = ({ postId, setCommentList }) => {
           },
         },
       );
-      console.log(res);
       setCommentList();
       setTxt('');
     } catch (error) {}

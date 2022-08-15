@@ -6,10 +6,6 @@ import {
   useParams,
 } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import axios from 'axios';
-import Icon from '../../atoms/Icon/Icon';
-import Button from '../../atoms/Button/Button';
-import Input from '../../atoms/Input/Input';
 import {
   accountnameValue,
   profileImgSrc,
@@ -25,6 +21,11 @@ import {
   productImgAtom,
   isLogin,
 } from '../../../atoms';
+import axios from 'axios';
+
+import Icon from '../../atoms/Icon/Icon';
+import Button from '../../atoms/Button/Button';
+import Input from '../../atoms/Input/Input';
 import DropUp from '../DropUp/DropUp';
 import Modal from '../Modal/Modal';
 import { HeaderBox, HeaderWrapper, HeaderSpan } from './style';
@@ -73,7 +74,6 @@ const Header = () => {
           },
         },
       );
-      console.log(res);
       navigate(`/profile/${accountname}`);
       setProductImgSrc();
     } catch (error) {
@@ -165,13 +165,13 @@ const Header = () => {
   };
 
   // 포스트 수정 함수
-  const postId = useParams();
+  const { id } = useParams();
   const editPostBtn = async e => {
     const images = uploadImgSrc.join(', ');
     e.preventDefault();
     try {
       const res = await axios.post(
-        `https://mandarin.api.weniv.co.kr/post/${postId}`,
+        `https://mandarin.api.weniv.co.kr/post/${id}`,
         {
           post: {
             content: txtValue,
@@ -193,10 +193,13 @@ const Header = () => {
       console.log(error);
     }
   };
+
   const handleLogoutBtn = () => {
     setDropUpShow(true);
   };
+
   const setIsLogin = useSetRecoilState(isLogin);
+
   const logoutFunc = () => {
     localStorage.removeItem('token');
     setIsLogin(false);

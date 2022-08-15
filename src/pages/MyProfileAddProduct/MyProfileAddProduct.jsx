@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import { useRecoilState } from 'recoil';
-import axios from 'axios';
 
 import Img from '../../components/atoms/Img/Img';
 import Label from '../../components/atoms/Label/Label';
@@ -17,33 +16,20 @@ import {
 import InputBox from '../../components/modules/InputBox/InputBox';
 import { ProductForm } from './style';
 
+import { uploadImg } from '../../apis/apis';
+
 const MyProfileAddProduct = () => {
   const [productImgSrc, setProductImgSrc] = useRecoilState(productImgAtom);
 
   const imgFileInput = useRef(null);
-  // 버튼 클릭시 input 클릭 함수
+
   const handleUploadImgBtnClick = e => {
     e.preventDefault();
     imgFileInput.current.click();
   };
 
-  const uploadImg = async imgFile => {
-    let formData = new FormData();
-    formData.append('image', imgFile);
-    try {
-      const res = await axios.post(
-        'https://mandarin.api.weniv.co.kr/image/uploadfile',
-        formData,
-      );
-      return `https://mandarin.api.weniv.co.kr/${res.data.filename}`;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleProductImgInputOnchange = async e => {
     const productImgSrc = await uploadImg(e.target.files[0]);
-    console.log(productImgSrc);
     setProductImgSrc(productImgSrc);
   };
 
