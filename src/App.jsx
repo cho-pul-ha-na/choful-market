@@ -1,4 +1,7 @@
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { isLogin } from './atoms';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+
 import ChatList from './pages/ChatList/ChatList';
 import ChatRoom from './pages/ChatRoom/ChatRoom';
 import EmailLogin from './pages/EmailLogin/EmailLogin';
@@ -16,9 +19,7 @@ import Nav from './components/modules/Nav/Nav';
 import MyProfileEdit from './pages/MyProfileEdit/MyProfileEdit';
 import PostDetail from './pages/PostDetail/PostDetail';
 import Followers from './pages/Followers/Followers';
-import { useRecoilState } from 'recoil';
-import { isLogin } from './atoms';
-import { useEffect } from 'react';
+import Page404 from './pages/404/404';
 
 function App() {
   const token = localStorage.getItem('token');
@@ -85,6 +86,7 @@ function App() {
         />
         <Route path='/chat/list' element={<ChatList />} />
         <Route path='/chat/room' element={<ChatRoom />} />
+        <Route path={'*'} element={<Page404 />} />
       </Routes>
       <Nav />
     </>
