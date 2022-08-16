@@ -1,16 +1,22 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { accountnameValue } from '../../../atoms';
 
-import axios from 'axios';
 import Profile from '../../atoms/Profile/Profile';
 import Icon from '../../atoms/Icon/Icon';
 import DropUp from '../DropUp/DropUp';
 import Modal from '../Modal/Modal';
 import * as S from './style';
+import { removePostAxios } from '../../../apis/apis';
 
 const PostUserInfo = ({ author, postId }) => {
+  const token = localStorage.getItem('token');
+
+  const { id } = useParams();
+
+  const navigate = useNavigate();
+
   const [dropUpShow, setDropUpShow] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [isMy, setIsMy] = useState();
@@ -20,25 +26,12 @@ const PostUserInfo = ({ author, postId }) => {
     setIsMy(author.accountname === accountname);
     setDropUpShow(true);
   };
-  const token = localStorage.getItem('token');
-  const navigate = useNavigate();
+
   const removePost = async () => {
-    try {
-      const res = await axios.delete(
-        `https://mandarin.api.weniv.co.kr/post/${postId}/`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      console.log(res.data);
-      navigate(`/profile/${accountname}`);
-    } catch (error) {
-      console.log(error);
-    }
+    await removePostAxios(token, id);
+    navigate(`/profile/${accountname}`);
   };
+
   return (
     <S.PostUserInfoWrapper>
       <S.PostUserInfoDiv>

@@ -5,8 +5,9 @@ import { CommonWrapper } from '../../common/commonWrapper';
 import Profile from '../../atoms/Profile/Profile';
 import MyProfileBtn from '../MyprofileBtn/MyProfileBtn';
 import YourProfileBtn from '../YourProfileBtn/YourProfileBtn';
-import axios from 'axios';
 import * as S from './style';
+
+import { getMyprofile, getYourprofile } from '../../../apis/apis';
 
 const ProfileInfo = () => {
   const token = localStorage.getItem('token');
@@ -19,52 +20,22 @@ const ProfileInfo = () => {
   const [followingCount, setFollowingCount] = useState();
   const [isFollowState, setIsFollowState] = useState();
 
-  const getMyprofile = async () => {
-    try {
-      const res = await axios.get(
-        `https://mandarin.api.weniv.co.kr/user/myinfo`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      console.log(res.data.user);
-      setUserinfo(res.data.user);
-      setFollowerCount(res.data.user.followerCount);
-      setFollowingCount(res.data.user.followingCount);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getYourprofile = async () => {
-    try {
-      const res = await axios.get(
-        `https://mandarin.api.weniv.co.kr/profile/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      setUserinfo(res.data.profile);
-      setFollowerCount(res.data.profile.followerCount);
-      setFollowingCount(res.data.profile.followingCount);
-      setIsFollowState(res.data.profile.isfollow);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    if (path.includes('yourProfile')) {
-      getYourprofile();
-    } else {
-      getMyprofile();
-    }
+    const setData = async () => {
+      if (path.includes('yourProfile')) {
+        const profileData = await getYourprofile(id, token);
+        setUserinfo(profileData);
+        setFollowerCount(profileData.followerCount);
+        setFollowingCount(profileData.followingCount);
+        setIsFollowState(profileData.isfollow);
+      } else {
+        const myData = await getMyprofile(token);
+        setUserinfo(myData);
+        setFollowerCount(myData.followerCount);
+        setFollowingCount(myData.followingCount);
+      }
+    };
+    setData();
   }, []);
 
   return (

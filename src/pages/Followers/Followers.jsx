@@ -1,10 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import axios from 'axios';
 
 import Profile from '../../components/atoms/Profile/Profile';
 import Button from '../../components/atoms/Button/Button';
 import * as S from './style';
+
+import {
+  followAxios,
+  getFollowerDataAxios,
+  getFollowingDataAxios,
+  unfollowAxios,
+} from '../../apis/apis';
 
 const Followers = () => {
   const token = localStorage.getItem('token');
@@ -15,89 +21,31 @@ const Followers = () => {
   const [followData, setFollowData] = useState([]);
   const [followChange, setFollowChange] = useState(false);
 
-  const getFollowingData = async () => {
-    try {
-      const res = await axios.get(
-        `https://mandarin.api.weniv.co.kr/profile/${id}/following/?limit=${parseInt(
-          20,
-        )}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      setFollowData(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getFollowerData = async () => {
-    try {
-      const res = await axios.get(
-        `https://mandarin.api.weniv.co.kr/profile/${id}/follower/?limit=${parseInt(
-          20,
-        )}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      setFollowData(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleFollowBtn = async e => {
     e.preventDefault();
     const accountname = e.target.value;
-    try {
-      const res = await axios.post(
-        `https://mandarin.api.weniv.co.kr/profile/${accountname}/follow`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      setFollowChange(prev => !prev);
-    } catch (error) {
-      console.log(error);
-    }
+    await followAxios(accountname, token);
+    setFollowChange(prev => !prev);
   };
 
   const handleUnfollowBtn = async e => {
     e.preventDefault();
     const accountname = e.target.value;
-    try {
-      const res = await axios.delete(
-        `https://mandarin.api.weniv.co.kr/profile/${accountname}/unfollow`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      setFollowChange(prev => !prev);
-    } catch (error) {
-      console.log(error);
-    }
+    await unfollowAxios(accountname, token);
+    setFollowChange(prev => !prev);
   };
 
   useEffect(() => {
-    if (path.includes('follower')) {
-      getFollowerData();
-    } else if (path.includes('following')) {
-      getFollowingData();
-    }
+    const setData = async () => {
+      if (path.includes('follower')) {
+        const followerData = await getFollowerDataAxios(id, token);
+        setFollowData(followerData);
+      } else if (path.includes('following')) {
+        const followingData = await getFollowingDataAxios(id, token);
+        setFollowData(followingData);
+      }
+    };
+    setData();
   }, [followChange]);
 
   return (

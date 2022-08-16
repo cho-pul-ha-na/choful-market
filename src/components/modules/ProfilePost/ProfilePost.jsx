@@ -6,14 +6,15 @@ import * as S from './style';
 
 const ProfilePost = () => {
   const [isList, setViewType] = useState(true);
-  const handleViewBtn = () => {
+
+  const handleViewBtnClick = () => {
     setViewType(prev => !prev);
   };
   return (
     <>
       <S.ViewBtnDiv>
         <S.ViewWrapper>
-          <S.ViewBtn onClick={handleViewBtn} disabled={isList}>
+          <S.ViewBtn onClick={handleViewBtnClick} disabled={isList}>
             <Icon
               size='26px'
               xpoint='-10px'
@@ -22,7 +23,7 @@ const ProfilePost = () => {
               className={isList ? 'list-active' : null}
             />
           </S.ViewBtn>
-          <S.ViewBtn onClick={handleViewBtn} disabled={!isList}>
+          <S.ViewBtn onClick={handleViewBtnClick} disabled={!isList}>
             <Icon
               size='26px'
               xpoint='-146px'

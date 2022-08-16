@@ -1,37 +1,27 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+
 import Img from '../../atoms/Img/Img';
 import { CommonWrapper } from '../../common/commonWrapper';
 import * as S from './style';
 
-const ForSale = () => {
-  const token = localStorage.getItem('token');
+import { getProductData } from '../../../apis/apis';
 
+const ForSale = () => {
   const { id } = useParams();
+
+  const token = localStorage.getItem('token');
 
   const [productData, setProductData] = useState([]);
 
-  const getProductData = async () => {
-    try {
-      const res = await axios.get(
-        `https://mandarin.api.weniv.co.kr/product/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      setProductData(res.data.product);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    getProductData();
+    const setData = async () => {
+      const productDatas = await getProductData(id, token);
+      setProductData(productDatas);
+    };
+    setData();
   }, []);
+
   return (
     <CommonWrapper>
       <S.ForSaleSec>

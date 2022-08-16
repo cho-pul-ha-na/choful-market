@@ -1,13 +1,15 @@
 import { useRef } from 'react';
 import { useRecoilState } from 'recoil';
-import axios from 'axios';
+import { profileImgSrc } from '../../../atoms';
+
 import Input from '../../atoms/Input/Input';
 import Label from '../../atoms/Label/Label';
 import Img from '../../atoms/Img/Img';
 import Button from '../../atoms/Button/Button';
 import GalleryButtonImg from '../../../assets/img-button-color.png';
-import { profileImgSrc } from '../../../atoms';
 import { CustomFileInputWrapper } from './style';
+
+import { uploadImg } from '../../../apis/apis';
 
 const CustomFileInput = () => {
   const [profileImgSrcState, setProfileImgSrcState] =
@@ -18,20 +20,6 @@ const CustomFileInput = () => {
   const handleProfileImgButtonClick = e => {
     e.preventDefault();
     profileImgInput.current.click();
-  };
-
-  const uploadImg = async imgFile => {
-    let formData = new FormData();
-    formData.append('image', imgFile);
-    try {
-      const res = await axios.post(
-        'https://mandarin.api.weniv.co.kr/image/uploadfile',
-        formData,
-      );
-      return `https://mandarin.api.weniv.co.kr/${res.data.filename}`;
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const handleProfileImgInputOnchange = async e => {

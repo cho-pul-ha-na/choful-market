@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+
 import Button from '../../atoms/Button/Button';
 import Icon from '../../atoms/Icon/Icon';
-import { IconButton, ProfileInfoFlex, ProfileInfoButtons } from './style';
+import { IconButton, ProfileInfoButtons } from './style';
+
+import { followAxios, unfollowAxios } from '../../../apis/apis';
 
 const YourProfileBtn = ({
   setFollowerCountFunc,
@@ -15,47 +16,20 @@ const YourProfileBtn = ({
 
   const { id } = useParams();
 
-  const handleFollowBtn = async e => {
+  const handleFollowBtnClick = async e => {
     e.preventDefault();
-    try {
-      const res = await axios.post(
-        `https://mandarin.api.weniv.co.kr/profile/${id}/follow`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      const data = res.data.profile;
-      setFollowerCountFunc(data.followerCount);
-      setFollowingCountFunc(data.followingCount);
-      setIsFollowState(true);
-    } catch (error) {
-      console.log(error);
-    }
+    const data = await followAxios(id, token);
+    setFollowerCountFunc(data.followerCount);
+    setFollowingCountFunc(data.followingCount);
+    setIsFollowState(true);
   };
 
-  const handleUnfollowBtn = async e => {
+  const handleUnfollowBtnClick = async e => {
     e.preventDefault();
-    try {
-      const res = await axios.delete(
-        `https://mandarin.api.weniv.co.kr/profile/${id}/unfollow`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      const data = res.data.profile;
-      setFollowerCountFunc(data.followerCount);
-      setFollowingCountFunc(data.followingCount);
-      setIsFollowState(false);
-    } catch (error) {
-      console.log(error);
-    }
+    const data = await unfollowAxios(id, token);
+    setFollowerCountFunc(data.followerCount);
+    setFollowingCountFunc(data.followingCount);
+    setIsFollowState(false);
   };
   return (
     <ProfileInfoButtons>
@@ -79,7 +53,7 @@ const YourProfileBtn = ({
           txtColor={props => props.theme.color.text.gray}
           borderRadius='30px'
           className='btn_active'
-          onClick={handleUnfollowBtn}
+          onClick={handleUnfollowBtnClick}
         />
       ) : (
         <Button
@@ -91,7 +65,7 @@ const YourProfileBtn = ({
           bgColor={props => props.theme.color.main.green}
           txtColor={props => props.theme.color.text.white}
           borderRadius='30px'
-          onClick={handleFollowBtn}
+          onClick={handleFollowBtnClick}
         />
       )}
       <IconButton>

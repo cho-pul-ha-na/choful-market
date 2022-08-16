@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import axios from 'axios';
-
 import {
   accountnameValue,
   idValue,
@@ -11,11 +9,14 @@ import {
   userIntroValue,
   usernameValue,
 } from '../../atoms';
+
 import Button from '../../components/atoms/Button/Button';
 import { CommonWrapper } from '../../components/common/commonWrapper';
 import CustomFileInput from '../../components/modules/CustomFileInput/CustomFileInput';
 import InputBox from '../../components/modules/InputBox/InputBox';
 import * as S from './style';
+
+import { accountnameValidateAxios, signUpAxios } from '../../apis/apis';
 
 const SetProfile = () => {
   const navigate = useNavigate();
@@ -32,52 +33,17 @@ const SetProfile = () => {
   const profileImgSrcValue = useRecoilValue(profileImgSrc);
   const userIntro = useRecoilValue(userIntroValue);
 
-  const onClickNextBtn = async e => {
+  const handleNextBtn = async e => {
     e.preventDefault();
-    try {
-      const res = await axios.post('https://mandarin.api.weniv.co.kr/user', {
-        user: {
-          username: username,
-          email: emailValue,
-          password: pwdValue,
-          accountname: accountname,
-          intro: userIntro,
-          image: profileImgSrcValue,
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    await signUpAxios(
+      username,
+      emailValue,
+      pwdValue,
+      accountname,
+      userIntro,
+      profileImgSrcValue,
+    );
     navigate('/login/email');
-  };
-
-  const accountnameValidate = async () => {
-    try {
-      const res = await axios.post(
-        'https://mandarin.api.weniv.co.kr/user/accountnamevalid',
-        {
-          user: {
-            accountname: accountname,
-          },
-        },
-      );
-      let msg = res.data.message;
-      const accountRegExp = /[0-9a-zA-z._]/i;
-      let result = accountRegExp.test(accountname);
-
-      if (msg.includes('가능한') && result) {
-        setIsAccountNameValid(true);
-        setAccountnameErrMsg(msg);
-      } else if (!result) {
-        setIsAccountNameValid(false);
-        setAccountnameErrMsg('올바른 계정아이디가 아니풀!');
-      } else {
-        setIsAccountNameValid(false);
-      }
-      setAccountnameErrMsg(msg);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const usernameValid = () => {
@@ -91,7 +57,23 @@ const SetProfile = () => {
   };
 
   useEffect(() => {
-    accountnameValidate();
+    const setData = async () => {
+      let msg = await accountnameValidateAxios(accountname);
+      const accountRegExp = /[0-9a-zA-z._]/i;
+      let result = accountRegExp.test(accountname);
+
+      if (msg.includes('가능한') && result) {
+        setIsAccountNameValid(true);
+        setAccountnameErrMsg(msg);
+      } else if (!result) {
+        setIsAccountNameValid(false);
+        setAccountnameErrMsg('올바른 계정아이디가 아니풀!');
+      } else {
+        setIsAccountNameValid(false);
+      }
+      setAccountnameErrMsg(msg);
+    };
+    setData();
   }, [accountname]);
 
   useEffect(() => {
@@ -142,7 +124,7 @@ const SetProfile = () => {
           bgColor={props => props.theme.color.main.subGreen}
           txtColor={props => props.theme.color.text.white}
           borderRadius='44px'
-          onClick={onClickNextBtn}
+          onClick={handleNextBtn}
           disabled={isUsernameValid && isAccountnameValid ? false : true}
           className={isUsernameValid && isAccountnameValid && 'btn_next'}
         />

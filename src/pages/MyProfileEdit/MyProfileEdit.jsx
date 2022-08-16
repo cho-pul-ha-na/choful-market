@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import {
@@ -7,31 +6,39 @@ import {
   userIntroValue,
   usernameValue,
 } from '../../atoms';
+
 import CustomFileInput from '../../components/modules/CustomFileInput/CustomFileInput';
 import InputBox from '../../components/modules/InputBox/InputBox';
 import { InputWrap, ProfileEditWrapper } from './style';
+
+import { accountnameValidateAxios } from '../../apis/apis';
 
 const MyProfileEdit = () => {
   const accountname = useRecoilValue(accountnameValue);
   const [isAccountnameValid, setIsAccountNameValid] = useState(false);
   const [accountnameErrMsg, setAccountnameErrMsg] = useState('');
+
   const username = useRecoilValue(usernameValue);
   const [isUsernameValid, setIsUsernameValid] = useState(false);
   const [usernameErrMsg, setUsernameErrMsg] = useState('');
+
   const userIntro = useRecoilValue(userIntroValue);
 
-  const accountnameValidate = async () => {
-    try {
-      const res = await axios.post(
-        'https://mandarin.api.weniv.co.kr/user/accountnamevalid',
-        {
-          user: {
-            accountname: accountname,
-          },
-        },
-      );
+  const userData = useRecoilValue(userDataAtom);
 
-      let msg = res.data.message;
+  const usernameValid = () => {
+    if (username.length >= 2 && username.length <= 12) {
+      setIsUsernameValid(true);
+      setUsernameErrMsg('사용가능한 사용자이름 입니다.');
+    } else {
+      setIsUsernameValid(false);
+      setUsernameErrMsg('올바른 사용자이름이 아닙니다.');
+    }
+  };
+
+  useEffect(() => {
+    const setData = async () => {
+      let msg = await accountnameValidateAxios(accountname);
       const accountRegExp = /[0-9a-zA-z._]/i;
       let result = accountRegExp.test(accountname);
 
@@ -49,23 +56,8 @@ const MyProfileEdit = () => {
       if (oldAccountName === accountname) {
         setAccountnameErrMsg(null);
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const usernameValid = () => {
-    if (username.length >= 2 && username.length <= 12) {
-      setIsUsernameValid(true);
-      setUsernameErrMsg('사용가능한 사용자이름 입니다.');
-    } else {
-      setIsUsernameValid(false);
-      setUsernameErrMsg('올바른 사용자이름이 아닙니다.');
-    }
-  };
-  const userData = useRecoilValue(userDataAtom);
-  useEffect(() => {
-    accountnameValidate();
+    };
+    setData();
   }, [accountname]);
 
   useEffect(() => {

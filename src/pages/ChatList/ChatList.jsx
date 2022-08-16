@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
+
 import UserInformation from '../../components/modules/UserInformation/UserInformation';
+import { CommonWrapper } from '../../components/common/commonWrapper';
+
 import img1 from '../../assets/exampleImg/comment-profile.png';
 import img2 from '../../assets/exampleImg/default-profile.png';
 import img3 from '../../assets/exampleImg/feed-profile.png';
-import { CommonWrapper } from '../../components/common/commonWrapper';
 
 const ChatList = () => {
   return (
