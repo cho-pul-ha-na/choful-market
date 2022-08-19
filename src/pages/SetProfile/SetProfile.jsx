@@ -1,8 +1,6 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
 import {
   accountnameValue,
   idValue,
@@ -11,34 +9,15 @@ import {
   userIntroValue,
   usernameValue,
 } from '../../atoms';
+
 import Button from '../../components/atoms/Button/Button';
 import { CommonWrapper } from '../../components/common/commonWrapper';
 import CustomFileInput from '../../components/modules/CustomFileInput/CustomFileInput';
 import InputBox from '../../components/modules/InputBox/InputBox';
-const FormWrapper = styled.div`
-  margin: 30px 34px;
-`;
-const FormTitle = styled.h1`
-  text-align: center;
-  font-weight: 500;
-  font-size: 24px;
-  margin-top: 30px;
-`;
-const InputWrap = styled.form`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  gap: 16px;
-  margin: 30px 0;
-`;
-const FormSubtitle = styled.h2`
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 14px;
-  text-align: center;
-  margin: 12px 0 30px;
-  color: ${props => props.theme.color.text.gray};
-`;
+import * as S from './style';
+
+import { accountnameValidateAxios, signUpAxios } from '../../apis/apis';
+
 const SetProfile = () => {
   const navigate = useNavigate();
 
@@ -54,53 +33,17 @@ const SetProfile = () => {
   const profileImgSrcValue = useRecoilValue(profileImgSrc);
   const userIntro = useRecoilValue(userIntroValue);
 
-  const onClickNextBtn = async e => {
+  const handleNextBtn = async e => {
     e.preventDefault();
-    try {
-      const res = await axios.post('https://mandarin.api.weniv.co.kr/user', {
-        user: {
-          username: username,
-          email: emailValue,
-          password: pwdValue,
-          accountname: accountname,
-          intro: userIntro,
-          image: profileImgSrcValue,
-        },
-      });
-      console.log(res.data);
-    } catch (error) {
-      console.log(error);
-    }
+    await signUpAxios(
+      username,
+      emailValue,
+      pwdValue,
+      accountname,
+      userIntro,
+      profileImgSrcValue,
+    );
     navigate('/login/email');
-  };
-
-  const accountnameValidate = async () => {
-    try {
-      const res = await axios.post(
-        'https://mandarin.api.weniv.co.kr/user/accountnamevalid',
-        {
-          user: {
-            accountname: accountname,
-          },
-        },
-      );
-      let msg = res.data.message;
-      const accountRegExp = /[0-9a-zA-z._]/i;
-      let result = accountRegExp.test(accountname);
-
-      if (msg.includes('가능한') && result) {
-        setIsAccountNameValid(true);
-        setAccountnameErrMsg(msg);
-      } else if (!result) {
-        setIsAccountNameValid(false);
-        setAccountnameErrMsg('올바른 계정아이디가 아니풀!');
-      } else {
-        setIsAccountNameValid(false);
-      }
-      setAccountnameErrMsg(msg);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const usernameValid = () => {
@@ -114,22 +57,36 @@ const SetProfile = () => {
   };
 
   useEffect(() => {
-    accountnameValidate();
-    console.log(accountname);
+    const setData = async () => {
+      let msg = await accountnameValidateAxios(accountname);
+      const accountRegExp = /[0-9a-zA-z._]/i;
+      let result = accountRegExp.test(accountname);
+
+      if (msg.includes('가능한') && result) {
+        setIsAccountNameValid(true);
+        setAccountnameErrMsg(msg);
+      } else if (!result) {
+        setIsAccountNameValid(false);
+        setAccountnameErrMsg('올바른 계정아이디가 아니풀!');
+      } else {
+        setIsAccountNameValid(false);
+      }
+      setAccountnameErrMsg(msg);
+    };
+    setData();
   }, [accountname]);
 
   useEffect(() => {
     usernameValid();
-    console.log(accountname);
   }, [username]);
 
   return (
     <CommonWrapper>
-      <FormWrapper>
-        <FormTitle>프로필 설정</FormTitle>
-        <FormSubtitle>나중에 언제든지 변경할 수 있풀!</FormSubtitle>
+      <S.FormWrapper>
+        <S.FormTitle>프로필 설정</S.FormTitle>
+        <S.FormSubtitle>나중에 언제든지 변경할 수 있풀!</S.FormSubtitle>
         <CustomFileInput />
-        <InputWrap>
+        <S.InputWrap>
           <InputBox
             label='사용자 이름'
             placeholder='2~10자 이내여야 합니다.'
@@ -157,7 +114,7 @@ const SetProfile = () => {
             validTarget={false}
             needValid={false}
           />
-        </InputWrap>
+        </S.InputWrap>
         <Button
           label='초풀마켓 시작하기'
           fontSize='14px'
@@ -167,11 +124,11 @@ const SetProfile = () => {
           bgColor={props => props.theme.color.main.subGreen}
           txtColor={props => props.theme.color.text.white}
           borderRadius='44px'
-          onClick={onClickNextBtn}
+          onClick={handleNextBtn}
           disabled={isUsernameValid && isAccountnameValid ? false : true}
           className={isUsernameValid && isAccountnameValid && 'btn_next'}
         />
-      </FormWrapper>
+      </S.FormWrapper>
     </CommonWrapper>
   );
 };

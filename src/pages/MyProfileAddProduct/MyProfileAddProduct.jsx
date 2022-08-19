@@ -1,76 +1,35 @@
-import styled from 'styled-components';
+import { useRef } from 'react';
+import { useRecoilState } from 'recoil';
+
 import Img from '../../components/atoms/Img/Img';
 import Label from '../../components/atoms/Label/Label';
 import Input from '../../components/atoms/Input/Input';
 import Button from '../../components/atoms/Button/Button';
 import { CommonWrapper } from '../../components/common/commonWrapper';
-import { useEffect, useRef, useState } from 'react';
-
 import UploadImg from '../../assets/img-button.png';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   productImgAtom,
   productLinkAtom,
   productNameAtom,
   productPriceAtom,
 } from '../../atoms';
-import axios from 'axios';
 import InputBox from '../../components/modules/InputBox/InputBox';
+import { ProductForm } from './style';
 
-const ProductForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  padding: 30px 14.7%;
-  gap: 16px;
-  & label:not(:first-of-type) {
-    margin-top: 16px;
-  }
-  & label:first-of-type {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    img {
-      margin: 18px 0 14px;
-      cursor: pointer;
-    }
-    button {
-      position: absolute;
-      bottom: 30px;
-      right: 12px;
-    }
-  }
-`;
+import { uploadImg } from '../../apis/apis';
 
 const MyProfileAddProduct = () => {
   const [productImgSrc, setProductImgSrc] = useRecoilState(productImgAtom);
-  const productName = useRecoilValue(productNameAtom);
-  const productPrice = useRecoilValue(productPriceAtom);
-  const productLink = useRecoilValue(productLinkAtom);
 
   const imgFileInput = useRef(null);
-  // 버튼 클릭시 input 클릭 함수
+
   const handleUploadImgBtnClick = e => {
     e.preventDefault();
     imgFileInput.current.click();
   };
 
-  const uploadImg = async imgFile => {
-    let formData = new FormData();
-    formData.append('image', imgFile);
-    try {
-      const res = await axios.post(
-        'https://mandarin.api.weniv.co.kr/image/uploadfile',
-        formData,
-      );
-      return `https://mandarin.api.weniv.co.kr/${res.data.filename}`;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleProductImgInputOnchange = async e => {
     const productImgSrc = await uploadImg(e.target.files[0]);
-    console.log(productImgSrc);
     setProductImgSrc(productImgSrc);
   };
 

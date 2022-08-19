@@ -1,63 +1,13 @@
-import styled, { css } from 'styled-components';
+import { useState, useEffect } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
+import { CommonWrapper } from '../../common/commonWrapper';
 
 import Profile from '../../atoms/Profile/Profile';
 import MyProfileBtn from '../MyprofileBtn/MyProfileBtn';
 import YourProfileBtn from '../YourProfileBtn/YourProfileBtn';
-import { CommonWrapper } from '../../common/commonWrapper';
-import axios from 'axios';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import * as S from './style';
 
-const ProfileInfoSection = styled.section`
-  width: 100%;
-  padding: 30px 0 26px;
-  text-align: center;
-  border-bottom: 1px solid ${props => props.theme.color.gray.d2};
-`;
-const ProfileInfoFlex = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const FollowWrap = styled.div`
-  ${ProfileInfoFlex};
-  gap: 40px;
-  margin-bottom: 16px;
-  text-align: center;
-`;
-const FollowNum = styled.strong`
-  font-weight: 700;
-  font-size: 18px;
-  display: block;
-  margin-bottom: 6px;
-  &.gray {
-    color: ${props => props.theme.color.text.gray};
-  }
-`;
-const FollowSpan = styled.span`
-  font-weight: 400;
-  font-size: 10px;
-  display: block;
-  color: ${props => props.theme.color.text.gray};
-`;
-const ProfileH1 = styled.h1`
-  font-weight: 700;
-  font-size: 16px;
-  margin-bottom: 6px;
-`;
-const ProfileInfoDesc = css`
-  font-weight: 400;
-  font-size: 12px;
-  color: ${props => props.theme.color.text.gray};
-`;
-const ProfileH2 = styled.h2`
-  ${ProfileInfoDesc}
-  margin-bottom: 16px;
-`;
-const ProfileSpan = styled.span`
-  ${ProfileInfoDesc}
-`;
+import { getMyprofile, getYourprofile } from '../../../apis/apis';
 
 const ProfileInfo = () => {
   const token = localStorage.getItem('token');
@@ -70,62 +20,32 @@ const ProfileInfo = () => {
   const [followingCount, setFollowingCount] = useState();
   const [isFollowState, setIsFollowState] = useState();
 
-  const getMyprofile = async () => {
-    try {
-      const res = await axios.get(
-        `https://mandarin.api.weniv.co.kr/user/myinfo`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      console.log(res.data.user);
-      setUserinfo(res.data.user);
-      setFollowerCount(res.data.user.followerCount);
-      setFollowingCount(res.data.user.followingCount);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getYourprofile = async () => {
-    try {
-      const res = await axios.get(
-        `https://mandarin.api.weniv.co.kr/profile/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      setUserinfo(res.data.profile);
-      setFollowerCount(res.data.profile.followerCount);
-      setFollowingCount(res.data.profile.followingCount);
-      setIsFollowState(res.data.profile.isfollow);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    if (path.includes('yourProfile')) {
-      getYourprofile();
-    } else {
-      getMyprofile();
-    }
+    const setData = async () => {
+      if (path.includes('yourProfile')) {
+        const profileData = await getYourprofile(id, token);
+        setUserinfo(profileData);
+        setFollowerCount(profileData.followerCount);
+        setFollowingCount(profileData.followingCount);
+        setIsFollowState(profileData.isfollow);
+      } else {
+        const myData = await getMyprofile(token);
+        setUserinfo(myData);
+        setFollowerCount(myData.followerCount);
+        setFollowingCount(myData.followingCount);
+      }
+    };
+    setData();
   }, []);
 
   return (
     <>
-      <ProfileInfoSection>
+      <S.ProfileInfoSection>
         <CommonWrapper>
-          <FollowWrap>
+          <S.FollowWrap>
             <Link to={`/profile/${userinfo.accountname}/follower`}>
-              <FollowNum>{followerCount}</FollowNum>
-              <FollowSpan>followers</FollowSpan>
+              <S.FollowNum>{followerCount}</S.FollowNum>
+              <S.FollowSpan>followers</S.FollowSpan>
             </Link>
             <div>
               <Profile
@@ -135,13 +55,13 @@ const ProfileInfo = () => {
               />
             </div>
             <Link to={`/profile/${userinfo.accountname}/following`}>
-              <FollowNum className='gray'>{followingCount}</FollowNum>
-              <FollowSpan>followings</FollowSpan>
+              <S.FollowNum className='gray'>{followingCount}</S.FollowNum>
+              <S.FollowSpan>followings</S.FollowSpan>
             </Link>
-          </FollowWrap>
-          <ProfileH1>{userinfo.username}</ProfileH1>
-          <ProfileH2>@ {userinfo.accountname}</ProfileH2>
-          <ProfileSpan>{userinfo.intro}</ProfileSpan>
+          </S.FollowWrap>
+          <S.ProfileH1>{userinfo.username}</S.ProfileH1>
+          <S.ProfileH2>@ {userinfo.accountname}</S.ProfileH2>
+          <S.ProfileSpan>{userinfo.intro}</S.ProfileSpan>
           {path.includes('yourProfile') ? (
             <YourProfileBtn
               setFollowerCountFunc={setFollowerCount}
@@ -153,7 +73,7 @@ const ProfileInfo = () => {
             <MyProfileBtn />
           )}
         </CommonWrapper>
-      </ProfileInfoSection>
+      </S.ProfileInfoSection>
     </>
   );
 };

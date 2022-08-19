@@ -1,15 +1,10 @@
-import axios from 'axios';
+import { useEffect, useState } from 'react';
 import {
   useLocation,
   useMatch,
   useNavigate,
   useParams,
 } from 'react-router-dom';
-import styled from 'styled-components';
-import Icon from '../../atoms/Icon/Icon';
-import Button from '../../atoms/Button/Button';
-import Input from '../../atoms/Input/Input';
-import { CommonWrapper } from '../../common/commonWrapper';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   accountnameValue,
@@ -26,39 +21,14 @@ import {
   productImgAtom,
   isLogin,
 } from '../../../atoms';
-import { useEffect } from 'react';
+import axios from 'axios';
+
+import Icon from '../../atoms/Icon/Icon';
+import Button from '../../atoms/Button/Button';
+import Input from '../../atoms/Input/Input';
 import DropUp from '../DropUp/DropUp';
 import Modal from '../Modal/Modal';
-import { useState } from 'react';
-
-const HeaderBox = styled.header`
-  width: 100%;
-  border-bottom: 0.5px solid ${props => props.theme.color.gray.d2};
-  background-color: white;
-  z-index: 10;
-  position: fixed;
-  top: 0;
-  &.hide {
-    display: none;
-  }
-`;
-
-const HeaderWrapper = styled(CommonWrapper)`
-  height: 48px;
-  padding: 8px 12px 8px 16px;
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-`;
-
-const HeaderSpan = styled.span`
-  width: 100%;
-  font-weight: 500;
-  font-size: 18px;
-  background-color: inherit;
-`;
+import { HeaderBox, HeaderWrapper, HeaderSpan } from './style';
 
 const Header = () => {
   const token = localStorage.getItem('token');
@@ -104,7 +74,6 @@ const Header = () => {
           },
         },
       );
-      console.log(res);
       navigate(`/profile/${accountname}`);
       setProductImgSrc();
     } catch (error) {
@@ -196,13 +165,13 @@ const Header = () => {
   };
 
   // 포스트 수정 함수
-  const postId = useParams();
+  const { id } = useParams();
   const editPostBtn = async e => {
     const images = uploadImgSrc.join(', ');
     e.preventDefault();
     try {
       const res = await axios.post(
-        `https://mandarin.api.weniv.co.kr/post/${postId}`,
+        `https://mandarin.api.weniv.co.kr/post/${id}`,
         {
           post: {
             content: txtValue,
@@ -224,10 +193,13 @@ const Header = () => {
       console.log(error);
     }
   };
+
   const handleLogoutBtn = () => {
     setDropUpShow(true);
   };
+
   const setIsLogin = useSetRecoilState(isLogin);
+
   const logoutFunc = () => {
     localStorage.removeItem('token');
     setIsLogin(false);
@@ -255,9 +227,19 @@ const Header = () => {
                 onInput={handleOnSearch}
               />
               <HeaderSpan
-                className={path.includes('chat/room') ? null : 'hide'}
+                className={
+                  path.includes('chat/room') || path.includes('follow')
+                    ? null
+                    : 'hide'
+                }
               >
-                목동뚜벅초
+                {path.includes('chat/room')
+                  ? '목동뚜벅초'
+                  : path.includes('follower')
+                  ? 'Follower'
+                  : path.includes('following')
+                  ? 'Following'
+                  : null}
               </HeaderSpan>
               <Icon
                 size='24px'
@@ -312,12 +294,7 @@ const Header = () => {
               <HeaderSpan className={path.length === 1 ? '' : 'hide'}>
                 초풀마켓 피드
               </HeaderSpan>
-              <HeaderSpan
-                className={path.includes('chat/room') ? null : 'hide'}
-              >
-                {/* 여기에 채팅하는 상대방 유저아이디 */}
-                도촌동풀벌레 찌르찌르
-              </HeaderSpan>
+
               <Icon
                 to='/search'
                 size='24px'

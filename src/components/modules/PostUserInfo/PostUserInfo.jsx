@@ -1,45 +1,22 @@
-import styled from 'styled-components';
+import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { accountnameValue } from '../../../atoms';
+
 import Profile from '../../atoms/Profile/Profile';
 import Icon from '../../atoms/Icon/Icon';
 import DropUp from '../DropUp/DropUp';
 import Modal from '../Modal/Modal';
-import { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { accountnameValue } from '../../../atoms';
-
-const PostUserInfoWrapper = styled.div`
-  width: 100%;
-`;
-
-const PostUserInfoDiv = styled.div`
-  display: flex;
-  padding: 5px 0 6px;
-  margin: 0 auto 16px;
-`;
-
-const PostUserInfoUl = styled.ul`
-  width: 100%;
-  margin-left: 12px;
-`;
-
-const PostUserInfoLi = styled.li`
-  font-weight: 400;
-  &:nth-child(1) {
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 18px;
-    margin-bottom: 6px;
-  }
-  &:nth-child(2) {
-    font-size: 12px;
-    line-height: 15px;
-    color: ${props => props.theme.color.text.gray};
-  }
-`;
+import * as S from './style';
+import { removePostAxios } from '../../../apis/apis';
 
 const PostUserInfo = ({ author, postId }) => {
+  const token = localStorage.getItem('token');
+
+  const { id } = useParams();
+
+  const navigate = useNavigate();
+
   const [dropUpShow, setDropUpShow] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [isMy, setIsMy] = useState();
@@ -49,38 +26,25 @@ const PostUserInfo = ({ author, postId }) => {
     setIsMy(author.accountname === accountname);
     setDropUpShow(true);
   };
-  const token = localStorage.getItem('token');
-  const navigate = useNavigate();
+
   const removePost = async () => {
-    try {
-      const res = await axios.delete(
-        `https://mandarin.api.weniv.co.kr/post/${postId}/`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        },
-      );
-      console.log(res.data);
-      navigate(`/profile/${accountname}`);
-    } catch (error) {
-      console.log(error);
-    }
+    await removePostAxios(token, id);
+    navigate(`/profile/${accountname}`);
   };
+
   return (
-    <PostUserInfoWrapper>
-      <PostUserInfoDiv>
+    <S.PostUserInfoWrapper>
+      <S.PostUserInfoDiv>
         <Profile
           size='42px'
           borderRadius={props => props.theme.borderRadius.circle}
           imgSrc={author.image}
           imgAlt='프로필 이미지'
         />
-        <PostUserInfoUl>
-          <PostUserInfoLi>{author.username}</PostUserInfoLi>
-          <PostUserInfoLi>{`@ ${author.accountname}`}</PostUserInfoLi>
-        </PostUserInfoUl>
+        <S.PostUserInfoUl>
+          <S.PostUserInfoLi>{author.username}</S.PostUserInfoLi>
+          <S.PostUserInfoLi>{`@ ${author.accountname}`}</S.PostUserInfoLi>
+        </S.PostUserInfoUl>
         <Icon
           size='18px'
           xpoint='-88px'
@@ -88,7 +52,7 @@ const PostUserInfo = ({ author, postId }) => {
           title='더보기 아이콘'
           onClick={handleMoreIcon}
         />
-      </PostUserInfoDiv>
+      </S.PostUserInfoDiv>
 
       <div className={dropUpShow ? null : 'hide'}>
         <DropUp
@@ -107,7 +71,7 @@ const PostUserInfo = ({ author, postId }) => {
           excutfunc={isMy ? removePost : null}
         />
       </div>
-    </PostUserInfoWrapper>
+    </S.PostUserInfoWrapper>
   );
 };
 

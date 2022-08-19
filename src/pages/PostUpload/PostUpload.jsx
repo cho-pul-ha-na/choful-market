@@ -1,72 +1,22 @@
-import axios from 'axios';
-import styled from 'styled-components';
-import Input from '../../components/atoms/Input/Input';
-import { CommonWrapper } from '../../components/common/commonWrapper';
-import Profile from '../../components/atoms/Profile/Profile';
-import UploadImg from '../../assets/upload-file.png';
 import { useCallback, useRef, useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
+
+import Input from '../../components/atoms/Input/Input';
+import Profile from '../../components/atoms/Profile/Profile';
+import UploadImg from '../../assets/upload-file.png';
 import { postTxtValue, profileImgSrc, uploadImgSrcArray } from '../../atoms';
 import Img from '../../components/atoms/Img/Img';
 import Icon from '../../components/atoms/Icon/Icon';
+import * as S from './style';
 
-const UploadWrapper = styled(CommonWrapper)`
-  position: relative;
-`;
-
-const ProfileImgDiv = styled.div`
-  border-radius: ${props => props.theme.borderRadius.circle};
-`;
-
-const FlexDiv = styled.div`
-  display: flex;
-  padding: 20px 16px 16px;
-  gap: 13px;
-  min-height: 100px;
-`;
-
-const TextAreaDiv = styled.div`
-  width: 100%;
-`;
-
-const ImgUploadLabel = styled.label`
-  width: 50px;
-  height: 50px;
-  position: fixed;
-  border-radius: ${props => props.theme.borderRadius.circle};
-  bottom: 16px;
-  right: 16px;
-  cursor: pointer;
-`;
-
-const ItemBox = styled.ul`
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-`;
-
-const SelectedImgLi = styled.li`
-  position: relative;
-`;
+import { uploadImg } from '../../apis/apis';
 
 const PostUpload = () => {
-  const setPostTxt = useSetRecoilState(postTxtValue);
+  const inputRef = useRef(null);
+
   const [imgArr, setImgArr] = useRecoilState(uploadImgSrcArray);
   const profileImg = useRecoilValue(profileImgSrc);
-
-  const uploadImg = async imgFile => {
-    let formData = new FormData();
-    formData.append('image', imgFile);
-    try {
-      const res = await axios.post(
-        'https://mandarin.api.weniv.co.kr/image/uploadfile',
-        formData,
-      );
-      return `https://mandarin.api.weniv.co.kr/${res.data.filename}`;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const setPostTxt = useSetRecoilState(postTxtValue);
 
   // 미리보기
   const preview = e => {
@@ -74,7 +24,6 @@ const PostUpload = () => {
     if (imgArr.length + files.length < 4) {
       Array.from(files).map(async file => {
         const url = await uploadImg(file);
-        console.log(url);
         return setImgArr([...imgArr, url]);
       });
     } else {
@@ -87,8 +36,6 @@ const PostUpload = () => {
     const key = e.target.id;
     setImgArr(imgArr.filter(e => e !== key));
   };
-
-  const inputRef = useRef(null);
 
   useEffect(() => {
     if (inputRef === null || inputRef.current === null) {
@@ -108,25 +55,25 @@ const PostUpload = () => {
   }, []);
 
   return (
-    <UploadWrapper>
-      <FlexDiv>
-        <ProfileImgDiv>
+    <S.UploadWrapper>
+      <S.FlexDiv>
+        <S.ProfileImgDiv>
           <Profile
             size='42px'
             imgSrc={profileImg}
             imgAlt='피드 프로필 기본이미지'
           />
-        </ProfileImgDiv>
-        <TextAreaDiv>
+        </S.ProfileImgDiv>
+        <S.TextAreaDiv>
           <Input
             isInput={false}
             placeholder='게시글 입력하기...'
             onInput={handleResizeHeight}
             inputRef={inputRef}
           />
-          <ItemBox>
+          <S.ItemBox>
             {imgArr?.map((imgSrc, index) => (
-              <SelectedImgLi key={index}>
+              <S.SelectedImgLi key={index}>
                 <Img
                   width='100px'
                   height='100px'
@@ -143,14 +90,14 @@ const PostUpload = () => {
                   onClick={removeImg}
                   id={imgSrc}
                 />
-              </SelectedImgLi>
+              </S.SelectedImgLi>
             ))}
-          </ItemBox>
-        </TextAreaDiv>
-      </FlexDiv>
-      <ImgUploadLabel htmlFor='post-upload-img'>
+          </S.ItemBox>
+        </S.TextAreaDiv>
+      </S.FlexDiv>
+      <S.ImgUploadLabel htmlFor='post-upload-img'>
         <img src={UploadImg} alt='' />
-      </ImgUploadLabel>
+      </S.ImgUploadLabel>
       <Input
         type='file'
         className='ir'
@@ -159,7 +106,7 @@ const PostUpload = () => {
         id='post-upload-img'
         onChange={preview}
       />
-    </UploadWrapper>
+    </S.UploadWrapper>
   );
 };
 

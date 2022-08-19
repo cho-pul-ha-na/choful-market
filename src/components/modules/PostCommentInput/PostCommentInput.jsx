@@ -1,36 +1,9 @@
-import styled from 'styled-components';
+import { useState } from 'react';
+import axios from 'axios';
 import Input from '../../atoms/Input/Input';
 import Profile from '../../atoms/Profile/Profile';
 import UserProfile from '../../../assets/basic-profile-img.png';
-import { useState } from 'react';
-import axios from 'axios';
-import { CommonWrapper } from '../../common/commonWrapper';
-
-const InputWrap = styled(CommonWrapper)`
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  padding: 13px 16px 12px 20px;
-  border-top: 0.5px solid ${props => props.theme.color.gray.d2};
-  background-color: white;
-`;
-
-const InputFlexContainer = styled.div`
-  display: flex;
-  gap: 18px;
-`;
-
-const InputBtn = styled.button`
-  display: inline-block;
-  width: 50px;
-  color: #c4c4c4;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 18px;
-  &.active {
-    color: ${props => props.theme.color.main.green};
-  }
-`;
+import { InputWrap, InputFlexContainer, InputBtn } from './style';
 
 const PostCommentInput = ({ postId, setCommentList }) => {
   const token = localStorage.getItem('token');
@@ -39,9 +12,10 @@ const PostCommentInput = ({ postId, setCommentList }) => {
   const onChangeInput = e => {
     setTxt(e.target.value);
   };
+
   const AddComment = async () => {
     try {
-      const res = await axios.post(
+      await axios.post(
         `https://mandarin.api.weniv.co.kr/post/${postId}/comments`,
         {
           comment: {
@@ -55,7 +29,6 @@ const PostCommentInput = ({ postId, setCommentList }) => {
           },
         },
       );
-      console.log(res);
       setCommentList();
       setTxt('');
     } catch (error) {}

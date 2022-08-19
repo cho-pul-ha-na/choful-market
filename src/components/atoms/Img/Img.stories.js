@@ -1,11 +1,11 @@
 import Img from './Img';
 import ChatExample from '../../../assets/chat-example.png';
 import LabelImg from '../../../assets/basic-profile-img.png';
-import PostImgExample from '../../../assets/post-img-example.png';
-import ProductImgExample from '../../../assets/product-img-example.png';
-import AlbumImgExample from '../../../assets/album-img-example.png';
-import PostImgsExample from '../../../assets/post-imgs-example.png';
-import RegistrationImgExample from '../../../assets/product-registration-img-example.png';
+import PostImgExample from '../../../assets/chat-example.png';
+import ProductImgExample from '../../../assets/chat-example.png';
+import AlbumImgExample from '../../../assets/chat-example.png';
+import PostImgsExample from '../../../assets/chat-example.png';
+import RegistrationImgExample from '../../../assets/chat-example.png';
 
 export default {
   title: 'Atoms / Img',

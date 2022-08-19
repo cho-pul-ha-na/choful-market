@@ -47,7 +47,7 @@ root.render(
   <React.StrictMode>
     <RecoilRoot>
       <ThemeProvider theme={mainTheme}>
-        <Router>
+        <Router basename={process.env.public_url}>
           <GlobalStyle />
           <App />
         </Router>

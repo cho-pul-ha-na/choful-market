@@ -1,5 +1,4 @@
 import Button from './Button';
-
 import UploadImgColor from '../../../assets/upload-file.png';
 import UploadImgColorSmall from '../../../assets/img-button-color.png';
 import UploadImg from '../../../assets/img-button.png';
