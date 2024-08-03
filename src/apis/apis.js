@@ -1,15 +1,14 @@
 import axios from 'axios';
 
+const API_URL = 'https://api.mandarin.weniv.co.kr/';
+
 // uploadImg Function
 export const uploadImg = async imgFile => {
   let formData = new FormData();
   formData.append('image', imgFile);
   try {
-    const res = await axios.post(
-      `https://mandarin.api.weniv.co.kr/image/uploadfile`,
-      formData,
-    );
-    return `https://mandarin.api.weniv.co.kr/${res.data.filename}`;
+    const res = await axios.post(`${API_URL}image/uploadfile`, formData);
+    return `${API_URL}${res.data.filename}`;
   } catch (error) {
     console.log(error);
   }
@@ -18,15 +17,12 @@ export const uploadImg = async imgFile => {
 // getProductData Function
 export const getProductData = async (id, token) => {
   try {
-    const res = await axios.get(
-      `https://mandarin.api.weniv.co.kr/product/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-type': 'application/json',
-        },
+    const res = await axios.get(`${API_URL}product/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-type': 'application/json',
       },
-    );
+    });
     return res.data.product;
   } catch (error) {
     console.log(error);
@@ -36,15 +32,12 @@ export const getProductData = async (id, token) => {
 // getMyPostData Function
 export const getMyPostData = async (id, token) => {
   try {
-    const res = await axios.get(
-      `https://mandarin.api.weniv.co.kr/post/${id}/userpost`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-type': 'application/json',
-        },
+    const res = await axios.get(`${API_URL}post/${id}/userpost`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-type': 'application/json',
       },
-    );
+    });
     return res.data.post;
   } catch (error) {
     console.log(error);
@@ -54,7 +47,7 @@ export const getMyPostData = async (id, token) => {
 // getPostData by ID Function
 export const getPostDetailDataAxios = async (id, token) => {
   try {
-    const res = await axios.get(`https://mandarin.api.weniv.co.kr/post/${id}`, {
+    const res = await axios.get(`${API_URL}post/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-type': 'application/json',
@@ -69,15 +62,12 @@ export const getPostDetailDataAxios = async (id, token) => {
 // getFeedPostData Function
 export const getFeedPostDataAxios = async token => {
   try {
-    const res = await axios.get(
-      `https://mandarin.api.weniv.co.kr/post/feed/?limit=${parseInt(20)}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-type': 'application/json',
-        },
+    const res = await axios.get(`${API_URL}post/feed/?limit=${parseInt(20)}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-type': 'application/json',
       },
-    );
+    });
     return res.data.posts;
   } catch (error) {
     console.log(error);
@@ -87,7 +77,7 @@ export const getFeedPostDataAxios = async token => {
 // removePost Function
 export const removePostAxios = async (token, postId) => {
   try {
-    await axios.delete(`https://mandarin.api.weniv.co.kr/post/${postId}/`, {
+    await axios.delete(`${API_URL}post/${postId}/`, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-type': 'application/json',
@@ -101,15 +91,12 @@ export const removePostAxios = async (token, postId) => {
 // getMyprofile Function
 export const getMyprofile = async token => {
   try {
-    const res = await axios.get(
-      `https://mandarin.api.weniv.co.kr/user/myinfo`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-type': 'application/json',
-        },
+    const res = await axios.get(`${API_URL}user/myinfo`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-type': 'application/json',
       },
-    );
+    });
     return res.data.user;
   } catch (error) {
     console.log(error);
@@ -119,15 +106,12 @@ export const getMyprofile = async token => {
 // getProfile by ID Function
 export const getYourprofile = async (id, token) => {
   try {
-    const res = await axios.get(
-      `https://mandarin.api.weniv.co.kr/profile/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-type': 'application/json',
-        },
+    const res = await axios.get(`${API_URL}profile/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-type': 'application/json',
       },
-    );
+    });
     return res.data.profile;
   } catch (error) {
     console.log(error);
@@ -138,7 +122,7 @@ export const getYourprofile = async (id, token) => {
 export const likeAxios = async (id, token) => {
   try {
     const res = await axios.post(
-      `https://mandarin.api.weniv.co.kr/post/${id}/heart`,
+      `${API_URL}post/${id}/heart`,
       {},
       {
         headers: {
@@ -156,15 +140,12 @@ export const likeAxios = async (id, token) => {
 // unlike Function
 export const unlikeAxios = async (id, token) => {
   try {
-    const res = await axios.delete(
-      `https://mandarin.api.weniv.co.kr/post/${id}/unheart`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-type': 'application/json',
-        },
+    const res = await axios.delete(`${API_URL}post/${id}/unheart`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-type': 'application/json',
       },
-    );
+    });
     return res.data.post;
   } catch (error) {
     console.log(error);
@@ -175,7 +156,7 @@ export const unlikeAxios = async (id, token) => {
 export const followAxios = async (id, token) => {
   try {
     const res = await axios.post(
-      `https://mandarin.api.weniv.co.kr/profile/${id}/follow`,
+      `${API_URL}profile/${id}/follow`,
       {},
       {
         headers: {
@@ -193,15 +174,12 @@ export const followAxios = async (id, token) => {
 // unfollow Function
 export const unfollowAxios = async (id, token) => {
   try {
-    const res = await axios.delete(
-      `https://mandarin.api.weniv.co.kr/profile/${id}/unfollow`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-type': 'application/json',
-        },
+    const res = await axios.delete(`${API_URL}profile/${id}/unfollow`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-type': 'application/json',
       },
-    );
+    });
     return res.data.profile;
   } catch (error) {
     console.log(error);
@@ -212,9 +190,7 @@ export const unfollowAxios = async (id, token) => {
 export const getFollowingDataAxios = async (id, token) => {
   try {
     const res = await axios.get(
-      `https://mandarin.api.weniv.co.kr/profile/${id}/following/?limit=${parseInt(
-        20,
-      )}`,
+      `${API_URL}profile/${id}/following/?limit=${parseInt(20)}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -232,9 +208,7 @@ export const getFollowingDataAxios = async (id, token) => {
 export const getFollowerDataAxios = async (id, token) => {
   try {
     const res = await axios.get(
-      `https://mandarin.api.weniv.co.kr/profile/${id}/follower/?limit=${parseInt(
-        20,
-      )}`,
+      `${API_URL}profile/${id}/follower/?limit=${parseInt(20)}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -251,15 +225,12 @@ export const getFollowerDataAxios = async (id, token) => {
 // login Function
 export const loginAxios = async (emailID, pwdValue) => {
   try {
-    const res = await axios.post(
-      'https://mandarin.api.weniv.co.kr/user/login',
-      {
-        user: {
-          email: emailID,
-          password: pwdValue,
-        },
+    const res = await axios.post(`${API_URL}user/login`, {
+      user: {
+        email: emailID,
+        password: pwdValue,
       },
-    );
+    });
     return res.data;
   } catch (error) {
     return error.response.data;
@@ -276,7 +247,7 @@ export const signUpAxios = async (
   profileImgSrcValue,
 ) => {
   try {
-    await axios.post('https://mandarin.api.weniv.co.kr/user', {
+    await axios.post(`${API_URL}user`, {
       user: {
         username: username,
         email: emailValue,
@@ -294,14 +265,11 @@ export const signUpAxios = async (
 // emailValidate Function
 export const emailValidateAxios = async emailID => {
   try {
-    const res = await axios.post(
-      'https://mandarin.api.weniv.co.kr/user/emailvalid',
-      {
-        user: {
-          email: emailID,
-        },
+    const res = await axios.post(`${API_URL}user/emailvalid`, {
+      user: {
+        email: emailID,
       },
-    );
+    });
     return res.data.message;
   } catch (error) {
     console.log(error);
@@ -311,14 +279,11 @@ export const emailValidateAxios = async emailID => {
 // accountnameValidate Function
 export const accountnameValidateAxios = async accountname => {
   try {
-    const res = await axios.post(
-      'https://mandarin.api.weniv.co.kr/user/accountnamevalid',
-      {
-        user: {
-          accountname: accountname,
-        },
+    const res = await axios.post(`${API_URL}user/accountnamevalid`, {
+      user: {
+        accountname: accountname,
       },
-    );
+    });
     return res.data.message;
   } catch (error) {
     console.log(error);
